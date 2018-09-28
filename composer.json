@@ -1,0 +1,24 @@
+{
+	"name": "jstewmc/gravity",
+	"description": "A framework-agnostic service and configuration manager for PHP",
+	"license": "MIT",
+	"keywords": ["php", "jstewmc", "gravity", "service", "configuration", "manager"],
+	"authors": [
+		{
+			"name": "Jack Clayton",
+			"email": "clayjs0@gmail.com"
+		}
+	],
+	"require": {
+		"php": "^7.2"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^6",
+		"mikey179/vfsstream": "^1.6"
+	},
+	"autoload": {
+		"psr-4": {
+			"Jstewmc\\Gravity\\": "src/"
+		}
+	}
+}
