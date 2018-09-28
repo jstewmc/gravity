@@ -4,24 +4,9 @@ Gravity is a framework-agnostic, community-friendly service and configuration ma
 
 Gravity makes it easy to use other people's settings and services in your application. As a _package author_, you'll use Gravity to _set_ settings and services. As a _package consumer_ you'll use Gravity to _get_ settings and services.
 
-Suppose:
-
-1. You've installed a library using Composer, and
-2. You'd like to use a service defined in the library.
-
-Gravity:
-
-1. Finds the service,
-2. Reads its definition,
-3. Instantiates it,
-4. Returns it to you, and
-5. Saves it for the next request.
-
-Gravity makes it easy to create and share services and settings. It just pulls everything together.
-
 ## Usage
 
-Here's a simple example.
+Here's a simple example:
 
 ### Package authors
 
@@ -40,7 +25,7 @@ class Baz
 }
 ```
 
-You'll define the service in a Gravity file (`$g`, the standard abbreviation for [gravity](https://en.wikipedia.org/wiki/Standard_gravity), is a magic variable in Gravity files, and PHP's `::class` constant is a convenient way to identify services):
+You'll define the service in a Gravity file:
 
 ```php
 # /path/to/project/.gravity/services.php
@@ -51,13 +36,13 @@ $g->set(Baz::class, function (): object {
 });
 ```
 
-And, you'll add your (awesome) `Foo\Bar` package to Packagist for others to use.
+And, you'll add your (awesome) package to Packagist for others to use.
 
 ### Package consumers
 
-As a _package consumer_, you'll add the `Foo\Bar` package to your `composer.json` file.
+As a _package consumer_, you'll add the `Foo\Bar` package (and Gravity) to your `composer.json` file.
 
-And, you'll use the `Baz` service in your application:
+Then, you'll use the `Baz` service in your application:
 
 ```php
 # path/to/project/file.php
@@ -71,17 +56,11 @@ $g = new Manager();
 $g->get(Baz::class)();
 ```
 
-The code above would produce the following output:
-
-```
-baz
-```
-
 That's it!
 
 ## Documentation
 
-Of course, there is much more that Gravity can do (including configuration)!
+Of course, there is much more that Gravity can do!
 
 See [the documentation](https://github.com/jstewmc/gravity/blob/master/docs/getting-started.md) for details.
 

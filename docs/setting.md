@@ -1,30 +1,27 @@
 # Setting services and settings
 
-As a _package author_ you'll use Gravity to _set_ services and settings for other developers to use.
+As a _package author_ you'll use Gravity to _set services and settings_ for other developers to use.
 
 ## Gravity directory
 
-Like [Composer](https://getcomposer.org), Gravity thinks in terms of packages. In fact, Gravity relies heavily on Composer's default filesystem to find its instructions.
+Like [Composer](https://getcomposer.org), Gravity thinks in terms of packages. In fact, Gravity relies heavily on Composer's default filesystem to find its files.
 
-As a package provider, you'll define your services and settings in a `.gravity` directory located in your package's root directory like `composer.json`:
+As a package author, you'll define your services and settings in a `.gravity` directory located in your package's root directory right beside your `composer.json`:
 
 ```
-/path/to/package
-|-- .git
-|-- .gravity   <----- here!
-|-- src
-|-- tests
-|-- vendor
-|-- .gitignore
-|-- composer.json
-|-- ...
+path
+|-- to
+|   |-- package
+|   |   |-- .gravity      <----- here!
+|   |   |-- composer.json
+|   |   |-- ...
 ```
 
-A Gravity directory many contain any number of files and subdirectories. Any file in the directory is considered a Gravity file.
+A Gravity directory many contain any number of files and subdirectories. Any file in the directory will be considered a Gravity file.
 
 ## Gravity files
 
-Within a Gravity file, a "magic" `$g` variable is always defined ("g" is the abbreviation for [gravity](https://en.wikipedia.org/wiki/Standard_gravity). You'll use `$g` and its methods to define, alias, and deprecate services and settings):
+Within a Gravity file, a "magic" `$g` variable will always be defined ("g" is the abbreviation for [gravity](https://en.wikipedia.org/wiki/Gravity_of_Earth)). You'll use `$g` and its methods to define services and settings:
 
 ```php
 # /path/to/package/.gravity/foo.php
@@ -34,8 +31,8 @@ namespace Foo\Bar;
 $g->set('foo.bar.baz', 1);
 
 // define a service
-$g->set(Baz::class, function () {
-    return new Baz();
+$g->set(Foo::class, function () {
+    return new Bar();
 });
 ```
 
@@ -45,13 +42,13 @@ Between the support for recursive directories and the mixing of services and con
 
 ## Services
 
-A service is typically a class that does one thing, and does it well, often exposing a single public `__invoke` method. However, no matter how you define a service, you can define it in Gravity.
+A service is typically a class that does one thing, and does it well, often exposing a single public `__invoke` method. No matter how you define a service, you can define it in Gravity.
 
 You'll use the `$g->set()` method to define a service using `null`, an object instance, an anonymous function, or a factory.
 
 ### Newables
 
-A newable is the simplest service definition. It's `null`! A newable service is a service with the same classname as its identifier.
+A newable-defined service is the simplest. It's definition is `null`! A newable service is a service with the same classname as its identifier.
 
 ```php
 # /path/to/project/.gravity/stuff.php
@@ -59,12 +56,13 @@ A newable is the simplest service definition. It's `null`! A newable service is 
 namespace Foo\Bar;
 
 $g->set(Baz::class);
-
 ```
+
+When a newable service is requested, Gravity will instantiate an instance of the class with the same name as the service identifier and return it.
 
 ### Instances
 
-Instance-defined services are slightly more complicated than newables. An instance-defined service is already instantiated.
+Instance-defined services are already instantiated.
 
 ```php
 # /path/to/project/.gravity/services.php
@@ -74,22 +72,26 @@ namespace Foo\Bar;
 $g->set(Baz::class, new \StdClass());
 ```
 
+When an instance-defined service is requested, Gravity will return the instance.
+
 ### Anonymous functions
 
-Anonymous functions are a simple and powerful way to define services.
-
-An anonymous function must accept no arguments, and it must return an object when invoked. However, anything can happen in between.
-
-Inside an anonymous function, `$this` refers to Gravity. So, it's easy to inject other services and configuration.
+An anonymous function definition must accept no arguments, and it must return an `object` when invoked. However, anything can happen in between.
 
 ```php
 #/path/to/project/.gravity/stuff.php
-
 namespace Foo\Bar;
 
 $g->set(Baz::class, function (): Foo {
     return new Baz();
 });
+```
+
+Within an anonymous function, `$this` refers to Gravity. So, it's easy to inject other services and configuration.
+
+```php
+#/path/to/project/.gravity/stuff.php
+namespace Foo\Bar;
 
 $g->set(Qux::class, function (): Bar {
     $foo = $this->get(Baz::class);
@@ -98,17 +100,11 @@ $g->set(Qux::class, function (): Bar {
 });
 ```
 
+When an anonymous-function-defined service is requested, Gravity will invoke the function and return the function's return value.
+
 ### Factories
 
-If your service definition is too complex for an anonymous function, you can use a factory. A factory is a service that instantiates another service.
-
-A factory must implement Gravity's Factory interface, and it must be defined in Gravity as a newable service.
-
-When a factory-defined service is requested, its factory will be instantiated; the factory's `__invoke()` method will be called; and, it will be passed an instance of the Gravity manager.
-
-The factory's `__invoke()` method must return an object, the service.
-
-The factory:
+A factory is a service that instantiates another service. A factory must implement Gravity's `Factory` interface, and it must be defined in Gravity as a newable service.
 
 ```php
 # /path/to/project/src/Factory/foo.php
@@ -141,13 +137,19 @@ $g->set(BazFactory::class);
 $g->set(Baz::class, BazFactory::class);  
 ```
 
+When a factory-defined service is requested, its factory will be instantiated; the factory's `__invoke()` method will be called with an instance of the Gravity manager; and, the method's value will be returned.
+
 ## Settings
+
+In addition to services, Gravity supports configuration settings.
 
 A configuration setting is a value that your package uses to make decisions. It may be a list of state abbreviations; a list of disposable email domains; a default token length; or, anything really.
 
-Configuration is important because it allows _different_ people to use the _same_ code _different_ ways. Plus, configuration changes are always easier than code changes. If you find yourself adding a constant, string, or number to your code, you should probably add it as a configuration setting instead!
+Configuration is as important as services, because it allows _different_ users to use the _same_ code _different_ ways. Gravity's support for cross-definitions encourages this. Plus, configuration changes are much easier than code changes.
 
-You'll use the `$g->set()` method to define configuration values using any valid PHP value.
+If you find yourself adding a constant, string, or number to your code, you should probably add it as a configuration setting instead!
+
+You'll use the `$g->set()` method to define configuration values.
 
 ```php
 # /path/to/project/.gravity/config.php
@@ -159,18 +161,24 @@ $g->set('foo.bar.d', [1, 2, 3]);
 $g->set('foo.bar.e', new StdClass());
 ```
 
-When multiple definitions exist for a scalar value, the last one wins. On the other hand, when multiple definitions exist for an array value, the values will be merged.
+When multiple definitions exist for a scalar value, the last one wins. In the example below, the final value of `foo.bar.baz` would be `2`.
 
 ```php
 # /path/to/project/.gravity/config.php
 
 $g->set('foo.bar.baz', 1);
-$g->set('foo.bar.baz', 2);  // sets 'foo.bar.baz' to 2
-
-$g->set('foo.bar.baz', ['qux']);
-$g->set('foo.bar.baz', ['quux']);  // sets 'foo.bar.baz' to ['qux, quuz']
+$g->set('foo.bar.baz', 2);
 ```
-Gravity accepts identifiers and arrays of any length. So, don't worry about it:
+
+On the other hand, when multiple definitions exist for an array value, the values will be merged. In the example below, the final valu eof `foo.bar.baz` would be `["qux", "quux"]`.
+
+```php
+# /path/to/project/.gravity/config.php
+$g->set('foo.bar.baz', ['qux']);
+$g->set('foo.bar.baz', ['quux']);
+```
+
+Gravity standardizes identifiers and arrays of any length. So don't worry about it. The two configuration settings below are equivalent:
 
 ```php
 $g->set('foo.baz.baz.qux.quux.corge', [
@@ -180,6 +188,9 @@ $g->set('foo.baz.baz.qux.quux.corge', [
         ]
     ]
 ]);
+
+$g->set('foo.baz.baz.qux.quux.corge.grault.garply.waldo', 1);
+
 ```
 
 You can organize your configuration however you'd like. However, as a general rule of thumb, if you find yourself adding prefixes to multiple keys, those values should probably be grouped into an array:
@@ -196,12 +207,11 @@ $g->set('foo.bar.baz-c', 3);
 $g->set('foo.bar.baz', [1, 2, 3]);
 ```
 
-
 ## Aliases
 
-Gravity supports aliases, although, in general, they are discouraged. It's a better world if every service is identified by a single identifier. However, sometimes aliases come in handy.
+Sometimes you need to move things. That's ok.  Gravity supports aliases. But, keep in mind, they should be used sparingly. It's a better world if every service is identified by a single identifier!
 
-You can use the `$g->alias()` method to alias a setting or service. It accepts two identifiers: a source and a destination.
+You can use the `$g->alias()` method to alias an alias, setting, or service. It accepts two arguments: a source id and a destination id.
 
 ```php
 # file /path/to/project/.gravity/stuff.php
