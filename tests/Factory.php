@@ -23,7 +23,7 @@ use StdClass;
  */
 class FactoryTest implements Factory
 {
-    public function __invoke(Manager $g): object
+    public function __invoke(Manager $g): StdClass
     {
         return new StdClass();
     }

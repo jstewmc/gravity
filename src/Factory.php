@@ -25,5 +25,5 @@ interface Factory
      * @return  object
      * @since   0.1.0
      */
-    public function __invoke(Manager $g): object;
+    public function __invoke(Manager $g);
 }
