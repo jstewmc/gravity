@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 
 <ruleset name="Custom Standard">
+ <config name="installed_paths" value="../../slevomat/coding-standard"/>
+
  <!--Exclude Paths-->
  <exclude-pattern type="relative">vendor/*</exclude-pattern>
  <exclude-pattern type="relative">docs/*</exclude-pattern>
@@ -38,7 +40,7 @@
  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
 
  <!--Slevomat Rules-->
- <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/Namespaces/UnusedUsesSniff.php">
+ <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
   <properties>
    <property name="searchAnnotations" value="true"/>
   </properties>
