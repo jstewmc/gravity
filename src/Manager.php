@@ -122,10 +122,10 @@ class Manager
      * Aliases help move things around, but in general, should be used lightly.
      * It's a better world if a service or setting has a single identifier.
      *
-     * @example  alias a service
+     * @example  Alias a service
      *    $g->alias('Foo\Bar\Baz');
      *
-     * @example  alias a setting
+     * @example  Alias a setting
      *    $g->alias('foo.bar.baz');
      *
      * @param   string  $source       the alias' source identifier
