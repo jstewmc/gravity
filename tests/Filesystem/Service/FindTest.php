@@ -19,14 +19,17 @@ use PHPUnit\Framework\TestCase;
  */
 class FindTest extends TestCase
 {
-    public function testInvokeReturnsNullIfNotComposer(): void
+    public function testInvokeReturnsPackageDirectoryIfNotComposer(): void
     {
-        $this->assertNull((new Find())());
+        $expected = realpath(dirname(__FILE__, 4));
+        $actual   = (new Find())();
+
+        $this->assertEquals($expected, $actual);
 
         return;
     }
 
-    // public function testInvokeReturnsSplFilInfoIfComposer(): void
+    // public function testInvokeReturnsProjectDirectoryIfComposer(): void
     // {
     //     // how the heck do I test this?
     // }

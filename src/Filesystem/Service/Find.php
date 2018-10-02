@@ -16,20 +16,21 @@ use Jstewmc\Gravity\Filesystem\Exception\NotReadable;
 use SplFileInfo;
 
 /**
- * Finds the project's filesystem if installed by Composer
+ * Finds the project's filesystem
  *
- * If the library is installed by Composer, I can find the project's root
- * directory, because I know my relative location.
+ * If the project includes a vendors directory (i.e., Gravity was installed by
+ * Composer), I will use the project's root directory. Otherwise, I will
+ * default to the package's root directory.
  *
- *     <root>
- *     |-- vendor
+ *     <root>                                # the project's root directory
+ *     |-- vendor                            # the vendors directory
  *     |   |-- jstewmc
- *     |   |   |-- gravity
+ *     |   |   |-- gravity                   # the package's root directory
  *     |   |   |   |-- src
  *     |   |   |   |   |-- Filesystem
  *     |   |   |   |   |   |-- Service
- *     |   |   |   |   |   |   |-- __FILE__
- *     6   5   4   3   2   1
+ *     |   |   |   |   |   |   |-- __FILE__  # this file
+ *     7   6   5   4   3   2   1
  *
  * @since  0.1.0
  */
@@ -37,11 +38,23 @@ class Find
 {
     /* !Private constants */
 
-    /**
-     * @var    int  the number of levels down from the root directory
-     * @since  0.1.0
-     */
-    private const LEVELS = 6;
+	/**
+	 * @var    int  the number of levels to the package's root directory
+	 * @since  0.1.0
+	 */
+	private const PACKAGE_DIRECTORY_LEVELS = self::PROJECT_DIRECTORY_LEVELS - 3;
+
+	/**
+	 * @var    int  the number of levels to the project's root directory
+	 * @since  0.1.0
+	 */
+	private const PROJECT_DIRECTORY_LEVELS = 7;
+
+	/**
+	 * @var    int  the number of levels to the vendors directory
+	 * @since  0.1.0
+	 */
+    private const VENDORS_DIRECTORY_LEVELS = self::PROJECT_DIRECTORY_LEVELS - 1;
 
     /* !Magic methods */
 
@@ -52,61 +65,89 @@ class Find
      * @throws  NotFound      if project's root directory does not exist
      * @throws  NotReadable   if project's root directory is not readable
      * @throws  NotDirectory  if project's root directory is not a directory
+     * @return  string
      * @since   0.1.0
      */
-    public function __invoke(): ?string
+    public function __invoke(): string
     {
-        if (!$this->isComposer()) {
-            return null;
-        }
+		if ($this->hasVendorsDirectory()) {
+			$pathname = $this->getProjectDirectoryPathname();
+		} else {
+			$pathname = $this->getPackageDirectoryPathname();
+		}
 
-        $pathname = realpath(dirname(__FILE__, self::LEVELS));
-
-        if ($pathname === false) {
-            throw new NotFound($pathname);
-        }
-
-        if (!is_readable($pathname)) {
-            throw new NotReadable($pathname);
-        }
-
-        if (!is_dir($pathname)) {
-            throw new NotDirectory($pathname);
-        }
-
-        return $pathname;
+		return $pathname;
     }
 
 
     /* !Private methods */
 
-    /**
-     * Returns true if the package was installed using Composer
-     * I assume the package is installed by Composer if the directory
-     * immediately below the expected root directory is the Composer directory.
-     * This may be false in some situations, but it seems like a sensible
-     * assumption.
-     *
-     * @return  bool
-     * @since   0.1.0
-     */
-    private function isComposer(): bool
-    {
-        $pathname = realpath(dirname(__FILE__, self::LEVELS - 1));
+	/**
+	 * Returns the package's root directory
+	 *
+	 * @return  string
+	 * @since   0.1.0
+	 */
+	private function getPackageDirectoryPathname(): string
+	{
+		return $this->getPathname(self::PACKAGE_DIRECTORY_LEVELS);
+	}
 
-        if (!$pathname) {
-            return false;
-        }
+	/**
+	 * Returns the project's root directory
+	 *
+	 * @return  string
+	 * @since  0.1.0
+	 */
+	private function getProjectDirectoryPathname(): string
+	{
+		return $this->getPathname(self::PROJECT_DIRECTORY_LEVELS);
+	}
 
-        $directory = new SplFileInfo($pathname);
+	/**
+	 * Returns true if a vendors directory exists
+	 *
+	 * @return  bool
+	 * @since   0.1.0
+	 */
+	private function hasVendorsDirectory(): bool
+	{
+		$pathname = $this->getPathname(self::VENDORS_DIRECTORY_LEVELS);
 
-        if (!$directory->isReadable() || !$directory->isDir()) {
-            return false;
-        }
+		// if a directory doesn't eixst, short-circuit
+		if ( ! $pathname) {
+			return false;
+		}
 
-        $expected = Filesystem::DIRECTORY_NAME_VENDORS;
-        $actual   = $directory->getFilename();
+		// otherwise, instantiate the directory
+		$directory = new SplFileInfo($pathname);
 
-        return $expected === $actual;
-    }
+		// if the directory isn't readable or directory (somehow), short-circuit
+		if ( ! $directory->isReadable() || ! $directory->isDir()) {
+			return false;
+		}
+
+		// if the directory's name is incorrect, short-circuit
+		if ($directory->getFilename() !== Filesystem::DIRECTORY_NAME_VENDORS) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Returns the pathname of a directory $levels above this file
+	 *
+	 * @param   int  $levels  the levels above this file
+	 * @return  string|null
+	 * @since   0.1.0
+	 */
+	private function getPathname(int $levels): ?string
+	{
+		if (false === ($pathname = realpath(dirname(__FILE__, $levels)))) {
+			return null;
+		}
+
+		return $pathname;
+	}
 }
