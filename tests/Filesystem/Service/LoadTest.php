@@ -11,7 +11,8 @@ namespace Jstewmc\Gravity\Filesystem\Service;
 
 use Jstewmc\Gravity\Filesystem\Data\Filesystem;
 use Jstewmc\Gravity\Manager;
-use org\bovigo\vfs\{vfsStream, vfsStreamDirectory, vfsStreamFile};
+use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 use PHPUnit\Framework\TestCase;
 use SplFileInfo;
 
@@ -45,12 +46,14 @@ class LoadTest extends TestCase
     {
         // create a valid gravity file (location doesn't matter)
         $file = vfsStream::newFile('foo.php')
-			->withContent('<?php
+            ->withContent(
+                '<?php
                 $g->alias("foo\bar\baz", "foo\bar\qux");
                 $g->set("foo\bar\qux");
                 $g->deprecate("foo\bar\baz");
-            ')
-			->at($this->root);
+            '
+            )
+            ->at($this->root);
 
         // set up a filesystem to return the file
         $file = new SplFileInfo($file->url());

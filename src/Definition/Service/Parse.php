@@ -10,11 +10,9 @@
 namespace Jstewmc\Gravity\Definition\Service;
 
 use Jstewmc\Gravity\Definition\Data\Definition;
-use Jstewmc\Gravity\Id\Data\{
-    Id,
-    Service as ServiceId,
-    Setting as SettingId
-};
+use Jstewmc\Gravity\Id\Data\Id;
+use Jstewmc\Gravity\Id\Data\Service as ServiceId;
+use Jstewmc\Gravity\Id\Data\Setting as SettingId;
 use Jstewmc\Gravity\Id\Service\Parse as ParseId;
 use Jstewmc\Gravity\Service\Data\Service as ServiceDefinition;
 use Jstewmc\Gravity\Service\Service\Parse as ParseService;
@@ -60,13 +58,13 @@ class Parse
      * @since  0.1.0
      */
     public function __construct(
-        ParseId  $parseId,
-        ParseService     $parseService,
-        ParseSetting     $parseSetting
+        ParseId $parseId,
+        ParseService $parseService,
+        ParseSetting $parseSetting
     ) {
-        $this->parseId = $parseId;
-        $this->parseService    = $parseService;
-        $this->parseSetting    = $parseSetting;
+        $this->parseId      = $parseId;
+        $this->parseService = $parseService;
+        $this->parseSetting = $parseSetting;
     }
 
     /**

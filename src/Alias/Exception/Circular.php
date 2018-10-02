@@ -18,18 +18,18 @@ use Jstewmc\Gravity\Id\Data\Id;
  */
 class Circular extends Exception
 {
-	/* !Magic methods */
+    /* !Magic methods */
 
-	/**
-	 * Called when the exception is constructed
-	 *
-	 * @param  Id  $id  the circular identifier
-	 * @since  0.1.
-	 */
-	public function __construct(Id $id)
-	{
-		parent::__construct($id);
-		
-		$this->message = "Circular alias for '$id'";
-	}
+    /**
+     * Called when the exception is constructed
+     *
+     * @param  Id $id the circular identifier
+     * @since  0.1.
+     */
+    public function __construct(Id $id)
+    {
+        parent::__construct($id);
+
+        $this->message = "Circular alias for '$id'";
+    }
 }

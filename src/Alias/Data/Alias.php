@@ -21,58 +21,57 @@ use Jstewmc\Gravity\Id\Data\Id;
  */
 abstract class Alias
 {
-	/* !Private properties */
+    /* !Private properties */
 
-	/**
-	 * @var    Id  the destination id
-	 * @since  0.1.0
-	 */
-	private $destination;
+    /**
+     * @var    Id  the destination id
+     * @since  0.1.0
+     */
+    private $destination;
 
-	/**
-	 * @var    Id  the source id
-	 * @since  0.1.0
-	 */
-	private $source;
+    /**
+     * @var    Id  the source id
+     * @since  0.1.0
+     */
+    private $source;
+
+    /* !Magic methods */
+
+    /**
+     * Called when the alias is constructed
+     *
+     * @param   Id $source      the source id
+     * @param   Id $destination the destination id
+     * @since   0.1.0
+     */
+    public function __construct(Id $source, Id $destination)
+    {
+        $this->source      = $source;
+        $this->destination = $destination;
+    }
 
 
-	/* !Magic methods */
+    /* !Get methods */
 
-	/**
-	 * Called when the alias is constructed
-	 *
-	 * @param   Id  $source       the source id
-	 * @param   Id  $destination  the destination id
-	 * @since   0.1.0
-	 */
-	public function __construct(Id $source, Id $destination)
-	{
-		$this->source      = $source;
-		$this->destination = $destination;
-	}
+    /**
+     * Returns the alias' destination identifier
+     *
+     * @return  Id
+     * @since   0.1.0
+     */
+    public function getDestination(): Id
+    {
+        return $this->destination;
+    }
 
-
-	/* !Get methods */
-
-	/**
-	 * Returns the alias' destination identifier
-	 *
-	 * @return  Id
-	 * @since   0.1.0
-	 */
-	public function getDestination(): Id
-	{
-		return $this->destination;
-	}
-
-	/**
-	 * Returns the alias' source identifier
-	 *
-	 * @return  Id
-	 * @since   0.1.0
-	 */
-	public function getSource(): Id
-	{
-		return $this->source;
-	}
+    /**
+     * Returns the alias' source identifier
+     *
+     * @return  Id
+     * @since   0.1.0
+     */
+    public function getSource(): Id
+    {
+        return $this->source;
+    }
 }

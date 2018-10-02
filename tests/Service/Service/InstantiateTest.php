@@ -9,10 +9,13 @@
 
 namespace Jstewmc\Gravity\Service\Service;
 
-use Jstewmc\Gravity\Id\Data\Service as Id;
 use Jstewmc\Gravity\FactoryTest;
+use Jstewmc\Gravity\Id\Data\Service as Id;
 use Jstewmc\Gravity\Manager;
-use Jstewmc\Gravity\Service\Data\{Factory, Fx, Instance, Newable};
+use Jstewmc\Gravity\Service\Data\Factory;
+use Jstewmc\Gravity\Service\Data\Fx;
+use Jstewmc\Gravity\Service\Data\Instance;
+use Jstewmc\Gravity\Service\Data\Newable;
 use PHPUnit\Framework\TestCase;
 use StdClass;
 
@@ -45,7 +48,9 @@ class InstantiateTest extends TestCase
     {
         // set up the anonymous-function-defined service to instantiate
         $id = $this->createMock(Id::class);
-        $definition = function () { return new StdClass(); };
+        $definition = function () {
+            return new StdClass();
+        };
 
         $service = new Fx($id, $definition);
 

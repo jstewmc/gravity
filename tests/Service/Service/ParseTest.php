@@ -11,8 +11,10 @@ namespace Jstewmc\Gravity\Service\Service;
 
 use Jstewmc\Gravity\FactoryTest;
 use Jstewmc\Gravity\Id\Data\Service as Id;
-use Jstewmc\Gravity\Manager;
-use Jstewmc\Gravity\Service\Data\{Factory, Fx, Instance, Newable};
+use Jstewmc\Gravity\Service\Data\Factory;
+use Jstewmc\Gravity\Service\Data\Fx;
+use Jstewmc\Gravity\Service\Data\Instance;
+use Jstewmc\Gravity\Service\Data\Newable;
 use Jstewmc\Gravity\Service\Exception\BadDefinition;
 use PHPUnit\Framework\TestCase;
 use StdClass;
@@ -51,7 +53,9 @@ class ParseTest extends TestCase
     public function testInvokeReturnsServiceIfFx(): void
     {
         $id = $this->createMock(Id::class);
-        $definition = function () { return; };
+        $definition = function () {
+            return;
+        };
 
         $expected = new Fx($id, $definition);
         $actual   = (new Parse())($id, $definition);

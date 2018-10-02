@@ -9,9 +9,7 @@
 
 namespace Jstewmc\Gravity\Service\Data;
 
-use Jstewmc\Gravity\Factory as FactoryInterface;
 use Jstewmc\Gravity\Id\Data\Service as Id;
-
 
 /**
  * A factory-defined service

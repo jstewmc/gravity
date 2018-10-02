@@ -9,9 +9,8 @@
 
 namespace Jstewmc\Gravity\Cache\Data;
 
-use Jstewmc\Gravity\Id\Data\Id;
 use Jstewmc\Gravity\Cache\Exception\NotFound;
-
+use Jstewmc\Gravity\Id\Data\Id;
 
 /**
  * A simple hash-based cache
@@ -41,11 +40,11 @@ class Hash implements Cache
      */
     public function get(Id $id)
     {
-        if ( ! $this->has($id)) {
+        if (!$this->has($id)) {
             throw new NotFound($id);
         }
 
-        return $this->values[(string) $id];
+        return $this->values[(string)$id];
     }
 
     /**
@@ -57,7 +56,7 @@ class Hash implements Cache
      */
     public function has(Id $id): bool
     {
-        return array_key_exists((string) $id, $this->values);
+        return array_key_exists((string)$id, $this->values);
     }
 
     /**
@@ -70,7 +69,7 @@ class Hash implements Cache
     public function remove(Id $id): void
     {
         if ($this->has($id)) {
-            unset($this->values[(string) $id]);
+            unset($this->values[(string)$id]);
         }
 
         return;
@@ -99,7 +98,7 @@ class Hash implements Cache
      */
     public function set(Id $id, $value): Cache
     {
-        $this->values[(string) $id] = $value;
+        $this->values[(string)$id] = $value;
 
         return $this;
     }

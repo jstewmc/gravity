@@ -9,7 +9,6 @@
 
 namespace Jstewmc\Gravity;
 
-use Jstewmc\Gravity\Setting\Exception\NotFound;
 use PHPUnit\Framework\TestCase;
 
 /**

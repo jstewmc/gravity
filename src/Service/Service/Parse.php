@@ -11,8 +11,11 @@ namespace Jstewmc\Gravity\Service\Service;
 
 use Jstewmc\Gravity\Factory as FactoryInterface;
 use Jstewmc\Gravity\Id\Data\Service as Id;
-use Jstewmc\Gravity\Id\Service\Parse as ParseId;
-use Jstewmc\Gravity\Service\Data\{Factory, Fx, Instance, Newable, Service};
+use Jstewmc\Gravity\Service\Data\Factory;
+use Jstewmc\Gravity\Service\Data\Fx;
+use Jstewmc\Gravity\Service\Data\Instance;
+use Jstewmc\Gravity\Service\Data\Newable;
+use Jstewmc\Gravity\Service\Data\Service;
 use Jstewmc\Gravity\Service\Exception\BadDefinition;
 
 /**
@@ -54,36 +57,36 @@ class Parse
     /* !Private methods */
 
     /**
-	 * Returns true if the service is an anonymous function
-	 *
-	 * @param   mixed  $value  the value to test
-	 * @return  bool
-	 * @since   0.1.0
-	 */
-	private function isFunction($value): bool
-	{
-		return is_callable($value);
-	}
+     * Returns true if the service is an anonymous function
+     *
+     * @param   mixed $value the value to test
+     * @return  bool
+     * @since   0.1.0
+     */
+    private function isFunction($value): bool
+    {
+        return is_callable($value);
+    }
 
-	/**
-	 * Returns true if the service is a factory
-	 *
-	 * @param   mixed  $value  the value to test
-	 * @return  bool
-	 * @since   0.1.0
-	 */
-	private function isFactory($value): bool
-	{
+    /**
+     * Returns true if the service is a factory
+     *
+     * @param   mixed $value the value to test
+     * @return  bool
+     * @since   0.1.0
+     */
+    private function isFactory($value): bool
+    {
         // apparently, instanceof does not accept strings
-		return is_string($value)
+        return is_string($value)
             && class_exists($value)
             && is_subclass_of($value, FactoryInterface::class);
-	}
+    }
 
     /**
      * Returns true if the service is a service instance
      *
-     * @param   mixed  $value  the value to test
+     * @param   mixed $value the value to test
      * @return  bool
      * @since   0.1.0
      */
@@ -95,7 +98,7 @@ class Parse
     /**
      * Returns true if the service is a newable service
      *
-     * @param   mixed  $value  the value to test
+     * @param   mixed $value the value to test
      * @return  bool
      * @since   0.1.0
      */

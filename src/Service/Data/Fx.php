@@ -11,7 +11,6 @@ namespace Jstewmc\Gravity\Service\Data;
 
 use Jstewmc\Gravity\Id\Data\Service as Id;
 
-
 /**
  * An anonymous-function-defined service
  *
@@ -28,7 +27,7 @@ class Fx extends Service
      * @param  Callable    $definition  the service's definition
      * @since  0.1.0
      */
-    public function __construct(Id $id, Callable $definition)
+    public function __construct(Id $id, callable $definition)
     {
         parent::__construct($id, $definition);
     }
@@ -39,10 +38,10 @@ class Fx extends Service
     /**
      * Returns the service's definition
      *
-     * @return  Callable
+     * @return  callable
      * @since   0.1.0
      */
-    public function getDefinition(): Callable
+    public function getDefinition(): callable
     {
         return parent::getDefinition();
     }

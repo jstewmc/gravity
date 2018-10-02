@@ -23,7 +23,9 @@ class FxTest extends TestCase
     {
         $id = $this->createMock(Id::class);
 
-        $service = new Fx($id, function () { return; });
+        $service = new Fx($id, function () {
+            return;
+        });
 
         $this->assertSame($id, $service->getId());
 
@@ -33,7 +35,9 @@ class FxTest extends TestCase
     public function testGetDefinition(): void
     {
         $id = $this->createMock(Id::class);
-        $definition = function () { return; };
+        $definition = function () {
+            return;
+        };
 
         $service = new Fx($id, $definition);
 

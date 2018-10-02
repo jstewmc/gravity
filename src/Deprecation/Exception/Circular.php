@@ -18,18 +18,18 @@ use Jstewmc\Gravity\Id\Data\Id;
  */
 class Circular extends Exception
 {
-	/* !Magic methods */
+    /* !Magic methods */
 
-	/**
-	 * Called when the exception is constructed
-	 *
-	 * @param  Id  $id   the deprecated identifier
-	 * @since  0.1.
-	 */
-	public function __construct(Id $id)
-	{
-		parent::__construct($id);
+    /**
+     * Called when the exception is constructed
+     *
+     * @param  Id $id the deprecated identifier
+     * @since  0.1.
+     */
+    public function __construct(Id $id)
+    {
+        parent::__construct($id);
 
-		$this->message = "Cicular deprecation for '$id'";
-	}
+        $this->message = "Cicular deprecation for '$id'";
+    }
 }

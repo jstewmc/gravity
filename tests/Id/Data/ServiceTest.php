@@ -23,7 +23,7 @@ class ServiceTest extends TestCase
     {
         $this->assertEquals(
             'foo\bar\baz',
-            (string) new Service(['foo', 'bar', 'baz'])
+            (string)new Service(['foo', 'bar', 'baz'])
         );
 
         return;
@@ -33,7 +33,7 @@ class ServiceTest extends TestCase
     {
         $segments = ['foo', 'bar', 'baz'];
 
-        $this->assertEquals($segments,(new Service($segments))->getSegments());
+        $this->assertEquals($segments, (new Service($segments))->getSegments());
 
         return;
     }

@@ -24,14 +24,14 @@ class Load
     /**
      * Called when the service is treated like a function
      *
-     * @param   Filesystem  $filesystem  the filesystem to read
-	 * @param   Manager     $g           the Gravity manager
-	 * @return  Manager
+     * @param   Filesystem $filesystem the filesystem to read
+     * @param   Manager    $g          the Gravity manager
+     * @return  Manager
      * @since   0.1.0
      */
     public function __invoke(Filesystem $filesystem, Manager $g): Manager
     {
-		foreach ($filesystem->getFiles() as $file) {
+        foreach ($filesystem->getFiles() as $file) {
             include $file->getPathname();
         }
 

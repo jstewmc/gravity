@@ -10,7 +10,8 @@
 namespace Jstewmc\Gravity\Filesystem\Service;
 
 use Jstewmc\Gravity\Filesystem\Data\Filesystem;
-use org\bovigo\vfs\{vfsStream, vfsStreamDirectory, vfsStreamFile};
+use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 use PHPUnit\Framework\TestCase;
 use SplFileInfo;
 

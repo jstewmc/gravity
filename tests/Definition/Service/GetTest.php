@@ -10,11 +10,9 @@
 namespace Jstewmc\Gravity\Definition\Service;
 
 use Jstewmc\Gravity\Cache\Data\Cache;
-use Jstewmc\Gravity\Id\Data\{
-    Id,
-    Service as ServiceId,
-    Setting as SettingId
-};
+use Jstewmc\Gravity\Id\Data\Id;
+use Jstewmc\Gravity\Id\Data\Service as ServiceId;
+use Jstewmc\Gravity\Id\Data\Setting as SettingId;
 use Jstewmc\Gravity\Id\Service\Find as FindId;
 use Jstewmc\Gravity\Project\Data\Project;
 use Jstewmc\Gravity\Service\Service\Get as GetService;

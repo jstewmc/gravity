@@ -12,7 +12,6 @@ namespace Jstewmc\Gravity\Deprecation\Data;
 use Jstewmc\Gravity\Id\Data\Setting as Id;
 use PHPUnit\Framework\TestCase;
 
-
 /**
  * Tests for a setting deprecation
  *
