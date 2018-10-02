@@ -11,7 +11,6 @@ namespace Jstewmc\Gravity\Filesystem\Exception;
 
 use Jstewmc\Gravity\Exception;
 
-
 /**
  * Thrown when a filesystem exception occurs
  *

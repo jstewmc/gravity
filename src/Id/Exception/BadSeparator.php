@@ -9,7 +9,8 @@
 
 namespace Jstewmc\Gravity\Id\Exception;
 
-use Jstewmc\Gravity\Id\Data\{Service, Setting};
+use Jstewmc\Gravity\Id\Data\Service;
+use Jstewmc\Gravity\Id\Data\Setting;
 
 /**
  * Thrown when an identifier doesn't contain a valid separator

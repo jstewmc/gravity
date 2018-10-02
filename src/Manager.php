@@ -11,24 +11,17 @@ namespace Jstewmc\Gravity;
 
 use Jstewmc\Gravity\Alias\Data\Alias;
 use Jstewmc\Gravity\Alias\Service\Parse as ParseAlias;
-use Jstewmc\Gravity\Definition\Data\{
-    Definition,
-    Service as ServiceDefinition,
-    Setting as SettingDefinition
-};
-use Jstewmc\Gravity\Definition\Service\{
-    Parse as ParseDefinition,
-    Get as GetDefinition
-};
+use Jstewmc\Gravity\Definition\Data\Definition;
+use Jstewmc\Gravity\Definition\Data\Service as ServiceDefinition;
+use Jstewmc\Gravity\Definition\Service\Get as GetDefinition;
+use Jstewmc\Gravity\Definition\Service\Parse as ParseDefinition;
 use Jstewmc\Gravity\Deprecation\Data\Deprecation;
 use Jstewmc\Gravity\Deprecation\Service\Parse as ParseDeprecation;
-use Jstewmc\Gravity\Filesystem\Service\{
-    Find as FindFilesystem,
-    Read as ReadFilesystem,
-    Load as LoadFilesystem
-};
+use Jstewmc\Gravity\Deprecation\Service\Warn;
+use Jstewmc\Gravity\Filesystem\Service\Find as FindFilesystem;
+use Jstewmc\Gravity\Filesystem\Service\Load as LoadFilesystem;
+use Jstewmc\Gravity\Filesystem\Service\Read as ReadFilesystem;
 use Jstewmc\Gravity\Project\Data\Project;
-
 
 /**
  * The Gravity manager
@@ -272,7 +265,7 @@ class Manager
         $cache = new Cache\Data\Hash();
 
         // instantiate the "get-side" services
-        $warnDeprecation = new \Jstewmc\Gravity\Deprecation\Service\Warn();
+        $warnDeprecation = new Warn();
 
         $resolveId = new Id\Service\Resolve($warnDeprecation);
         $findId    = new Id\Service\Find($parseId, $resolveId);
@@ -320,7 +313,7 @@ class Manager
     {
         $root = (new FindFilesystem())();
 
-        if ( ! $root) {
+        if (!$root) {
             return;
         }
 

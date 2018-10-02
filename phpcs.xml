@@ -46,7 +46,6 @@
  <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
  <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
  <rule ref="SlevomatCodingStandard.ControlStructures.RequireShortTernaryOperator"/>
- <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions"/>
  <rule ref="SlevomatCodingStandard.Namespaces.NamespaceDeclaration"/>
  <rule ref="SlevomatCodingStandard.Namespaces.RequireOneNamespaceInFile"/>
  <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>

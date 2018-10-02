@@ -18,18 +18,18 @@ use Jstewmc\Gravity\Id\Data\Id;
  */
 class NotFound extends Exception
 {
-	/* !Magic methods */
+    /* !Magic methods */
 
-	/**
-	 * Called when the exception is constructed
-	 *
-	 * @param  Id  $id  the identifier not found
-	 * @since  0.1.
-	 */
-	public function __construct(Id $id)
-	{
-		parent::__construct($id);
+    /**
+     * Called when the exception is constructed
+     *
+     * @param  Id $id the identifier not found
+     * @since  0.1.
+     */
+    public function __construct(Id $id)
+    {
+        parent::__construct($id);
 
-		$this->message = "Alias '$id' not found";
-	}
+        $this->message = "Alias '$id' not found";
+    }
 }

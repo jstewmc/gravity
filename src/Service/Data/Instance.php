@@ -11,7 +11,6 @@ namespace Jstewmc\Gravity\Service\Data;
 
 use Jstewmc\Gravity\Id\Data\Service as Id;
 
-
 /**
  * An instance-defined service
  *

@@ -9,17 +9,12 @@
 
 namespace Jstewmc\Gravity\Deprecation\Service;
 
-use Jstewmc\Gravity\Deprecation\Data\{
-    Deprecation,
-    Service as ServiceDeprecation,
-    Setting as SettingDeprecation
-};
+use Jstewmc\Gravity\Deprecation\Data\Deprecation;
+use Jstewmc\Gravity\Deprecation\Data\Service as ServiceDeprecation;
+use Jstewmc\Gravity\Deprecation\Data\Setting as SettingDeprecation;
 use Jstewmc\Gravity\Deprecation\Exception\Circular;
-use Jstewmc\Gravity\Id\Data\{
-    Id,
-    Service as ServiceId,
-    Setting as SettingId
-};
+use Jstewmc\Gravity\Id\Data\Id;
+use Jstewmc\Gravity\Id\Data\Service as ServiceId;
 use Jstewmc\Gravity\Id\Service\Parse as ParseId;
 
 /**
@@ -64,8 +59,8 @@ class Parse
         if ($replacement) {
             $replacement = $this->parseId($replacement);
             if ($id == $replacement) {
-    			throw new Circular($id, $replacement);
-    		}
+                throw new Circular($id, $replacement);
+            }
         }
 
         if ($id instanceof ServiceId) {

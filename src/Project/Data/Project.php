@@ -13,11 +13,9 @@ use Jstewmc\Gravity\Alias\Data\Alias;
 use Jstewmc\Gravity\Alias\Exception\NotFound as AliasNotFound;
 use Jstewmc\Gravity\Deprecation\Data\Deprecation;
 use Jstewmc\Gravity\Deprecation\Exception\NotFound as DeprecationNotFound;
-use Jstewmc\Gravity\Id\Data\{
-    Id,
-    Service as ServiceId,
-    Setting as SettingId
-};
+use Jstewmc\Gravity\Id\Data\Id;
+use Jstewmc\Gravity\Id\Data\Service as ServiceId;
+use Jstewmc\Gravity\Id\Data\Setting as SettingId;
 use Jstewmc\Gravity\Service\Data\Service;
 use Jstewmc\Gravity\Service\Exception\NotFound as ServiceNotFound;
 use Jstewmc\Gravity\Setting\Data\Setting;
@@ -68,7 +66,7 @@ class Project
      */
     public function addAlias(Alias $alias): self
     {
-        $this->aliases[(string) $alias->getSource()] = $alias;
+        $this->aliases[(string)$alias->getSource()] = $alias;
 
         return $this;
     }
@@ -82,7 +80,7 @@ class Project
      */
     public function addDeprecation(Deprecation $deprecation): self
     {
-        $this->deprecations[(string) $deprecation->getId()] = $deprecation;
+        $this->deprecations[(string)$deprecation->getId()] = $deprecation;
 
         return $this;
     }
@@ -96,7 +94,7 @@ class Project
      */
     public function addService(Service $service): self
     {
-        $this->services[(string) $service->getId()] = $service;
+        $this->services[(string)$service->getId()] = $service;
 
         return $this;
     }
@@ -124,7 +122,7 @@ class Project
      */
     public function hasAlias(Id $id): bool
     {
-        return array_key_exists((string) $id, $this->aliases);
+        return array_key_exists((string)$id, $this->aliases);
     }
 
     /**
@@ -136,7 +134,7 @@ class Project
      */
     public function hasDeprecation(Id $id): bool
     {
-        return array_key_exists((string) $id, $this->deprecations);
+        return array_key_exists((string)$id, $this->deprecations);
     }
 
     /**
@@ -148,7 +146,7 @@ class Project
      */
     public function hasService(Id $id): bool
     {
-        return array_key_exists((string) $id, $this->services);
+        return array_key_exists((string)$id, $this->services);
     }
 
     /**
@@ -163,7 +161,7 @@ class Project
         $settings = $this->settings;
 
         foreach ($id->getSegments() as $segment) {
-            if ( ! array_key_exists($segment, $settings)) {
+            if (!array_key_exists($segment, $settings)) {
                 return false;
             }
             $settings = $settings[$segment];
@@ -182,11 +180,11 @@ class Project
      */
     public function getAlias(Id $id): Alias
     {
-        if ( ! $this->hasAlias($id)) {
+        if (!$this->hasAlias($id)) {
             throw new AliasNotFound($id);
         }
 
-        return $this->aliases[(string) $id];
+        return $this->aliases[(string)$id];
     }
 
     /**
@@ -199,11 +197,11 @@ class Project
      */
     public function getDeprecation(Id $id): Deprecation
     {
-        if ( ! $this->hasDeprecation($id)) {
+        if (!$this->hasDeprecation($id)) {
             throw new DeprecationNotFound($id);
         }
 
-        return $this->deprecations[(string) $id];
+        return $this->deprecations[(string)$id];
     }
 
     /**
@@ -216,11 +214,11 @@ class Project
      */
     public function getService(ServiceId $id): Service
     {
-        if ( ! $this->hasService($id)) {
+        if (!$this->hasService($id)) {
             throw new ServiceNotFound($id);
         }
 
-        return $this->services[(string) $id];
+        return $this->services[(string)$id];
     }
 
     /**
@@ -233,7 +231,7 @@ class Project
      */
     public function getSetting(SettingId $id)
     {
-        if ( ! $this->hasSetting($id)) {
+        if (!$this->hasSetting($id)) {
             throw new SettingNotFound($id);
         }
 
@@ -250,8 +248,7 @@ class Project
     /* !Private methods */
 
     /**
-	 * Merges two arrays recursively
-     *
+     * Merges two arrays recursively
      * PHP's native array_merge_recursive() function combines the scalar values
      * of duplicate string keys into an array instead of overwriting the first
      * value with the second value.
@@ -259,42 +256,36 @@ class Project
      * @example  PHP's native function
      *     $a = ["foo" => "bar"];
      *     $b = ["foo" => "baz"];
-     *
      *     array_merge_recursive($a, $b);  // returns ["foo" => ["bar","baz"]]
-     *
      * I, on the other hand, will merge arrays so that scalar values in the
      * second array overwrite the values in the first.
-     *
      * @example  merge two arrays recursively
      *     $a = ["foo" => "bar"];
      *     $b = ["foo" => "baz"];
-     *
      *     $this->merge($a, $b);  // returns ["foo" => "baz"]
-     *
-	 * @param   mixed[]  $a  the first array
-	 * @param   mixed[]  $b  the second array (takes precedence)
-	 * @return  mixed[]
-	 * @since   0.1.0
-	 * @see     http://php.net/manual/en/function.array-merge-recursive.php#92195
-	 *     gabriel dot sobrinho at gmail dot com's commnent on the
-	 *     array_merge_recursive() man page (accessed 11/26/17)
-	 * @todo    hmm, what do we do with zero-indexed arrays (see failing test)
-	 */
-	private function merge(array $a, array $b): array
-	{
-		// loop through the second array
-		foreach ($b as $k => $v) {
-			// if the value is an array, the key exists in $a, and the value in
+     * @param   mixed[] $a the first array
+     * @param   mixed[] $b the second array (takes precedence)
+     * @return  mixed[]
+     * @since    0.1.0
+     * @see      http://php.net/manual/en/function.array-merge-recursive.php#92195
+     *                     gabriel dot sobrinho at gmail dot com's commnent on the
+     *                     array_merge_recursive() man page (accessed 11/26/17)
+     * @todo     hmm, what do we do with zero-indexed arrays (see failing test)
+     */
+    private function merge(array $a, array $b): array
+    {
+        // loop through the second array
+        foreach ($b as $k => $v) {
+            // if the value is an array, the key exists in $a, and the value in
             // $a sn an array, merge it recursively; otherwise, just set it in
             // $a
-			//
-			if (is_array($v) && isset($a[$k]) && is_array($a[$k])) {
-				$a[$k] = ($this)($a[$k], $v);
-			} else {
-				$a[$k] = $v;
-			}
-		}
+            if (is_array($v) && isset($a[$k]) && is_array($a[$k])) {
+                $a[$k] = ($this)($a[$k], $v);
+            } else {
+                $a[$k] = $v;
+            }
+        }
 
-		return $a;
-	}
+        return $a;
+    }
 }

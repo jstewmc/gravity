@@ -23,7 +23,7 @@ class SettingTest extends TestCase
     {
         $this->assertEquals(
             'foo.bar.baz',
-            (string) new Setting(['foo', 'bar', 'baz'])
+            (string)new Setting(['foo', 'bar', 'baz'])
         );
 
         return;

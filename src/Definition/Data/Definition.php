@@ -11,7 +11,6 @@ namespace Jstewmc\Gravity\Definition\Data;
 
 use Jstewmc\Gravity\Id\Data\Id;
 
-
 /**
  * A setting or service definition
  *

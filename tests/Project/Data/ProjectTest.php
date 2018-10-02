@@ -13,11 +13,9 @@ use Jstewmc\Gravity\Alias\Data\Alias;
 use Jstewmc\Gravity\Alias\Exception\NotFound as AliasNotFound;
 use Jstewmc\Gravity\Deprecation\Data\Deprecation;
 use Jstewmc\Gravity\Deprecation\Exception\NotFound as DeprecationNotFound;
-use Jstewmc\Gravity\Id\Data\{
-    Id,
-    Service as ServiceId,
-    Setting as SettingId
-};
+use Jstewmc\Gravity\Id\Data\Id;
+use Jstewmc\Gravity\Id\Data\Service as ServiceId;
+use Jstewmc\Gravity\Id\Data\Setting as SettingId;
 use Jstewmc\Gravity\Service\Data\Service;
 use Jstewmc\Gravity\Service\Exception\NotFound as ServiceNotFound;
 use Jstewmc\Gravity\Setting\Data\Setting;
