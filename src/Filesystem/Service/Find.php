@@ -115,7 +115,7 @@ class Find
         $pathname = $this->getPathname(self::VENDORS_DIRECTORY_LEVELS);
 
         // if a directory doesn't eixst, short-circuit
-        if ( ! $pathname) {
+        if (!$pathname) {
             return false;
         }
 
@@ -123,7 +123,7 @@ class Find
         $directory = new SplFileInfo($pathname);
 
         // if the directory isn't readable or directory (somehow), short-circuit
-        if ( ! $directory->isReadable() || ! $directory->isDir()) {
+        if (!$directory->isReadable() || ! $directory->isDir()) {
             return false;
         }
 
