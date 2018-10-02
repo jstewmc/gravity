@@ -38,22 +38,22 @@ class Find
 {
     /* !Private constants */
 
-	/**
-	 * @var    int  the number of levels to the package's root directory
-	 * @since  0.1.0
-	 */
-	private const PACKAGE_DIRECTORY_LEVELS = self::PROJECT_DIRECTORY_LEVELS - 3;
+    /**
+     * @var    int  the number of levels to the package's root directory
+     * @since  0.1.0
+     */
+    private const PACKAGE_DIRECTORY_LEVELS = self::PROJECT_DIRECTORY_LEVELS - 3;
 
-	/**
-	 * @var    int  the number of levels to the project's root directory
-	 * @since  0.1.0
-	 */
-	private const PROJECT_DIRECTORY_LEVELS = 7;
+    /**
+     * @var    int  the number of levels to the project's root directory
+     * @since  0.1.0
+     */
+    private const PROJECT_DIRECTORY_LEVELS = 7;
 
-	/**
-	 * @var    int  the number of levels to the vendors directory
-	 * @since  0.1.0
-	 */
+    /**
+     * @var    int  the number of levels to the vendors directory
+     * @since  0.1.0
+     */
     private const VENDORS_DIRECTORY_LEVELS = self::PROJECT_DIRECTORY_LEVELS - 1;
 
     /* !Magic methods */
@@ -70,84 +70,84 @@ class Find
      */
     public function __invoke(): string
     {
-		if ($this->hasVendorsDirectory()) {
-			$pathname = $this->getProjectDirectoryPathname();
-		} else {
-			$pathname = $this->getPackageDirectoryPathname();
-		}
+        if ($this->hasVendorsDirectory()) {
+            $pathname = $this->getProjectDirectoryPathname();
+        } else {
+            $pathname = $this->getPackageDirectoryPathname();
+        }
 
-		return $pathname;
+        return $pathname;
     }
 
 
     /* !Private methods */
 
-	/**
-	 * Returns the package's root directory
-	 *
-	 * @return  string
-	 * @since   0.1.0
-	 */
-	private function getPackageDirectoryPathname(): string
-	{
-		return $this->getPathname(self::PACKAGE_DIRECTORY_LEVELS);
-	}
+    /**
+     * Returns the package's root directory
+     *
+     * @return  string
+     * @since   0.1.0
+     */
+    private function getPackageDirectoryPathname(): string
+    {
+        return $this->getPathname(self::PACKAGE_DIRECTORY_LEVELS);
+    }
 
-	/**
-	 * Returns the project's root directory
-	 *
-	 * @return  string
-	 * @since  0.1.0
-	 */
-	private function getProjectDirectoryPathname(): string
-	{
-		return $this->getPathname(self::PROJECT_DIRECTORY_LEVELS);
-	}
+    /**
+     * Returns the project's root directory
+     *
+     * @return  string
+     * @since  0.1.0
+     */
+    private function getProjectDirectoryPathname(): string
+    {
+        return $this->getPathname(self::PROJECT_DIRECTORY_LEVELS);
+    }
 
-	/**
-	 * Returns true if a vendors directory exists
-	 *
-	 * @return  bool
-	 * @since   0.1.0
-	 */
-	private function hasVendorsDirectory(): bool
-	{
-		$pathname = $this->getPathname(self::VENDORS_DIRECTORY_LEVELS);
+    /**
+     * Returns true if a vendors directory exists
+     *
+     * @return  bool
+     * @since   0.1.0
+     */
+    private function hasVendorsDirectory(): bool
+    {
+        $pathname = $this->getPathname(self::VENDORS_DIRECTORY_LEVELS);
 
-		// if a directory doesn't eixst, short-circuit
-		if ( ! $pathname) {
-			return false;
-		}
+        // if a directory doesn't eixst, short-circuit
+        if ( ! $pathname) {
+            return false;
+        }
 
-		// otherwise, instantiate the directory
-		$directory = new SplFileInfo($pathname);
+        // otherwise, instantiate the directory
+        $directory = new SplFileInfo($pathname);
 
-		// if the directory isn't readable or directory (somehow), short-circuit
-		if ( ! $directory->isReadable() || ! $directory->isDir()) {
-			return false;
-		}
+        // if the directory isn't readable or directory (somehow), short-circuit
+        if ( ! $directory->isReadable() || ! $directory->isDir()) {
+            return false;
+        }
 
-		// if the directory's name is incorrect, short-circuit
-		if ($directory->getFilename() !== Filesystem::DIRECTORY_NAME_VENDORS) {
-			return false;
-		}
+        // if the directory's name is incorrect, short-circuit
+        if ($directory->getFilename() !== Filesystem::DIRECTORY_NAME_VENDORS) {
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Returns the pathname of a directory $levels above this file
-	 *
-	 * @param   int  $levels  the levels above this file
-	 * @return  string|null
-	 * @since   0.1.0
-	 */
-	private function getPathname(int $levels): ?string
-	{
-		if (false === ($pathname = realpath(dirname(__FILE__, $levels)))) {
-			return null;
-		}
+    /**
+     * Returns the pathname of a directory $levels above this file
+     *
+     * @param   int  $levels  the levels above this file
+     * @return  string|null
+     * @since   0.1.0
+     */
+    private function getPathname(int $levels): ?string
+    {
+        if (false === ($pathname = realpath(dirname(__FILE__, $levels)))) {
+            return null;
+        }
 
-		return $pathname;
-	}
+        return $pathname;
+    }
 }
