@@ -9,17 +9,12 @@
 
 namespace Jstewmc\Gravity\Deprecation\Service;
 
-use Jstewmc\Gravity\Deprecation\Data\{
-    Deprecation,
-    Service as ServiceDeprecation,
-    Setting as SettingDeprecation
-};
+use Jstewmc\Gravity\Deprecation\Data\Service as ServiceDeprecation;
+use Jstewmc\Gravity\Deprecation\Data\Setting as SettingDeprecation;
 use Jstewmc\Gravity\Deprecation\Exception\Circular;
-use Jstewmc\Gravity\Id\Data\{
-    Id,
-    Service as ServiceId,
-    Setting as SettingId
-};
+use Jstewmc\Gravity\Id\Data\Id;
+use Jstewmc\Gravity\Id\Data\Service as ServiceId;
+use Jstewmc\Gravity\Id\Data\Setting as SettingId;
 use Jstewmc\Gravity\Id\Service\Parse as ParseId;
 use PHPUnit\Framework\TestCase;
 

@@ -106,7 +106,7 @@ class Read
         $vendors = $this->implode($root, Filesystem::DIRECTORY_NAME_VENDORS);
 
         // if a vendors directory doesn't exist, short-circuit
-        if ( ! $this->isDirectory($vendors)) {
+        if (!$this->isDirectory($vendors)) {
             return [];
         }
 

@@ -10,7 +10,6 @@
 namespace Jstewmc\Gravity\Service\Data;
 
 use Jstewmc\Gravity\Id\Data\Service as Id;
-use Jstewmc\Gravity\Factory as FactoryInterface;
 use PHPUnit\Framework\TestCase;
 
 /**

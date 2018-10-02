@@ -9,10 +9,12 @@
 
 namespace Jstewmc\Gravity\Deprecation\Service;
 
-use Jstewmc\Gravity\Deprecation\Data\Service as Deprecation;  // either one
+use Jstewmc\Gravity\Deprecation\Data\Service as Deprecation;
 use Jstewmc\Gravity\Id\Data\Service as Id;
 use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\TestCase;
+
+// either one
 
 /**
  * Tests for the warn-deprecation service
@@ -26,32 +28,32 @@ use PHPUnit\Framework\TestCase;
  *
  * @since  0.1.0
  */
-class WarnDeprecationTest extends TestCase
+class WarnTest extends TestCase
 {
     public function testInvokeTriggersErrorIfReplacementDoesNotExist(): void
-	{
-		$this->expectException(Deprecated::class);
+    {
+        $this->expectException(Deprecated::class);
 
-		$id = $this->createMock(Id::class);
+        $id = $this->createMock(Id::class);
 
-		$deprecation = new Deprecation($id);
+        $deprecation = new Deprecation($id);
 
-		(new Warn())($deprecation);
+        (new Warn())($deprecation);
 
-		return;
-	}
+        return;
+    }
 
-	public function testInvokeTriggersErrorIfReplacementDoesExist(): void
-	{
-		$this->expectException(Deprecated::class);
+    public function testInvokeTriggersErrorIfReplacementDoesExist(): void
+    {
+        $this->expectException(Deprecated::class);
 
-		$id  = $this->createMock(Id::class);
-		$replacement = $this->createMock(Id::class);
+        $id          = $this->createMock(Id::class);
+        $replacement = $this->createMock(Id::class);
 
-		$deprecation = new Deprecation($id, $replacement);
+        $deprecation = new Deprecation($id, $replacement);
 
-		(new Warn())($deprecation);
+        (new Warn())($deprecation);
 
-		return;
-	}
+        return;
+    }
 }

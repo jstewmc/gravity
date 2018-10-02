@@ -10,16 +10,13 @@
 namespace Jstewmc\Gravity\Definition\Service;
 
 use Jstewmc\Gravity\Cache\Data\Cache;
-use Jstewmc\Gravity\Id\Data\{
-    Id,
-    Service as ServiceId,
-    Setting as SettingId
-};
+use Jstewmc\Gravity\Id\Data\Id;
+use Jstewmc\Gravity\Id\Data\Service as ServiceId;
+use Jstewmc\Gravity\Id\Data\Setting as SettingId;
 use Jstewmc\Gravity\Id\Service\Find as FindId;
 use Jstewmc\Gravity\Project\Data\Project;
 use Jstewmc\Gravity\Service\Service\Get as GetService;
 use Jstewmc\Gravity\Setting\Service\Get as GetSetting;
-
 
 /**
  * The get-definition service
@@ -66,15 +63,15 @@ class Get
      * @param   Cache       $cache       the cache to use
      */
     public function __construct(
-        FindId      $findId,
-        GetService  $getService,
-        GetSetting  $getSetting,
-        Cache       $cache
-    ){
-        $this->findId      = $findId;
-        $this->getService  = $getService;
-        $this->getSetting  = $getSetting;
-        $this->cache       = $cache;
+        FindId $findId,
+        GetService $getService,
+        GetSetting $getSetting,
+        Cache $cache
+    ) {
+        $this->findId     = $findId;
+        $this->getService = $getService;
+        $this->getSetting = $getSetting;
+        $this->cache      = $cache;
     }
 
     /**

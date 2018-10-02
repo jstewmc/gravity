@@ -9,9 +9,10 @@
 
 namespace Jstewmc\Gravity\Id\Service;
 
-use Jstewmc\Gravity\Id\Data\Service as Id;  // either one works
-use Jstewmc\Gravity\Id\Exception\{BadLength, BadSeparator};
-use PHPUnit\Framework\TestCase;
+use Jstewmc\Gravity\Id\Data\Service as Id;
+use Jstewmc\Gravity\Id\Exception\BadLength;
+use Jstewmc\Gravity\Id\Exception\BadSeparator;
+use PHPUnit\Framework\TestCase;  // either one works
 
 /**
  * Tests for the parse-identifier service

@@ -18,46 +18,46 @@ use Jstewmc\Gravity\Deprecation\Data\Deprecation;
  */
 class Warn
 {
-	/* !Magic methods */
+    /* !Magic methods */
 
-	/**
-	 * Called when the service is treated like a function
-	 *
-	 * @param   Deprecation  $deprecation  the deprecation used
-	 * @return  void
-	 * @since   0.1.0
-	 */
-	public function __invoke(Deprecation $deprecation): void
-	{
-		$message = $this->getMessage($deprecation);
+    /**
+     * Called when the service is treated like a function
+     *
+     * @param   Deprecation $deprecation the deprecation used
+     * @return  void
+     * @since   0.1.0
+     */
+    public function __invoke(Deprecation $deprecation): void
+    {
+        $message = $this->getMessage($deprecation);
 
-		trigger_error($message, E_USER_DEPRECATED);
+        trigger_error($message, E_USER_DEPRECATED);
 
-		return;
-	}
+        return;
+    }
 
 
-	/* !Private methods */
+    /* !Private methods */
 
-	/**
-	 * Creates the error message
-	 *
-	 * @param   Deprecation  $deprecation
-	 * @return  string
-	 * @since   0.1.0
-	 */
-	private function getMessage(Deprecation $deprecation): string
-	{
-		$message = "The service, setting, or alias "
-			. "'{$deprecation->getId()}' has been deprecated and "
-			. "should be";
+    /**
+     * Creates the error message
+     *
+     * @param   Deprecation $deprecation
+     * @return  string
+     * @since   0.1.0
+     */
+    private function getMessage(Deprecation $deprecation): string
+    {
+        $message = "The service, setting, or alias "
+            . "'{$deprecation->getId()}' has been deprecated and "
+            . "should be";
 
-		if ($deprecation->hasReplacement()) {
-			$message .= "replaced with '{$deprecation->getReplacement()}'";
-		} else {
-			$message .= "removed";
-		}
+        if ($deprecation->hasReplacement()) {
+            $message .= "replaced with '{$deprecation->getReplacement()}'";
+        } else {
+            $message .= "removed";
+        }
 
-		return $message;
-	}
+        return $message;
+    }
 }

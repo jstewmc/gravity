@@ -9,16 +9,12 @@
 
 namespace Jstewmc\Gravity\Alias\Service;
 
-use Jstewmc\Gravity\Alias\Data\{
-    Service as ServiceAlias,
-    Setting as SettingAlias
-};
+use Jstewmc\Gravity\Alias\Data\Service as ServiceAlias;
+use Jstewmc\Gravity\Alias\Data\Setting as SettingAlias;
 use Jstewmc\Gravity\Alias\Exception\Circular;
-use Jstewmc\Gravity\Id\Data\{
-    Id,
-    Service as ServiceId,
-    Setting as SettingId
-};
+use Jstewmc\Gravity\Id\Data\Id;
+use Jstewmc\Gravity\Id\Data\Service as ServiceId;
+use Jstewmc\Gravity\Id\Data\Setting as SettingId;
 use Jstewmc\Gravity\Id\Service\Parse as ParseId;
 use PHPUnit\Framework\TestCase;
 

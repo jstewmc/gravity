@@ -23,7 +23,7 @@ class HashTest extends TestCase
 {
     /* get, has, remove, reset, and set */
 
-    public function testGet_throwsException_ifValueDoesNotExist(): void
+    public function testGetThrowsExceptionIfValueDoesNotExist(): void
     {
         $this->expectException(NotFound::class);
 

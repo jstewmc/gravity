@@ -9,10 +9,8 @@
 
 namespace Jstewmc\Gravity\Definition\Service;
 
-use Jstewmc\Gravity\Id\Data\{
-    Service as ServiceId,
-    Setting as SettingId
-};
+use Jstewmc\Gravity\Id\Data\Service as ServiceId;
+use Jstewmc\Gravity\Id\Data\Setting as SettingId;
 use Jstewmc\Gravity\Id\Service\Parse as ParseId;
 use Jstewmc\Gravity\Service\Service\Parse as ParseService;
 use Jstewmc\Gravity\Setting\Service\Parse as ParseSetting;
@@ -28,7 +26,9 @@ class ParseTest extends TestCase
     public function testInvokeReturnsServiceIfService(): void
     {
         $id = $this->createMock(ServiceId::class);
-        $value      = function () { return; };
+        $value      = function () {
+            return;
+        };
 
         // stub the parse-identifier service to return the identifier
         $parseId = $this->createMock(ParseId::class);

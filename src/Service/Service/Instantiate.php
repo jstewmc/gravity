@@ -10,7 +10,11 @@
 namespace Jstewmc\Gravity\Service\Service;
 
 use Jstewmc\Gravity\Manager;
-use Jstewmc\Gravity\Service\Data\{Factory, Fx, Instance, Newable, Service};
+use Jstewmc\Gravity\Service\Data\Factory;
+use Jstewmc\Gravity\Service\Data\Fx;
+use Jstewmc\Gravity\Service\Data\Instance;
+use Jstewmc\Gravity\Service\Data\Newable;
+use Jstewmc\Gravity\Service\Data\Service;
 
 /**
  * Instantiates a service
@@ -117,7 +121,7 @@ class Instantiate
      */
     public function instantiateNewable(Newable $service): object
     {
-        $classname = (string) $service->getId();
+        $classname = (string)$service->getId();
 
         return new $classname;
     }
