@@ -50,7 +50,7 @@ class Warn
     {
         $message = "The service, setting, or alias "
             . "'{$deprecation->getId()}' has been deprecated and "
-            . "should be";
+            . "should be ";
 
         if ($deprecation->hasReplacement()) {
             $message .= "replaced with '{$deprecation->getReplacement()}'";
