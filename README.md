@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/jstewmc/gravity.svg?branch=master)](https://travis-ci.com/jstewmc/gravity)
+
 # Gravity
 
 Gravity is a framework-agnostic, community-friendly service and configuration manager.
