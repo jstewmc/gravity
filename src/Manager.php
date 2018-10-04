@@ -22,7 +22,6 @@ use Jstewmc\Gravity\Filesystem\Service\Load as LoadFilesystem;
 use Jstewmc\Gravity\Filesystem\Service\Read as ReadFilesystem;
 use Jstewmc\Gravity\Project\Data\Project;
 use Jstewmc\Gravity\Service\Data\Service;
-use Jstewmc\Gravity\Setting\Data\Setting;
 
 /**
  * The Gravity manager
