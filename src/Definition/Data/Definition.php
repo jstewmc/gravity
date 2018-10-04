@@ -39,7 +39,7 @@ abstract class Definition
      */
     public function __construct(Id $id)
     {
-        $this->identifier = $id;
+        $this->id = $id;
     }
 
 
@@ -53,6 +53,6 @@ abstract class Definition
      */
     public function getId(): Id
     {
-        return $this->identifier;
+        return $this->id;
     }
 }

@@ -10,6 +10,7 @@
 namespace Jstewmc\Gravity;
 
 use PHPUnit\Framework\TestCase;
+use StdClass;
 
 /**
  * Tests for the manager
@@ -61,11 +62,20 @@ class ManagerTest extends TestCase
         return;
     }
 
-    public function testSet(): void
+    public function testSetReturnsSelfIfSetting(): void
     {
         $g = new Manager();
 
         $this->assertSame($g, $g->set('foo.baz.baz', 1));
+
+        return;
+    }
+
+    public function testSetReturnsSelfIfService(): void
+    {
+        $g = new Manager();
+
+        $this->assertSame($g, $g->set('foo\bar\baz', new StdClass()));
 
         return;
     }

@@ -12,7 +12,6 @@ namespace Jstewmc\Gravity;
 use Jstewmc\Gravity\Alias\Data\Alias;
 use Jstewmc\Gravity\Alias\Service\Parse as ParseAlias;
 use Jstewmc\Gravity\Definition\Data\Definition;
-use Jstewmc\Gravity\Definition\Data\Service as ServiceDefinition;
 use Jstewmc\Gravity\Definition\Service\Get as GetDefinition;
 use Jstewmc\Gravity\Definition\Service\Parse as ParseDefinition;
 use Jstewmc\Gravity\Deprecation\Data\Deprecation;
@@ -22,6 +21,7 @@ use Jstewmc\Gravity\Filesystem\Service\Find as FindFilesystem;
 use Jstewmc\Gravity\Filesystem\Service\Load as LoadFilesystem;
 use Jstewmc\Gravity\Filesystem\Service\Read as ReadFilesystem;
 use Jstewmc\Gravity\Project\Data\Project;
+use Jstewmc\Gravity\Service\Data\Service;
 
 /**
  * The Gravity manager
@@ -224,7 +224,7 @@ class Manager
     {
         $definition = $this->parseDefinition($id, $value);
 
-        if ($definition instanceof ServiceDefinition) {
+        if ($definition instanceof Service) {
             $this->project->addService($definition);
         } else {
             $this->project->addSetting($definition);
@@ -248,10 +248,10 @@ class Manager
     private function bootstrap(): void
     {
         // instantiate the "set-side" services
-        $parseId = new Id\Service\Parse();
+        $parseId = new \Jstewmc\Gravity\Id\Service\Parse();
 
-        $parseService = new Service\Service\Parse();
-        $parseSetting = new Setting\Service\Parse();
+        $parseService = new \Jstewmc\Gravity\Service\Service\Parse();
+        $parseSetting = new \Jstewmc\Gravity\Setting\Service\Parse();
 
         $this->parseAlias       = new ParseAlias($parseId);
         $this->parseDeprecation = new ParseDeprecation($parseId);
@@ -262,18 +262,17 @@ class Manager
         );
 
         // instantiate the cache (for now, just use a hash)
-        $cache = new Cache\Data\Hash();
+        $cache = new \Jstewmc\Gravity\Cache\Data\Hash();
 
         // instantiate the "get-side" services
         $warnDeprecation = new Warn();
 
-        $resolveId = new Id\Service\Resolve($warnDeprecation);
-        $findId    = new Id\Service\Find($parseId, $resolveId);
+        $resolveId = new \Jstewmc\Gravity\Id\Service\Resolve($warnDeprecation);
+        $findId    = new \Jstewmc\Gravity\Id\Service\Find($parseId, $resolveId);
 
-        $instantiateService = new Service\Service\Instantiate($this);
-        $getService         = new Service\Service\Get($instantiateService);
-
-        $getSetting = new Setting\Service\Get();
+        $instantiateService = new \Jstewmc\Gravity\Service\Service\Instantiate($this);
+        $getService         = new \Jstewmc\Gravity\Service\Service\Get($instantiateService);
+        $getSetting         = new \Jstewmc\Gravity\Setting\Service\Get();
 
         $this->getDefinition = new GetDefinition(
             $findId,

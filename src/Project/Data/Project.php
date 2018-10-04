@@ -108,7 +108,10 @@ class Project
      */
     public function addSetting(Setting $setting): self
     {
-        $this->settings = $this->merge($this->settings, $setting->getArray());
+        $this->settings = uarray_merge_recursive(
+            $this->settings,
+            $setting->getArray()
+        );
 
         return $this;
     }
@@ -242,50 +245,5 @@ class Project
         }
 
         return $settings;
-    }
-
-
-    /* !Private methods */
-
-    /**
-     * Merges two arrays recursively
-     * PHP's native array_merge_recursive() function combines the scalar values
-     * of duplicate string keys into an array instead of overwriting the first
-     * value with the second value.
-     *
-     * @example  PHP's native function
-     *     $a = ["foo" => "bar"];
-     *     $b = ["foo" => "baz"];
-     *     array_merge_recursive($a, $b);  // returns ["foo" => ["bar","baz"]]
-     * I, on the other hand, will merge arrays so that scalar values in the
-     * second array overwrite the values in the first.
-     * @example  merge two arrays recursively
-     *     $a = ["foo" => "bar"];
-     *     $b = ["foo" => "baz"];
-     *     $this->merge($a, $b);  // returns ["foo" => "baz"]
-     * @param   mixed[] $a the first array
-     * @param   mixed[] $b the second array (takes precedence)
-     * @return  mixed[]
-     * @since    0.1.0
-     * @see      http://php.net/manual/en/function.array-merge-recursive.php#92195
-     *                     gabriel dot sobrinho at gmail dot com's commnent on the
-     *                     array_merge_recursive() man page (accessed 11/26/17)
-     * @todo     hmm, what do we do with zero-indexed arrays (see failing test)
-     */
-    private function merge(array $a, array $b): array
-    {
-        // loop through the second array
-        foreach ($b as $k => $v) {
-            // if the value is an array, the key exists in $a, and the value in
-            // $a sn an array, merge it recursively; otherwise, just set it in
-            // $a
-            if (is_array($v) && isset($a[$k]) && is_array($a[$k])) {
-                $a[$k] = ($this)($a[$k], $v);
-            } else {
-                $a[$k] = $v;
-            }
-        }
-
-        return $a;
     }
 }
