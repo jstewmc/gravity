@@ -6,9 +6,15 @@
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
+namespace Jstewmc\Gravity;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Tests for the uarray_merge_recursive custom function
+ *
+ * @since  0.1.0
+ */
 class uarray_merge_recursive_test extends TestCase
 {
     // test that PHP's function behaves as we expect
