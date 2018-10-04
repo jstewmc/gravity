@@ -20,6 +20,7 @@
 	"autoload": {
 		"psr-4": {
 			"Jstewmc\\Gravity\\": "src/"
-		}
+		},
+        "files": ["src/uarray_merge_recursive.php"]
 	}
 }
