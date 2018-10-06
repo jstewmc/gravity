@@ -11,13 +11,14 @@ namespace Jstewmc\Gravity\Setting\Exception;
 
 use Jstewmc\Gravity\Id\Data\Setting as Id;
 use Jstewmc\Gravity\Exception;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Thrown when a setting is not found
  *
  * @since  0.1.0
  */
-class NotFound extends Exception
+class NotFound extends Exception implements NotFoundExceptionInterface
 {
     /* !Private properties */
 
