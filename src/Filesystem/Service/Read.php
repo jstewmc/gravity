@@ -113,11 +113,11 @@ class Read
         // otherwise, loop through the vendors directory's vendor directories
         foreach (new DirectoryIterator($vendors) as $vendor) {
             // if the item is a vendor directory
-            if ($vendor->isDir()) {
+            if ($vendor->isDir() && ! $vendor->isDot()) {
                 // loop through the vendor directory's package directories
                 foreach (new DirectoryIterator($vendor->getPathname()) as $package) {
                     // if the item is a package directory
-                    if ($package->isDir()) {
+                    if ($package->isDir() && ! $package->isDot()) {
                         // get the package's (expected) gravity directory pathname
                         $gravity = $this->implode(
                             $package->getPathname(),
