@@ -10,7 +10,8 @@
 namespace Jstewmc\Gravity\Example\Factory;
 
 use Jstewmc\Gravity\Example\Service\Grault as GraultService;
-use Jstewmc\Gravity\{Manager, Factory as FactoryInterface};
+use Jstewmc\Gravity\Manager;
+use Jstewmc\Gravity\Factory as FactoryInterface;
 
 class Grault implements FactoryInterface
 {

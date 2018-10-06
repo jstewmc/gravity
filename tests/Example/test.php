@@ -12,7 +12,6 @@ namespace Jstewmc\Gravity\Example;
 use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\TestCase;
 
-
 /**
  * Tests for the example scripts
  *
