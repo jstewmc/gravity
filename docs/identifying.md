@@ -1,6 +1,6 @@
 [Home](index.md) | [**Identifying**](identifying.md) | [Setting](setting.md) | [Getting](getting.md) | [Aliasing](aliasing.md) | [Deprecating](deprecating.md)
 
-## Identifying services and settings
+# Identifying services and settings
 
 Gravity uses a string identifier (aka, an "id") to uniquely identify a service or setting.
 
@@ -27,15 +27,13 @@ Identifiers are case-insensitive, and leading-separators, trailing-separators, a
 "foo...bar...baz"  // parses to "foo.bar.baz"
 ```
 
-# Service identifiers
+## Service identifiers
 
 A service identifier should be a fully-qualified classname. It's not a hard and fast requirement. The class doesn't have to exist. But, the benefits of classname identifiers are too great to ignore: using a classname ensures uniqueness, and you can use PHP's `namespace`, `use`, and `::class` features as shortcuts. To learn more, see PHP's [namespace resolution rules](http://php.net/manual/en/language.namespaces.rules.php).
 
 
-# Setting identifiers
+## Setting identifiers
 
 Setting identifiers, on the other hand, are literal strings. They are admittedly a bit cumbersome, because there is no convenient `::class` constant for them. But, we are working on some ideas to make them easier to use, and we welcome your ideas too.
-
----
 
 Next up, [setting services and setting](setting.md)!

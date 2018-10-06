@@ -1,10 +1,10 @@
-[Home](index.md) | [Identifying](identifying.md) | [Setting](setting.md) | [Getting](getting.md) | [**Aliasing**](aliasing.md) | [Deprecating](deprecating.md)
+[Home](index.md) | [Identifying](identifying.md) | [Setting](setting.md) | [Getting](getting.md) - [**Aliasing**](aliasing.md) - [Deprecating](deprecating.md)
 
 # Aliasing services and settings
 
-Aliases allow you to use _different_ identifiers for the _same_ service or setting.
+An alias allows you to use a _different_ identifier for the _same_ service or setting.
 
-In general, aliases should be used sparingly. It's a better world if every service is identified by a single identifier!
+In general, aliases should be used sparingly. It's a better world if every service and setting is identified by a single identifier!
 
 Use the `$g->alias()` method to alias a setting, service, or alias. The method accepts two arguments: a _source id_ and a _destination id_.
 
@@ -35,7 +35,7 @@ $g->alias(
 );
 ```
 
-Use the aliases:
+When an alias is requested, it's equivalent to requesting the destination service or setting. The exact same object or value will be returned.
 
 ```php
 # /path/to/jstewmc/gravity/examples/aliasing.php
@@ -59,6 +59,6 @@ $d = $g->get(Aliasing\Bar::class);
 assert($c === $d);
 ```
 
----
+Aliases can be chained, and Gravity will attempt to recursively resolve them. However, if you are chaining aliases, there is likely a better solution!
 
 Next up, [deprecating services and setting](deprecating.md)!

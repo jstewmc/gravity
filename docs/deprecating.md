@@ -1,12 +1,12 @@
 [Home](index.md) | [Identifying](identifying.md) | [Setting](setting.md) | [Getting](getting.md) | [Aliasing](aliasing.md) | [**Deprecating**](deprecating.md)
 
-## Deprecating services and settings
+# Deprecating services and settings
 
-Deprecations allow you to mark aliases, settings, or services for removal without breaking your users' code. Deprecate them in one version and remove them in the next.
+A deprecation allows you to mark an alias, service, or setting for removal and, optionally, to suggest a replacement. When a deprecated setting, service, or alias is requested, it's handled normally, except an `E_USER_DEPRECATED` error will be triggered, and if a replacement has been given, it will be suggested in the message.
+
+Deprecations are an important part of versioning your package. Marking items for removal allows your users to update their code before you introduce breaking changes.
 
 Use the `$g->deprecate()` method to deprecate an alias, setting, or service. The method accepts two arguments: a _deprecated id_ and an optional _replacement id_.
-
-When a deprecated setting, service, or alias is requested, it's handled normally, except an `E_USER_DEPRECATED` error will be triggered. If a replacement has been given, it will be suggested in the error message.
 
 ```php
 # /path/to/jstewmc/gravity/.gravity/deprecating.php
@@ -47,7 +47,7 @@ $g->deprecate(Deprecating\Foo::class);
 $g->deprecate(Deprecating\Bar::class, Deprecating\Baz::class);
 ```
 
-Using the deprecations (this example will trigger `E_USER_DEPRECATED` errors):
+When you request a deprecated service or setting, an `E_USER_DEPRECATED` error will be triggered (this example will output `E_USER_DEPRECATED` errors):
 
 ```php
 # /path/to/jstewmc/gravity/examples/deprecating.php
@@ -69,6 +69,6 @@ $g->get('jstewmc.gravity.example.deprecating.bar');
 $g->get(Deprecating\Bar::class);
 ```
 
----
+That's about it!
 
-That's it! Return [home](index.md) or start [coding](https://github.com/jstewmc/gravity)!
+If you've made it here, you've learned how to [identify](identifying.md), [get](getting.md), [set](setting.md), and [alias](aliasing.md) services and settings. If you have any questions, [let us know](mailto:clayjs0@gmail.com). Otherwise, get [coding](https://github.com/jstewmc/gravity)!
