@@ -1,3 +1,5 @@
+[Home](index.md) | [Identifying](identifying.md) | [**Setting**](setting.md) | [Getting](getting.md) | [Aliasing](aliasing.md) | [Deprecating](deprecating.md)
+
 # Setting services and settings
 
 Use Gravity to set services and settings for yourself and others.
@@ -237,3 +239,7 @@ $g->set('jstewmc.gravity.example.waldo-three', 3);
 // good
 $g->set('jstewmc.gravity.example.waldo', [1, 2, 3]);
 ```
+
+---
+
+Next up, [getting services and setting](getting.md)!

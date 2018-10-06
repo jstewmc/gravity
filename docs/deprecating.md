@@ -1,3 +1,5 @@
+[Home](index.md) | [Identifying](identifying.md) | [Setting](setting.md) | [Getting](getting.md) | [Aliasing](aliasing.md) | [**Deprecating**](deprecating.md)
+
 ## Deprecating services and settings
 
 Deprecations allow you to mark aliases, settings, or services for removal without breaking your users' code. Deprecate them in one version and remove them in the next.
@@ -66,3 +68,7 @@ $g->get(Deprecating\Foo::class);
 $g->get('jstewmc.gravity.example.deprecating.bar');
 $g->get(Deprecating\Bar::class);
 ```
+
+---
+
+That's it! Return [home](index.md) or start [coding](https://github.com/jstewmc/gravity)!

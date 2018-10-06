@@ -1,3 +1,5 @@
+[Home](index.md) | [Identifying](identifying.md) | [Setting](setting.md) | [Getting](getting.md) | [**Aliasing**](aliasing.md) | [Deprecating](deprecating.md)
+
 # Aliasing services and settings
 
 Aliases allow you to use _different_ identifiers for the _same_ service or setting.
@@ -56,3 +58,7 @@ $d = $g->get(Aliasing\Bar::class);
 
 assert($c === $d);
 ```
+
+---
+
+Next up, [deprecating services and setting](deprecating.md)!

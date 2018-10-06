@@ -1,3 +1,5 @@
+[Home](index.md) | [Identifying](identifying.md) | [Setting](setting.md) | [**Getting**](getting.md) | [Aliasing](aliasing.md) | [Deprecating](deprecating.md)
+
 # Getting services and settings
 
 Use Gravity to get services and settings from yourself or others.
@@ -46,3 +48,7 @@ $b = $g->get(Setting\Qux::class);
 // remember, PHP's === operator compares the object's references in memory
 assert($a === $b);
 ```
+
+---
+
+Next up, [aliasing services and setting](aliasing.md)!
