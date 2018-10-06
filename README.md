@@ -1,79 +1,91 @@
-[![Build Status](https://travis-ci.com/jstewmc/gravity.svg?branch=master)](https://travis-ci.com/jstewmc/gravity) [![codecov](https://codecov.io/gh/jstewmc/gravity/branch/master/graph/badge.svg)](https://codecov.io/gh/jstewmc/gravity)
-
-
 # Gravity
 
-Gravity is a framework-agnostic, community-friendly service and configuration manager.
+Gravity is a framework-agnostic service and configuration manager. Gravity makes it easy to use other people's settings and services in your application.
 
-Gravity makes it easy to use other people's settings and services in your application. As a _package author_, you'll use Gravity to _set_ settings and services. As a _package consumer_ you'll use Gravity to _get_ settings and services.
+[![Build Status](https://travis-ci.com/jstewmc/gravity.svg?branch=master)](https://travis-ci.com/jstewmc/gravity) [![codecov](https://codecov.io/gh/jstewmc/gravity/branch/master/graph/badge.svg)](https://codecov.io/gh/jstewmc/gravity)
 
 ## Usage
 
-Here's a simple example:
-
-### Package authors
-
-As a _package author_, you'll create a service:
+Create a service:
 
 ```php
-# /path/to/project/src/Baz.php
-namespace Foo\Bar;
+# /path/to/jstewmc/gravity/docs/examples/src/Service/Foo.php
 
-class Baz
+namespace Jstewmc\Gravity\Example\Service;
+
+class Foo
 {
     public function __invoke(): string
     {
-        return 'baz';
+        return 'foo';
     }
 }
 ```
 
-You'll define the service in a Gravity file:
+Add your service (and any settings) to a Gravity file:
 
 ```php
-# /path/to/project/.gravity/services.php
-namespace Foo\Bar;
+# /path/to/jstewmc/gravity/.gravity/examples/basic.php
 
-$g->set(Baz::class, function (): object {
-    return new Baz();
+namespace Jstewmc\Gravity\Example\Service;
+
+$g->set(Foo::class, function (): Foo {
+    return new Foo();
 });
+
+$g->set('jstewmc.gravity.example.foo', true);
 ```
 
-And, you'll add your (awesome) package to Packagist for others to use.
-
-### Package consumers
-
-As a _package consumer_, you'll add the `Foo\Bar` package (and Gravity) to your `composer.json` file.
-
-Then, you'll use the `Baz` service in your application:
+Use your service:
 
 ```php
-# path/to/project/file.php
-namespace Foo\Bar;
+# /path/to/jstemwc/gravity/examples/basic.php
+
+namespace Jstewmc\Gravity\Example\Service;
 
 use Jstewmc\Gravity\Manager;
-use Foo\Bar\Baz;
+
+require_once realpath(__DIR__ . '/../vendor/autoload.php');
 
 $g = new Manager();
 
-$g->get(Baz::class)();
+// Gravity returns an instance of Foo
+assert($g->get(Foo::class) instanceof Foo);
+
+// Gravity returns true
+$expected = true;
+$actual   = $g->get('jstewmc.gravity.example.foo');
+
+assert($expected == $actual);
 ```
 
 That's it!
 
+Of course, this was just your work. Imagine getting and setting services and settings in _any package_! That's the power of Gravity. It just pulls everything together.
+
+## Examples
+
+You can run the example above (and most examples in the documentation), by cloning the repository, navigating to it on your filesystem, and using the PHP command line. Most examples use `assert()` statements, and will output nothing when successful, unless stated otherwise.
+
+```bash
+$ cd /path/to/jstewmc/gravity
+
+/path/to/jstewmc/gravity$ php examples/basic.php
+```
+
 ## Documentation
 
-Of course, there is much more that Gravity can do!
+[Documentation](https://github.com/jstewmc/gravity/blob/master/docs/index.md) is available online or in the `docs` directory.
 
-See [the documentation](https://github.com/jstewmc/gravity/blob/master/docs/getting-started.md) for details.
+We strive to maintain great documentation. If you see a mistake or have a suggestion, feel free to fork it!
 
 ## Installation
 
-Gravity requires [Composer](https://getcomposer.org) and [PHP 7.2+](https://secure.php.net).
+Gravity requires [PHP 7.2+](https://secure.php.net).
 
 Gravity is multi-platform, and we strive to make it run equally well on Windows, Linux, and OSX.
 
-To install Gravity, add the following line to the `require` section of your `composer.json` file (where `x` is the latest major version):
+Gravity must be installed via [Composer](https://getcomposer.org). To do so, add the following line to the `require` section of your `composer.json` file (where `x` is the latest major version), and run `composer update`:
 
 ```javascript
 {
@@ -100,6 +112,6 @@ This library is licensed under the [MIT license](LICENSE).
 
 ## Credits
 
-This library was originally developed by [Jack Clayton](mailto:clayjs0@gmail.com) with input from friends like [Andy O'brien](https://github.com/javabudd) and [Harry Wallin](https://github.com/BillwoodMarbles).
+This library was originally developed by [Jack Clayton](mailto:clayjs0@gmail.com) with input from my good friends like [Andy O'brien](https://github.com/javabudd) and [Harry Wallin](https://github.com/BillwoodMarbles).
 
 We hope you enjoy it!
