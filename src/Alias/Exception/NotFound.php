@@ -10,13 +10,14 @@
 namespace Jstewmc\Gravity\Alias\Exception;
 
 use Jstewmc\Gravity\Id\Data\Id;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Thrown when an alias is not found
  *
  * @since  0.1.0
  */
-class NotFound extends Exception
+class NotFound extends Exception implements NotFoundExceptionInterface
 {
     /* !Magic methods */
 

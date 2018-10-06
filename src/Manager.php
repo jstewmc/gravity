@@ -20,6 +20,9 @@ use Jstewmc\Gravity\Deprecation\Service\Warn;
 use Jstewmc\Gravity\Filesystem\Service\Find as FindFilesystem;
 use Jstewmc\Gravity\Filesystem\Service\Load as LoadFilesystem;
 use Jstewmc\Gravity\Filesystem\Service\Read as ReadFilesystem;
+use Jstewmc\Gravity\Id\Data\Id;
+use Jstewmc\Gravity\Id\Data\Service as ServiceId;
+use Jstewmc\Gravity\Id\Service\Find as FindId;
 use Jstewmc\Gravity\Project\Data\Project;
 use Jstewmc\Gravity\Service\Data\Service;
 
@@ -49,6 +52,12 @@ use Jstewmc\Gravity\Service\Data\Service;
 class Manager
 {
     /* !Private properties */
+
+    /**
+     * @var    FindId  the find-id service
+     * @since  0.1.0
+     */
+    private $parseId;
 
     /**
      * @var    GetDefinition  the get-definition service
@@ -207,6 +216,26 @@ class Manager
     }
 
     /**
+     * Returns true if the service or setting exists
+     *
+     * @param   string  $id  a service or setting identifier
+     * @return  bool
+     * @since   0.1.0
+     */
+    public function has(string $id): bool
+    {
+        $id = $this->findId($id, $this->project);
+
+        if ($id instanceof ServiceId) {
+            $has = $this->project->hasService($id);
+        } else {
+            $has = $this->project->hasSetting($id);
+        }
+
+        return $has;
+    }
+
+    /**
      * Adds a service or setting to the project
      *
      * @example  set a service (using an anonoymous function)
@@ -267,15 +296,15 @@ class Manager
         // instantiate the "get-side" services
         $warnDeprecation = new Warn();
 
-        $resolveId = new \Jstewmc\Gravity\Id\Service\Resolve($warnDeprecation);
-        $findId    = new \Jstewmc\Gravity\Id\Service\Find($parseId, $resolveId);
+        $resolveId    = new \Jstewmc\Gravity\Id\Service\Resolve($warnDeprecation);
+        $this->findId = new \Jstewmc\Gravity\Id\Service\Find($parseId, $resolveId);
 
         $instantiateService = new \Jstewmc\Gravity\Service\Service\Instantiate($this);
         $getService         = new \Jstewmc\Gravity\Service\Service\Get($instantiateService);
         $getSetting         = new \Jstewmc\Gravity\Setting\Service\Get();
 
         $this->getDefinition = new GetDefinition(
-            $findId,
+            $this->findId,
             $getService,
             $getSetting,
             $cache
@@ -285,6 +314,18 @@ class Manager
         $this->project = new Project();
 
         return;
+    }
+
+    /**
+     * Finds an identifier's final destination
+     *
+     * @param   string
+     * @return  Id
+     * @since   0.1.0
+     */
+    private function findId(string $id): Id
+    {
+        return ($this->findId)($id, $this->project);
     }
 
     /**

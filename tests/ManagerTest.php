@@ -62,6 +62,46 @@ class ManagerTest extends TestCase
         return;
     }
 
+    public function testHasReturnsFalseIfSettingDoesNotExist(): void
+    {
+        $g = new Manager();
+
+        $this->assertFalse($g->has('foo.baz.baz'));
+
+        return;
+    }
+
+    public function testHasReturnsFalseIfServiceDoesNotExist(): void
+    {
+        $g = new Manager();
+
+        $this->assertFalse($g->has('foo\bar\baz'));
+
+        return;
+    }
+
+    public function testHasReturnsTrueIfSettingDoesExist(): void
+    {
+        $g = new Manager();
+
+        $g->set('foo.bar.baz', 1);
+
+        $this->assertTrue($g->has('foo.bar.baz'));
+
+        return;
+    }
+
+    public function testHasReturnsTrueIfServiceDoesExist(): void
+    {
+        $g = new Manager();
+
+        $g->set('foo\bar\baz', function () { return new StdClass(); });
+
+        $this->assertTrue($g->has('foo\bar\baz'));
+
+        return;
+    }
+
     public function testSetReturnsSelfIfSetting(): void
     {
         $g = new Manager();
