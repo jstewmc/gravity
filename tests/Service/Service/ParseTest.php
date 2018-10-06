@@ -65,6 +65,28 @@ class ParseTest extends TestCase
         return;
     }
 
+    /**
+     * We had an issue where an object that implemented the __invoke() method
+     * was considered a function, which it's not.
+     */
+    public function testInvokeReturnsServiceIfObjectImplementsInvoke(): void
+    {
+        $id = $this->createMock(Id::class);
+        $definition = new Class {
+            public function __invoke()
+            {
+                return;
+            }
+        };
+
+        $expected = new Instance($id, $definition);
+        $actual   = (new Parse())($id, $definition);
+
+        $this->assertEquals($expected, $actual);
+
+        return;
+    }
+
     public function testInvokeReturnsServiceIfInstance(): void
     {
         $id = $this->createMock(Id::class);
