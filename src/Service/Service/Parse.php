@@ -9,6 +9,7 @@
 
 namespace Jstewmc\Gravity\Service\Service;
 
+use Closure;
 use Jstewmc\Gravity\Factory as FactoryInterface;
 use Jstewmc\Gravity\Id\Data\Service as Id;
 use Jstewmc\Gravity\Service\Data\Factory;
@@ -59,13 +60,16 @@ class Parse
     /**
      * Returns true if the service is an anonymous function
      *
+     * Keep in mind, is_callable() will return true if an object implements
+     * the __invoke() method.
+     *
      * @param   mixed $value the value to test
      * @return  bool
      * @since   0.1.0
      */
     private function isFunction($value): bool
     {
-        return is_callable($value);
+        return is_callable($value) && $value instanceof Closure;
     }
 
     /**
