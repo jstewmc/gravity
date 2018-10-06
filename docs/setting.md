@@ -1,102 +1,107 @@
 # Setting services and settings
 
-As a _package author_ you'll use Gravity to _set services and settings_ for other developers to use.
+Use Gravity to set services and settings for yourself and others.
 
 ## Gravity directory
 
 Like [Composer](https://getcomposer.org), Gravity thinks in terms of packages. In fact, Gravity relies heavily on Composer's default filesystem to find its files.
 
-As a package author, you'll define your services and settings in a `.gravity` directory located in your package's root directory right beside your `composer.json`:
+As a package author, you'll define your services and settings in a `.gravity` directory located in your package's root directory:
 
 ```
-path
-|-- to
-|   |-- package
-|   |   |-- .gravity      <----- here!
-|   |   |-- composer.json
-|   |   |-- ...
+/path/to/package
+ |-- .gravity
+ |-- composer.json
+ |-- ...
 ```
 
 A Gravity directory many contain any number of files and subdirectories. Any file in the directory will be considered a Gravity file.
 
 ## Gravity files
 
-Within a Gravity file, a "magic" `$g` variable will always be defined ("g" is the abbreviation for [gravity](https://en.wikipedia.org/wiki/Gravity_of_Earth)). You'll use `$g` and its methods to define services and settings:
+Within a Gravity file, the magic `$g` variable will always be defined ("g" is the abbreviation for [gravity](https://en.wikipedia.org/wiki/Gravity_of_Earth)). Use `$g` and its methods to define services and settings:
 
 ```php
-# /path/to/package/.gravity/foo.php
-namespace Foo\Bar;
+# /path/to/jstewmc/gravity/.gravity/examples/basic.php
 
-// define a setting
-$g->set('foo.bar.baz', 1);
+namespace Jstewmc\Gravity\Example\Service;
 
-// define a service
-$g->set(Foo::class, function () {
-    return new Bar();
+$g->set('jstewmc.gravity.example.foo', true);
+
+$g->set(Foo::class, function (): Foo {
+    return new Foo();
 });
 ```
 
 You can mix settings and services in the same file.
 
-Between the support for recursive directories and the mixing of services and configuration in the same file, you're free to organize your package's settings and services however you'd like!
+## Organization
+
+Between the support for recursive directories and the mixing of services and configuration in the same file, you're free to organize your package's settings and services however you'd like.
+
+Also, and this is important, Gravity allows _anyone_ to define settings and services _anywhere_. So, in your own Gravity files, you can define (or override) settings and services defined in another package. This allows you to create services that your users can configure.
 
 ## Services
 
-A service is typically a class that does one thing, and does it well, often exposing a single public `__invoke` method. No matter how you define a service, you can define it in Gravity.
+A service is usually a class that does one thing, and does it well, often exposing a single public `__invoke` method.
 
-You'll use the `$g->set()` method to define a service using `null`, an object instance, an anonymous function, or a factory.
+No matter how you define a service, you can define it in Gravity.
+
+Use the `$g->set()` method to define a service using `null`, an object instance, an anonymous function, or a factory.
 
 ### Newables
 
-A newable-defined service is the simplest. It's definition is `null`! A newable service is a service with the same classname as its identifier.
+A newable-defined service is the simplest definition. It's `null`! A newable service is a service with the same classname as its identifier.
 
 ```php
-# /path/to/project/.gravity/stuff.php
+# /path/to/jstewmc/gravity/.gravity/examples/setting.php
 
-namespace Foo\Bar;
+namespace Jstewmc\Gravity\Example;
 
-$g->set(Baz::class);
+$g->set(Service\Baz::class);
 ```
 
 When a newable service is requested, Gravity will instantiate an instance of the class with the same name as the service identifier and return it.
 
 ### Instances
 
-Instance-defined services are already instantiated.
+An instance-defined service is already instantiated.
 
 ```php
-# /path/to/project/.gravity/services.php
+# /path/to/jstewmc/gravity/.gravity/examples/setting.php
 
-namespace Foo\Bar;
+namespace Jstewmc\Gravity\Example;
 
-$g->set(Baz::class, new \StdClass());
+$g->set(Setting\Qux::class, new Service\Qux());
 ```
 
 When an instance-defined service is requested, Gravity will return the instance.
 
 ### Anonymous functions
 
-An anonymous function definition must accept no arguments, and it must return an `object` when invoked. However, anything can happen in between.
+An anonymous function (aka, "fx") definition must accept no arguments, and it must return an `object` when invoked. However, anything can happen in between.
 
 ```php
-#/path/to/project/.gravity/stuff.php
-namespace Foo\Bar;
+#/path/to/jstewmc/gravity/.gravity/examples/setting.php
 
-$g->set(Baz::class, function (): Foo {
-    return new Baz();
+namespace Jstewmc\Gravity\Example;
+
+$g->set(Setting\Quux::class, function (): Quux {
+    return new Quux();
 });
 ```
 
-Within an anonymous function, `$this` refers to Gravity. So, it's easy to inject other services and configuration.
+Within an anonymous function, `$this` refers to the Gravity manager. So, it's easy to inject other services and settings.
 
 ```php
-#/path/to/project/.gravity/stuff.php
-namespace Foo\Bar;
+#/path/to/jstewmc/gravity/.gravity/examples/setting.php
 
-$g->set(Qux::class, function (): Bar {
-    $foo = $this->get(Baz::class);
+namespace Jstewmc\Gravity\Example;
 
-    return new Qux($foo);
+$g->set(Setting\Corge::class, function (): Service\Corge {
+    $quux = $this->get(Setting\Quux::class);
+
+    return new Corge($quux);
 });
 ```
 
@@ -104,183 +109,131 @@ When an anonymous-function-defined service is requested, Gravity will invoke the
 
 ### Factories
 
-A factory is a service that instantiates another service. A factory must implement Gravity's `Factory` interface, and it must be defined in Gravity as a newable service.
+A factory is a service that instantiates another service. A factory must implement Gravity's `Factory` interface, and it must be defined in Gravity as a newable service:
 
 ```php
-# /path/to/project/src/Factory/foo.php
-namespace Foo\Bar\Factory;
+# /path/to/jstewmc/gravity/docs/examples/src/Factory/Grault.php
 
-use Foo\Bar\Service;
-use Jstewmc\Gravity\{Manager, Factory};
+namespace Jstewmc\Gravity\Example\Factory;
 
-class Baz implements Factory
+use Jstewmc\Gravity\Example\Service\Grault as GraultService;
+use Jstewmc\Gravity\{Manager, Factory as FactoryInterface};
+
+class Grault implements FactoryInterface
 {
-    public function __invoke(Manager $g): Service\Baz
+    public function __invoke(Manager $g): GraultService
     {
-        return new Service\Baz();
+        return new GraultService();
     }
 }
 ```
 
-The Gravity file:
+And the Gravity file:
 
 ```php
-# /path/to/project/.gravity/stuff.php
-namespace Foo\Bar\Service;
+# /path/to/jstewmc/gravity/.gravity/examples/setting.php
+namespace Jstewmc\Gravity\Example;
 
-use Foo\Bar\Factory\Baz as BazFactory;
+// set the factory as a newable-defined service
+$g->set(Factory\Grault::class);
 
-// define the factory as a newable-defined service
-$g->set(BazFactory::class);  
-
-// define the service as a factory-defined service
-$g->set(Baz::class, BazFactory::class);  
+// set the service as a factory-defined service
+$g->set(Service\Grault::class, Factory\Grault::class);
 ```
 
-When a factory-defined service is requested, its factory will be instantiated; the factory's `__invoke()` method will be called with an instance of the Gravity manager; and, the method's value will be returned.
+When a factory-defined service is requested, Gravity will instantiate the factory; call the factory's `__invoke()` method; and, return the the method's return value.
 
 ## Settings
 
 In addition to services, Gravity supports configuration settings.
 
-A configuration setting is a value that your package uses to make decisions. It may be a list of state abbreviations; a list of disposable email domains; a default token length; or, anything really.
+A configuration setting is a value that a service uses to make decisions. It may be a list of state abbreviations; a list of disposable email domains; a default token length; or, anything you need.
 
-Configuration is as important as services, because it allows _different_ users to use the _same_ code _different_ ways. Gravity's support for cross-definitions encourages this. Plus, configuration changes are much easier than code changes.
+Configuration is just as important as services, because it allows _different_ users to use the _same_ code _different_ ways. Gravity's support for cross-definitions encourages this. Plus, configuration changes are much easier than code changes.
 
 If you find yourself adding a constant, string, or number to your code, you should probably add it as a configuration setting instead!
 
-You'll use the `$g->set()` method to define configuration values.
+Use the `$g->set()` method to define configuration settings. You can use any valid PHP value as a setting.
 
 ```php
-# /path/to/project/.gravity/config.php
+# /path/to/jstewmc/gravity/.gravity/examples/setting.php
 
-$g->set('foo.bar.a', true);
-$g->set('foo.bar.b', 1);
-$g->set('foo.bar.c', 'hello');
-$g->set('foo.bar.d', [1, 2, 3]);
-$g->set('foo.bar.e', new StdClass());
+$g->set('jstewmc.gravity.example.setting.foo', true);
+$g->set('jstewmc.gravity.example.setting.bar', 1);
+$g->set('jstewmc.gravity.example.setting.baz', 'hello');
+$g->set('jstewmc.gravity.example.setting.qux', [1, 2, 3]);
 ```
 
-When multiple definitions exist for a scalar value, the last one wins. In the example below, the final value of `foo.bar.baz` would be `2`.
+When multiple definitions exist for a scalar value, the last one wins. In the example below, the final value of `'jstewmc.gravity.example.setting.quux'` would be `2`:
 
 ```php
-# /path/to/project/.gravity/config.php
+# /path/to/jstewmc/gravity/.gravity/examples/setting.php
 
-$g->set('foo.bar.baz', 1);
-$g->set('foo.bar.baz', 2);
+$g->set('jstewmc.gravity.example.setting.quux', 1);
+$g->set('jstewmc.gravity.example.setting.quux', 2);
 ```
 
-On the other hand, when multiple definitions exist for an array value, the values will be merged. In the example below, the final valu eof `foo.bar.baz` would be `["qux", "quux"]`.
+On the other hand, when multiple definitions exist for an array value, the values will be merged. In the example below, the final value of `'jstewmc.gravity.example.setting.quuz'` would be `["qux", "quux"]`:
 
 ```php
-# /path/to/project/.gravity/config.php
-$g->set('foo.bar.baz', ['qux']);
-$g->set('foo.bar.baz', ['quux']);
+# /path/to/jstewmc/gravity/.gravity/examples/setting.php
+
+$g->set('jstewmc.gravity.example.setting.quuz', ['corge']);
+$g->set('jstewmc.gravity.example.setting.quuz', ['grault']);
 ```
 
 Gravity standardizes identifiers and arrays of any length. So don't worry about it. The two configuration settings below are equivalent:
 
 ```php
-$g->set('foo.baz.baz.qux.quux.corge', [
-    'grault' => [
-        'garply' => [
-            'waldo' => 1
+$g->set('jstewmc.gravity.example.setting.corge', [
+    'garply' => [
+        'waldo' => [
+            'fred' => 1
         ]
     ]
 ]);
 
-$g->set('foo.baz.baz.qux.quux.corge.grault.garply.waldo', 1);
+$g->set('jstewmc.gravity.example.setting.corge.garply.waldo.fred', 1);
 
 ```
 
-You can organize your configuration however you'd like. However, as a general rule of thumb, if you find yourself adding prefixes to multiple keys, those values should probably be grouped into an array:
+Putting it all together in an example:
 
 ```php
-# /path/to/project/.gravity/config.php
+# /path/to/jstewmc/gravity/examples/setting.md
 
-// bad
-$g->set('foo.bar.baz-a', 1);
-$g->set('foo.bar.baz-b', 2);
-$g->set('foo.bar.baz-c', 3);
+namespace Jstewmc\Gravity\Example\Service;
 
-// good
-$g->set('foo.bar.baz', [1, 2, 3]);
-```
+use Jstewmc\Gravity\Manager;
 
-## Aliases
-
-Sometimes you need to move things. That's ok.  Gravity supports aliases. But, keep in mind, they should be used sparingly. It's a better world if every service is identified by a single identifier!
-
-You can use the `$g->alias()` method to alias an alias, setting, or service. It accepts two arguments: a source id and a destination id.
-
-```php
-# file /path/to/project/.gravity/stuff.php
-
-namespace Jstewmc\Foo;
-
-$g->set('foo.bar.baz', 1);
-
-// alias setting 'foo.bar.qux' to 'foo.bar.baz'
-$g->alias('foo.bar.qux', 'foo.bar.baz');  
-
-$g->set(Foo::class, function () {
-    return new Foo();
-});
-
-// alias service 'Jstewmc\Foo\Bar' to 'Jstewmc\Foo\Foo'
-$g->alias(Bar::class, Foo::class);
-```
-
-Given the Gravity file above, the following conditionals would be true when [getting the settings and services](getting-services-and-settings.md):
-
-```php
-namespace Jstewmc\Gravity;
-
-use Jstewmc\Foo\{Foo, Bar};
+require_once realpath(__DIR__ . '/../vendor/autoload.php');
 
 $g = new Manager();
 
-$a = $g->get('foo.bar.baz');
-$b = $g->get('foo.bar.qux');
+$expected = 2;
+$actual   = $g->get('jstewmc.gravity.example.setting.quux');
 
-$a == $b;  // returns true
+assert($expected == $actual);
 
-$c = $g->get(Foo::class);
-$d = $g->get(Bar::class);
+$expected = ['corge', 'grault'];
+$actual   = $g->get('jstewmc.gravity.example.setting.quuz');
 
-$c === $d;  // returns true
+assert($expected == $actual);
+
+$expected = 1;
+$actual   = $g->get('jstewmc.gravity.example.setting.corge.garply.waldo.fred');
+
+assert($expected == $actual);
 ```
 
-## Deprecations
-
-You shouldn't remove aliases, settings, or services without warning. Otherwise, you'll break your users code! Instead, you should deprecate your services and settings for at least a minor version of your package.
-
-When a deprecated setting, service, or alias is requested, it's handled normally, except an `E_USER_DEPRECATED` error will be triggered. If a replacement has been given, the error's message will suggest it.
+You can organize your configuration however you'd like. However, by convention, keys with multiple words should be lowercased and hyphen-separated, and if you find yourself adding prefixes to multiple keys, those values should probably be grouped into an array.
 
 ```php
-# /path/to/project/.gravity/stuff.php
-namespace Jstewmc\Foo;
+// bad
+$g->set('jstewmc.gravity.example.waldo-one', 1);
+$g->set('jstewmc.gravity.example.waldo-two', 2);
+$g->set('jstewmc.gravity.example.waldo-three', 3);
 
-$g->set('foo.bar.baz')
-
-$g->set(Foo::class, function (): Foo {
-    return Foo();
-});
-
-$g->set(Bar::class, function (): Bar {
-    return Bar();
-});
-
-// deprecate the 'foo.bar.baz' setting
-$g->deprecate('foo.bar.baz');
-
-// deprecate the foo service without suggesting a replacement
-$g->deprecate(Foo::class);
-
-// deprecate the foo service with a replacement
-$g->deprecate(Foo::class, Bar::class);
+// good
+$g->set('jstewmc.gravity.example.waldo', [1, 2, 3]);
 ```
-
-## Cross definitions
-
-Gravity allows anyone to define settings and services anywhere. So, in your own Gravity files, you can define (or override) settings and services defined in another library. This allows for the maximum amount of customization.
