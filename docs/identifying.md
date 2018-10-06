@@ -1,3 +1,5 @@
+[Home](index.md) | [**Identifying**](identifying.md) | [Setting](setting.md) | [Getting](getting.md) | [Aliasing](aliasing.md) | [Deprecating](deprecating.md)
+
 ## Identifying services and settings
 
 Gravity uses a string identifier (aka, an "id") to uniquely identify a service or setting.
@@ -33,3 +35,7 @@ A service identifier should be a fully-qualified classname. It's not a hard and 
 # Setting identifiers
 
 Setting identifiers, on the other hand, are literal strings. They are admittedly a bit cumbersome, because there is no convenient `::class` constant for them. But, we are working on some ideas to make them easier to use, and we welcome your ideas too.
+
+---
+
+Next up, [setting services and setting](setting.md)!

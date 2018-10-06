@@ -1,3 +1,5 @@
+[**Home**](index.md) | [Identifying](identifying.md) | [Setting](setting.md) | [Getting](getting.md) | [Aliasing](aliasing.md) | [Deprecating](deprecating.md)
+
 # Getting started
 
 Gravity is a framework-agnostic service and configuration manager. It makes it easy to use other people's settings and services in your application.
@@ -18,3 +20,5 @@ Gravity:
 It works the same for configuration settings.
 
 Gravity makes it easy to create and share services and settings.
+
+Get started with [identifying settings and services](identifying.md)!
