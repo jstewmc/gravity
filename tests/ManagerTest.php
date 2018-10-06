@@ -95,7 +95,9 @@ class ManagerTest extends TestCase
     {
         $g = new Manager();
 
-        $g->set('foo\bar\baz', function () { return new StdClass(); });
+        $g->set('foo\bar\baz', function () {
+            return new StdClass();
+        });
 
         $this->assertTrue($g->has('foo\bar\baz'));
 
