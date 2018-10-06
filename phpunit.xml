@@ -18,6 +18,10 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
             <directory suffix=".php">./examples</directory>
+            <exclude>
+                <!-- Generates deprecated error when analysing code coverage -->
+                <file>./examples/deprecating.php</file>
+            </exclude>
         </whitelist>
     </filter>
 </phpunit>
