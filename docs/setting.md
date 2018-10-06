@@ -21,7 +21,7 @@ A Gravity directory many contain any number of files and subdirectories. Any fil
 
 ## Gravity files
 
-Within a Gravity file, the magic `$g` variable will always be defined ("g" is the abbreviation for [gravity](https://en.wikipedia.org/wiki/Gravity_of_Earth)). Use `$g` and its methods to define services and settings:
+Within a Gravity file, the magic `$g` variable will always be defined ("g" is the abbreviation for [gravity](https://en.wikipedia.org/wiki/Gravity_of_Earth)). You'll use `$g` and its methods to define services and settings:
 
 ```php
 # /path/to/jstewmc/gravity/.gravity/examples/basic.php
@@ -63,7 +63,7 @@ namespace Jstewmc\Gravity\Example;
 $g->set(Service\Baz::class);
 ```
 
-When a newable service is requested, Gravity will instantiate an instance of the class with the same name as the service identifier and return it.
+When a newable service is requested, Gravity will instantiate an instance of the class with the same name as the identifier and return it.
 
 ### Instances
 
@@ -77,7 +77,7 @@ namespace Jstewmc\Gravity\Example;
 $g->set(Setting\Qux::class, new Service\Qux());
 ```
 
-When an instance-defined service is requested, Gravity will return the instance.
+When an instance-defined service is requested, Gravity will simply return the instance.
 
 ### Anonymous functions
 
@@ -119,7 +119,8 @@ A factory is a service that instantiates another service. A factory must impleme
 namespace Jstewmc\Gravity\Example\Factory;
 
 use Jstewmc\Gravity\Example\Service\Grault as GraultService;
-use Jstewmc\Gravity\{Manager, Factory as FactoryInterface};
+use Jstewmc\Gravity\Manager;
+use Jstewmc\Gravity\Factory as FactoryInterface;
 
 class Grault implements FactoryInterface
 {
@@ -128,9 +129,10 @@ class Grault implements FactoryInterface
         return new GraultService();
     }
 }
+
 ```
 
-And the Gravity file:
+The Gravity file:
 
 ```php
 # /path/to/jstewmc/gravity/.gravity/examples/setting.php
@@ -151,11 +153,13 @@ In addition to services, Gravity supports configuration settings.
 
 A configuration setting is a value that a service uses to make decisions. It may be a list of state abbreviations; a list of disposable email domains; a default token length; or, anything you need.
 
-Configuration is just as important as services, because it allows _different_ users to use the _same_ code _different_ ways. Gravity's support for cross-definitions encourages this. Plus, configuration changes are much easier than code changes.
+Configuration settings are just as important as services, because they allow _different_ users to use the _same_ code _different_ ways. Gravity's support for cross-definitions encourages this. You can build services that your users can configure.
+
+Plus, configuration changes are much easier than code changes.
 
 If you find yourself adding a constant, string, or number to your code, you should probably add it as a configuration setting instead!
 
-Use the `$g->set()` method to define configuration settings. You can use any valid PHP value as a setting.
+Use the `$g->set()` method to define configuration settings. You can use any valid PHP value.
 
 ```php
 # /path/to/jstewmc/gravity/.gravity/examples/setting.php
@@ -228,7 +232,23 @@ $actual   = $g->get('jstewmc.gravity.example.setting.corge.garply.waldo.fred');
 assert($expected == $actual);
 ```
 
-You can organize your configuration however you'd like. However, by convention, keys with multiple words should be lowercased and hyphen-separated, and if you find yourself adding prefixes to multiple keys, those values should probably be grouped into an array.
+### Organization
+
+You can organize your configuration settings however you'd like. By convention and for easier reading, identifiers should be lowercased (although, they're case-insensitive), and keys with multiple words should be hyphen-separated.
+
+```php
+// bad
+$g->set('Harder.To.Read.Identifier');
+$g->set('HARDER.TO.READ.IDENTIFIER');
+$g->set('harder.to.read.identifier_with_multiword_keys');
+$g->set('harder.to.read.identifierWithMultiwordKeys');
+
+// good
+$g->set('easier.to.read.identifier');
+$g->set('easier.to.read.identifier-with-multiword-keys');
+```
+
+Also, if you find yourself adding prefixes to multiple, related keys, odds are those values should be grouped into an array.
 
 ```php
 // bad
@@ -239,7 +259,5 @@ $g->set('jstewmc.gravity.example.waldo-three', 3);
 // good
 $g->set('jstewmc.gravity.example.waldo', [1, 2, 3]);
 ```
-
----
 
 Next up, [getting services and setting](getting.md)!

@@ -10,9 +10,9 @@ To get a setting or service from Gravity you need an instance of the manager, of
 
 When the Gravity manager is instantiated, it loads settings and services from the project filesystem. Sometimes, this may involve reading hundreds of files and thousands of settings and services. This is not a cheap operation!
 
-For best performance, use a single instance of the Gravity manager, and make sure it survives as long as possible over the lifetime of your application.
+For best performance, use a single instance of the Gravity manager as long as possible.
 
-As a new library, Gravity doesn't have integrations for the major frameworks yet. Until it does, it's up to you to figure out how to keep Gravity around as long as possible. If you have a good solution, feel free to open a pull request or [let us know](mailto:clayjs0@gmail.com)!
+As a new library, Gravity doesn't have integrations for the major frameworks yet. Until it does, it's up to you to figure out how to keep Gravity around as long as possible in your application. But, if you have a good solution, open a pull request or [let us know](mailto:clayjs0@gmail.com)!
 
 ## Requests
 
@@ -49,6 +49,6 @@ $b = $g->get(Setting\Qux::class);
 assert($a === $b);
 ```
 
----
+That's it. Getting services and settings is the easy part!
 
 Next up, [aliasing services and setting](aliasing.md)!
