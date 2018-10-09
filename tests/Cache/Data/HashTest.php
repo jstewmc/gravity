@@ -58,7 +58,7 @@ class HashTest extends TestCase
     {
         $this->expectException(NotFound::class);
 
-        (new Hash())->get($this->createMock(Id::class));
+        (new Hash())->get('foo');
 
         return;
     }
