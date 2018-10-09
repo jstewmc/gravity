@@ -22,25 +22,25 @@ class NotFound extends Exception
     /* !Private properties */
 
     /**
-     * @var    Id  the exception's identifier
+     * @var    string  the cache key (i.e., identifier)
      * @since  0.1.0
      */
-    private $id;
+    private $key;
 
-     
+
     /* !Private properties */
 
     /**
      * Called when the exception is constructed
      *
-     * @param  Id  $id  the not found identifier
+     * @param  string  $key  the key of the missing cached item
      * @since  0.1.0
      */
-    public function __construct(Id $id)
+    public function __construct(string $key)
     {
-        $this->identifier = $id;
+        $this->key = $key;
 
-        $this->message = "'$id' not cached";
+        $this->message = "'$key' not cached";
     }
 
 
@@ -49,10 +49,11 @@ class NotFound extends Exception
     /**
      * Returns the missing identifier
      *
-     * @return  Id
+     * @return  string
+     * @since   0.1.0
      */
-    public function getId(): Id
+    public function getKey(): string
     {
-        return $this->identifier;
+        return $this->key;
     }
 }

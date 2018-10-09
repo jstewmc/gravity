@@ -9,59 +9,65 @@
 
 namespace Jstewmc\Gravity\Cache\Data;
 
-use Jstewmc\Gravity\Id\Data\Id;
+use Jstewmc\Gravity\Cache\Exception\NotFound;
 
 /**
  * A simple cache interface
  *
+ * This cache interface does its best to adhere to PSR-16, Common Interface for
+ * Caching Libraries. However, the PSR does not support argument and return
+ * types, and it adds multiple-item methods, TTL, and default values which are
+ * unnecessary here.
+ *
  * @since  0.1.0
+ * @see    https://www.php-fig.org/psr/psr-16/  PSR-16: Common Interface for
+ *     Caching Libraries (accessed 2018-10-08)
  */
 interface Cache
 {
-    /* !Public methods */
-
     /**
-     * Returns the cached value
+     * Resets the cache
      *
-     * @param   Id  $id  the identifier to get
-     * @return  mixed
-     * @since   0.1.0
-     */
-    public function get(Id $id);
-
-    /**
-     * Returns true if the value is cached
-     *
-     * @param   Id  $id  the identifier to test
      * @return  bool
      * @since   0.1.0
      */
-    public function has(Id $id): bool;
+    public function clear(): bool;
 
     /**
      * Removes a value from the cache if it exists
      *
-     * @param   Id  the identifier to remove
-     * @return  void
+     * @param   string  the key of the cached item to delete
+     * @return  bool
      * @since   0.1.0
      */
-    public function remove(Id $id): void;
+    public function delete(string $key): bool;
 
     /**
-     * Resets the cache
+     * Returns the cached value
      *
-     * @return  void
+     * @param   string  $key  the key of the cached item to get
+     * @return  mixed
+     * @throws  NotFound  if $key does not exist
      * @since   0.1.0
      */
-    public function reset(): void;
+    public function get(string $key);
+
+    /**
+     * Returns true if the value is cached
+     *
+     * @param   string  $key  the key of the cached item
+     * @return  bool
+     * @since   0.1.0
+     */
+    public function has(string $key): bool;
 
     /**
      * Caches a value
      *
-     * @param   Id  $id  the identifier to cache
-     * @param   mixed       $value       the value to cache
-     * @return  self
+     * @param   string  $id     the identifier to cache
+     * @param   mixed   $value  the value to cache
+     * @return  bool
      * @since   0.1.0
      */
-    public function set(Id $id, $value): Cache;
+    public function set(string $key, $value): bool;
 }

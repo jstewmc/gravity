@@ -10,18 +10,49 @@
 namespace Jstewmc\Gravity\Cache\Data;
 
 use Jstewmc\Gravity\Cache\Exception\NotFound;
-use Jstewmc\Gravity\Id\Data\Id;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for a hash-based cache
+ *
+ * Hmm, these are tough to do without creating dependencies between the set(),
+ * get(), and has() methods. But, if we don't, we're not really testing
+ * behavior, just the static return types, which isn't helpful.
  *
  * @since  0.1.0
  * @group  todo
  */
 class HashTest extends TestCase
 {
-    /* get, has, remove, reset, and set */
+    public function testClear(): void
+    {
+        $key = 'foo';
+
+        $cache = new Hash();
+
+        $cache->set($key, 1);
+
+        $this->assertTrue($cache->has($key));
+        $this->assertTrue($cache->clear());
+        $this->assertFalse($cache->has($key));
+
+        return;
+    }
+
+    public function testDelete(): void
+    {
+        $key = 'foo';
+
+        $cache = new Hash();
+
+        $cache->set($key, 1);
+
+        $this->assertTrue($cache->has($key));
+        $this->assertTrue($cache->delete($key));
+        $this->assertFalse($cache->has($key));
+
+        return;
+    }
 
     public function testGetThrowsExceptionIfValueDoesNotExist(): void
     {
@@ -32,40 +63,44 @@ class HashTest extends TestCase
         return;
     }
 
-    /*
-    public function testGet_returnsValue_ifValueDoesExist(): void
+    public function testGetReturnsValueIfValueDoesExist(): void
     {
+        $key   = 'foo';
+        $value = 1;
 
+        $cache = new Hash();
+
+        $cache->set($key, $value);
+
+        $this->assertEquals($value, $cache->get($key));
+
+        return;
     }
 
-    public function testHas_returnsFalse_ifValueDoesNotExist(): void
+    public function testHasReturnsFalseIfKeyDoesNotExist(): void
     {
+        $this->assertFalse((new Hash())->has('foo'));
 
+        return;
     }
 
-    public function testHas_returnsTrue_ifValueDoesExist(): void
+    public function testHasReturnsTrueIfValueDoesExist(): void
     {
+        $cache = new Hash();
 
+        $cache->set('foo', 1);
+
+        $this->assertTrue($cache->has('foo'));
+
+        return;
     }
-
-    public function testRemove(): void
-    {
-
-    }
-
-    public function testReset(): void
-    {
-
-    }
-    */
 
     public function testSet(): void
     {
         $cache = new Hash();
 
-        $id = $this->createMock(Id::class);
-
-        $this->assertSame($cache, $cache->set($id, true));
+        $this->assertTrue($cache->set('foo', true));
+        $this->assertTrue($cache->has('foo'));
 
         return;
     }
