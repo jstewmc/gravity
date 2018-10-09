@@ -10,7 +10,6 @@
 namespace Jstewmc\Gravity\Cache\Data;
 
 use Jstewmc\Gravity\Cache\Exception\NotFound;
-use Jstewmc\Gravity\Id\Data\Id;
 
 /**
  * A simple hash-based cache
@@ -31,75 +30,75 @@ class Hash implements Cache
     /* !Public methods */
 
     /**
-     * Returns the cached value
+     * Resets the cache
      *
-     * @param   Id  $id  the identifier to get
-     * @return  mixed
-     * @throws  NotFound  if $id does not exist
-     * @since   0.1.0
-     */
-    public function get(Id $id)
-    {
-        if (!$this->has($id)) {
-            throw new NotFound($id);
-        }
-
-        return $this->values[(string)$id];
-    }
-
-    /**
-     * Returns true if the value is cached
-     *
-     * @param   Id  $id  the identifier to test
      * @return  bool
      * @since   0.1.0
      */
-    public function has(Id $id): bool
+    public function clear(): bool
     {
-        return array_key_exists((string)$id, $this->values);
+        $this->values = [];
+
+        return true;
     }
 
     /**
      * Removes a value from the cache
      *
-     * @param   Id  $id
-     * @return  void
+     * @param   string  $key  the key of the cached item to delete
+     * @return  bool
      * @since   0.1.0
      */
-    public function remove(Id $id): void
+    public function delete(string $key): bool
     {
-        if ($this->has($id)) {
-            unset($this->values[(string)$id]);
+        if ($this->has($key)) {
+            unset($this->values[$key]);
         }
 
-        return;
+        return true;
     }
 
     /**
-     * Resets the cache
+     * Returns the cached value
      *
-     * @return  void
+     * @param   string  $key  the key of the cached item to get
+     * @return  mixed
+     * @throws  NotFound  if $key does not exist
      * @since   0.1.0
      */
-    public function reset(): void
+    public function get(string $key)
     {
-        $this->values = [];
+        if (!$this->has($key)) {
+            throw new NotFound($key);
+        }
 
-        return;
+        return $this->values[$key];
+    }
+
+    /**
+     * Returns true if the value is cached
+     *
+     * @param   string  $key  the key of the cached item
+     * @return  bool
+     * @since   0.1.0
+     */
+    public function has(string $key): bool
+    {
+        return array_key_exists($key, $this->values);
     }
 
     /**
      * Caches a value
      *
-     * @param   Id  $id  the identifier to cache
-     * @param   mixed       $value       the value to cache
-     * @return  self
+     * @param   string  $key    the key to cache
+     * @param   mixed   $value  the value to cache
+     * @return  bool
      * @since   0.1.0
      */
-    public function set(Id $id, $value): Cache
+    public function set(string $key, $value): bool
     {
-        $this->values[(string)$id] = $value;
+        $this->values[$key] = $value;
 
-        return $this;
+        return true;
     }
 }

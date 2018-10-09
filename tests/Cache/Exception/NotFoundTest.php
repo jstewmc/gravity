@@ -1,6 +1,6 @@
 <?php
 /**
- * The file for the not found exception tests
+ * The file for the cache "not found" exception tests
  *
  * @author     Jack Clayton <claysj0@gmail.com>
  * @copyright  2018 Jack Clayton
@@ -9,7 +9,6 @@
 
 namespace Jstewmc\Gravity\Cache\Exception;
 
-use Jstewmc\Gravity\Id\Data\Id;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,14 +18,9 @@ use PHPUnit\Framework\TestCase;
  */
 class NotFoundTest extends TestCase
 {
-    public function testGetId(): void
+    public function testGetKey(): void
     {
-        $id = $this->createMock(Id::class);
-
-        $this->assertSame(
-            $id,
-            (new NotFound($id))->getId()
-        );
+        $this->assertSame('foo', (new NotFound('foo'))->getKey());
 
         return;
     }
