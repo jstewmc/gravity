@@ -10,7 +10,6 @@
 namespace Jstewmc\Gravity\Cache\Exception;
 
 use Jstewmc\Gravity\Exception;
-use Jstewmc\Gravity\Id\Data\Id;
 
 /**
  * Thrown when an identifier is not cached

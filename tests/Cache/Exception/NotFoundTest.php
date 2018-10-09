@@ -9,7 +9,6 @@
 
 namespace Jstewmc\Gravity\Cache\Exception;
 
-use Jstewmc\Gravity\Id\Data\Id;
 use PHPUnit\Framework\TestCase;
 
 /**
