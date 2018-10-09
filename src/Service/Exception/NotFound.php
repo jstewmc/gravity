@@ -10,14 +10,13 @@
 namespace Jstewmc\Gravity\Service\Exception;
 
 use Jstewmc\Gravity\Id\Data\Service as Id;
-use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Thrown when a service can't be found
  *
  * @since  0.1.0
  */
-class NotFound extends Exception implements NotFoundExceptionInterface
+class NotFound extends Exception
 {
     /* !Magic methods */
 
