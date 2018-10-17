@@ -163,7 +163,7 @@ class Project
     {
         $settings = $this->settings;
 
-        foreach ($id->getSegments() as $segment) {
+        foreach ($id->getPath()->getSegments() as $segment) {
             if (!array_key_exists($segment, $settings)) {
                 return false;
             }
@@ -240,7 +240,7 @@ class Project
 
         $settings = $this->settings;
 
-        foreach ($id->getSegments() as $segment) {
+        foreach ($id->getPath()->getSegments() as $segment) {
             $settings = $settings[$segment];
         }
 

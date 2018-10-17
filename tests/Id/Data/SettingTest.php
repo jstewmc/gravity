@@ -1,6 +1,6 @@
 <?php
 /**
- * The file for the setting identifier tests
+ * The file for setting id tests
  *
  * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
@@ -9,31 +9,39 @@
 
 namespace Jstewmc\Gravity\Id\Data;
 
+use Jstewmc\Gravity\Path\Data\Setting as Path;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for a setting identifier
+ * Tests for a setting id
  *
  * @since  0.1.0
- * @group  identifier
  */
 class SettingTest extends TestCase
 {
     public function testToString(): void
     {
-        $this->assertEquals(
-            'foo.bar.baz',
-            (string)new Setting(['foo', 'bar', 'baz'])
-        );
+        $string = 'foo.bar.baz';
+
+        $path = $this->createMock(Path::class);
+        $path->method('__toString')->willReturn($string);
+        $path->method('getLength')->willReturn(3);
+
+        $id = new Setting($path);
+
+        $this->assertEquals($string, (string)$id);
 
         return;
     }
 
-    public function testGetSegments(): void
+    public function testGetPath(): void
     {
-        $segments = ['foo', 'bar', 'baz'];
+        $path = $this->createMock(Path::class);
+        $path->method('getLength')->willReturn(3);
 
-        $this->assertEquals($segments, (new Setting($segments))->getSegments());
+        $id = new Setting($path);
+
+        $this->assertSame($path, $id->getPath());
 
         return;
     }

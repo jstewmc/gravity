@@ -16,6 +16,7 @@ use Jstewmc\Gravity\Deprecation\Exception\NotFound as DeprecationNotFound;
 use Jstewmc\Gravity\Id\Data\Id;
 use Jstewmc\Gravity\Id\Data\Service as ServiceId;
 use Jstewmc\Gravity\Id\Data\Setting as SettingId;
+use Jstewmc\Gravity\Path\Data\Setting as SettingPath;
 use Jstewmc\Gravity\Service\Data\Service;
 use Jstewmc\Gravity\Service\Exception\NotFound as ServiceNotFound;
 use Jstewmc\Gravity\Setting\Data\Setting;
@@ -162,9 +163,11 @@ class ProjectTest extends TestCase
     {
         $this->expectException(SettingNotFound::class);
 
-        // return anything but null
+        $path = $this->createMock(SettingPath::class);
+        $path->method('getSegments')->willReturn(['foo', 'bar', 'baz']);
+
         $id = $this->createMock(SettingId::class);
-        $id->method('getSegments')->willReturn(['foo']);
+        $id->method('getPath')->willReturn($path);
 
         (new Project())->getSetting($id);
 
@@ -173,17 +176,20 @@ class ProjectTest extends TestCase
 
     public function testGetSettingReturnsSettingIfDoesExist(): void
     {
+        $path = $this->createMock(SettingPath::class);
+        $path->method('getSegments')->willReturn(['foo', 'bar', 'baz']);
+
         $id = $this->createMock(SettingId::class);
-        $id->method('__toString')->willReturn('foo');
-        $id->method('getSegments')->willReturn(['foo']);
+        $id->method('__toString')->willReturn('foo.bar.baz');
+        $id->method('getPath')->willReturn($path);
 
         $setting = $this->createMock(Setting::class);
         $setting->method('getId')->willReturn($id);
-        $setting->method('getArray')->willReturn(['foo' => 'bar']);
+        $setting->method('getArray')->willReturn(['foo' => ['bar' => ['baz' => 1]]]);
 
         $project = (new Project())->addSetting($setting);
 
-        $this->assertEquals('bar', $project->getSetting($id));
+        $this->assertEquals(1, $project->getSetting($id));
 
         return;
     }
@@ -265,8 +271,11 @@ class ProjectTest extends TestCase
 
     public function testHasSettingReturnsFalseIfDoesNotExist(): void
     {
+        $path = $this->createMock(SettingPath::class);
+        $path->method('getSegments')->willReturn(['foo', 'bar', 'baz']);
+
         $id = $this->createMock(Id::class);
-        $id->method('getSegments')->willReturn(['foo']);
+        $id->method('getPath')->willReturn($path);
 
         $this->assertFalse((new Project())->hasSetting($id));
 
@@ -275,13 +284,16 @@ class ProjectTest extends TestCase
 
     public function testHasSettingReturnsTrueIfDoesExist(): void
     {
+        $path = $this->createMock(SettingPath::class);
+        $path->method('getSegments')->willReturn(['foo', 'bar', 'baz']);
+
         $id = $this->createMock(SettingId::class);
-        $id->method('__toString')->willReturn('foo');
-        $id->method('getSegments')->willReturn(['foo']);
+        $id->method('__toString')->willReturn('foo.bar.baz');
+        $id->method('getPath')->willReturn($path);
 
         $setting = $this->createMock(Setting::class);
         $setting->method('getId')->willReturn($id);
-        $setting->method('getArray')->willReturn(['foo' => 'bar']);
+        $setting->method('getArray')->willReturn(['foo' => ['bar' => ['baz' => 1]]]);
 
         $project = (new Project())->addSetting($setting);
 

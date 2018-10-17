@@ -9,20 +9,25 @@
 
 namespace Jstewmc\Gravity\Id\Data;
 
+use Jstewmc\Gravity\Path\Data\Service as Path;
+
 /**
  * A service identifier
- *
- * A service identifier is separated by the backslash ("\") character.
  *
  * @since  0.1.0
  */
 class Service extends Id
 {
-    /* !Public constants */
+    /* !Magic methods */
 
     /**
-     * @var    string  the service identifier separator
+     * Called when the id is constructed
+     *
+     * @param  Path  $path
      * @since  0.1.0
      */
-    public const SEPARATOR = '\\';
+    public function __construct(Path $path)
+    {
+        parent::__construct($path);
+    }
 }
