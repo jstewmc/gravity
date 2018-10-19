@@ -277,7 +277,9 @@ class Manager
     private function bootstrap(): void
     {
         // instantiate the "set-side" services
-        $parseId = new \Jstewmc\Gravity\Id\Service\Parse();
+        $parsePath = new \Jstewmc\Gravity\Path\Service\Parse();
+
+        $parseId = new \Jstewmc\Gravity\Id\Service\Parse($parsePath);
 
         $parseService = new \Jstewmc\Gravity\Service\Service\Parse();
         $parseSetting = new \Jstewmc\Gravity\Setting\Service\Parse();

@@ -75,13 +75,17 @@ class Parse
 
     /**
      * Converts a path and value into a single array
+     *
      * Settings are defined as key-value pairs, but they're stored in a single
      * consolidated array.
+     *
      * Ids can be of any length (e.g., "foo.bar" or "foo.bar.baz.quz"),
      * and values may be scalar or arrays of arbitrary depth (e.g., 1, "foo",
      * or ["foo" => "bar"]).
+     *
      * Before we can add a setting to a package's existing settings array, we
      * must normalize it to a standard array.
+     *
      * I'll normalize any identifier-value pair into an associative array so
      * they can be merged into the existing configuration set.
      *
@@ -91,6 +95,7 @@ class Parse
      *     $c = $this->toArray("foo", ["bar" => ["baz" => "qux"]]);
      *     $a === $b;  // returns true
      *     $b === $c;  // returns true
+     *
      * In the example above, $a, $b, and $c are equivalent to the following:
      *     [
      *         "foo" => [
@@ -99,6 +104,7 @@ class Parse
      *             ]
      *         ]
      *     ]
+     *
      * @param   Id    $id    the setting's identifier
      * @param   mixed $value the setting's value
      * @return  array
@@ -108,13 +114,13 @@ class Parse
     {
         $array = [];
 
-        // at this point, the identifier's segments are ordered from first-to-
-        // last, left-to-right
+        // get the identifier's segments from outer-to-inner
         // e.g., ["foo", "bar", "baz"]
-        //
-        // reverse them from innermost to outermost
+        $segments = $id->getPath()->getSegments();
+
+        // reverse them to inner-to-outer
         // e.g., ["foo", "bar", "baz"] -> ["baz", "bar", "foo"]
-        $segments = array_reverse($id->getSegments());
+        $segments = array_reverse($segments);
 
         // now, nest the values from the inside out
         // e.g., (i=0) ["baz" => $value]

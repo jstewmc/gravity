@@ -1,6 +1,6 @@
 <?php
 /**
- * The file for the "bad length" exception
+ * The file for the "bad id length" exception tests
  *
  * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
@@ -12,15 +12,15 @@ namespace Jstewmc\Gravity\Id\Exception;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for the "bad length" exception
+ * Tests for the "bad id length" exception
  *
  * @since  0.1.0
  */
 class BadLengthTest extends TestCase
 {
-    public function testGetIdenfifier(): void
+    public function testGetId(): void
     {
-        $this->assertEquals('foo', (new BadLength('foo'))->getId());
+        $this->assertSame('foo', (new BadLength('foo'))->getPath());
 
         return;
     }

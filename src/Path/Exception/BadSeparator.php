@@ -1,27 +1,28 @@
 <?php
 /**
- * The file for an "bad id length" exception
+ * The file for a "bad path separator" exception
  *
  * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
 
-namespace Jstewmc\Gravity\Id\Exception;
+namespace Jstewmc\Gravity\Path\Exception;
 
-use Jstewmc\Gravity\Exception;
+use Jstewmc\Gravity\Path\Data\Service;
+use Jstewmc\Gravity\Path\Data\Setting;
 
 /**
- * Thrown when an id contains less than three segments
+ * Thrown when an path doesn't contain a valid separator
  *
  * @since  0.1.0
  */
-class BadLength extends Exception
+class BadSeparator extends Exception
 {
     /* !Private properties */
 
     /**
-     * @var    string  the id's path
+     * @var    string  the string path
      * @since  0.1.0
      */
     private $path;
@@ -32,21 +33,23 @@ class BadLength extends Exception
     /**
      * Called when the exception is constructed
      *
-     * @param  string    $id  the id's path
+     * @param  string  $path  the invalid path
      * @since  0.1.0
      */
     public function __construct(string $path)
     {
         $this->path = $path;
 
-        $this->message = "Path '$path' does not contain three or more segments";
+        $this->message = "Path does not contain a service ("
+            . Service::SEPARATOR . ") or setting (" . Setting::SEPARATOR
+            . ") separator";
     }
 
 
     /* !Get methods */
 
     /**
-     * Returns the id's invalid path
+     * Returns the unparsable path
      *
      * @return  string
      * @since   0.1.0

@@ -9,8 +9,9 @@
 
 namespace Jstewmc\Gravity\Setting\Service;
 
-use Jstewmc\Gravity\Setting\Data\Setting;
 use Jstewmc\Gravity\Id\Data\Setting as Id;
+use Jstewmc\Gravity\Path\Data\Setting as Path;
+use Jstewmc\Gravity\Setting\Data\Setting;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -24,8 +25,11 @@ class ParseTest extends TestCase
     {
         $value = 1;
 
+        $path = $this->createMock(Path::class);
+        $path->method('getSegments')->willReturn(['foo', 'bar', 'baz']);
+
         $id = $this->createMock(Id::class);
-        $id->method('getSegments')->willReturn(['foo', 'bar', 'baz']);
+        $id->method('getPath')->willReturn($path);
 
         $expected = new Setting(
             $id,
@@ -55,8 +59,11 @@ class ParseTest extends TestCase
             ]
         ];
 
+        $path = $this->createMock(Path::class);
+        $path->method('getSegments')->willReturn(['foo', 'bar', 'baz']);
+
         $id = $this->createMock(Id::class);
-        $id->method('getSegments')->willReturn(['foo', 'bar', 'baz']);
+        $id->method('getPath')->willReturn($path);
 
         $expected = new Setting(
             $id,
@@ -80,8 +87,11 @@ class ParseTest extends TestCase
         // make sure the keys are downcased but values are preserved
         $value = ['QUX' => 'QUUX'];
 
+        $path = $this->createMock(Path::class);
+        $path->method('getSegments')->willReturn(['foo', 'bar', 'baz']);
+
         $id = $this->createMock(Id::class);
-        $id->method('getSegments')->willReturn(['foo', 'bar', 'baz']);
+        $id->method('getPath')->willReturn($path);
 
         $expected = new Setting(
             $id,

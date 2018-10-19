@@ -9,68 +9,69 @@
 
 namespace Jstewmc\Gravity\Id\Data;
 
+use Jstewmc\Gravity\Id\Exception\BadLength;
+use Jstewmc\Gravity\Path\Data\Path as Path;
+
 /**
- * Uniquely identifies a service or setting across the project
- * An identifier is composed of three or more case-insensitive segments (i.e., a
- * vendor name, a package name, and a path) separated by a separator character
- * (i.e., a backslash ("\") for services and period (".") for settings).
+ * Uniquely identifies a service or setting
+ *
+ * An identifier (aka, "id") is a path with three or more segments: vendor,
+ * package, class, etc. Requiring three or more segments follows the PSR-4
+ * convention and reduces the chances of a collision.
  *
  * @since  0.1.0
  */
 abstract class Id
 {
-    /* !Public constants */
-
-    /**
-     * @var    string  the identifier's separator character (MUST be defined
-     *     in each child class)
-     * @since  0.1.0
-     */
-    public const SEPARATOR = '';
-
     /* !Private properties */
 
     /**
-     * @var    string[]  the identifier's segments
+     * @var    Path  the identifier's path
      * @since  0.1.0
      */
-    private $segments;
+    private $path;
+
 
     /* !Magic methods */
 
     /**
-     * Called when the identifier is constructed
+     * Called when the id is constructed
      *
-     * @param   string[] $segments the identifier's segments
+     * @param   Path  $path  the idenfitier's path
+     * @throws  BadLength  if the path is too short
      * @since   0.1.0
      */
-    public function __construct(array $segments)
+    public function __construct(Path $path)
     {
-        $this->segments = $segments;
+        if ($path->getLength() < 3) {
+            throw new BadLength($path);
+        }
+
+        $this->path = $path;
     }
 
     /**
-     * Called when the identifier is treated like a string
+     * Called when the id is treated like a string
      *
      * @return  string
      * @since   0.1.0
      */
     public function __toString(): string
     {
-        return implode(static::SEPARATOR, $this->segments);
+        return (string)$this->path;
     }
 
 
     /* !Get methods */
 
     /**
-     * Returns the identifier's segments
+     * Returns the id's path
      *
-     * @return  string[]
+     * @return  Path
      * @since   0.1.0
      */
-    public function getSegments(): array
+    public function getPath(): Path
     {
-        return $this->segments;
+        return $this->path;
     }
 }

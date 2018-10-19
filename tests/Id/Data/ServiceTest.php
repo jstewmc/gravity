@@ -1,6 +1,6 @@
 <?php
 /**
- * The file for the service identifier tests
+ * The file for service id tests
  *
  * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
@@ -9,31 +9,39 @@
 
 namespace Jstewmc\Gravity\Id\Data;
 
+use Jstewmc\Gravity\Path\Data\Service as Path;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for a Id  identifier
+ * Tests for a service id
  *
  * @since  0.1.0
- * @group  identifier
  */
 class ServiceTest extends TestCase
 {
     public function testToString(): void
     {
-        $this->assertEquals(
-            'foo\bar\baz',
-            (string)new Service(['foo', 'bar', 'baz'])
-        );
+        $string = 'foo\bar\baz';
+
+        $path = $this->createMock(Path::class);
+        $path->method('__toString')->willReturn($string);
+        $path->method('getLength')->willReturn(3);
+
+        $id = new Service($path);
+
+        $this->assertEquals($string, (string)$id);
 
         return;
     }
 
-    public function testGetSegments(): void
+    public function testGetPath(): void
     {
-        $segments = ['foo', 'bar', 'baz'];
+        $path = $this->createMock(Path::class);
+        $path->method('getLength')->willReturn(3);
 
-        $this->assertEquals($segments, (new Service($segments))->getSegments());
+        $id = new Service($path);
+
+        $this->assertSame($path, $id->getPath());
 
         return;
     }

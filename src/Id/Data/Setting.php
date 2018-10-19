@@ -9,20 +9,25 @@
 
 namespace Jstewmc\Gravity\Id\Data;
 
+use Jstewmc\Gravity\Path\Data\Setting as Path;
+
 /**
  * A setting identifier
- *
- * A setting identifier is separated by the period (".") character.
  *
  * @since  0.1.0
  */
 class Setting extends Id
 {
-    /* !Public constants */
+    /* !Magic methods */
 
     /**
-     * @var    string  the setting identifier separator
+     * Called when the id is constructed
+     *
+     * @param  Path  $path
      * @since  0.1.0
      */
-    public const SEPARATOR = '.';
+    public function __construct(Path $path)
+    {
+        parent::__construct($path);
+    }
 }
