@@ -19,8 +19,8 @@ class TypeMismatch extends Exception
         $this->source      = $source;
         $this->destination = $destination;
 
-        $this->message = "Source type (". get_class($source) .") does not "
-            ."match destination type (". get_class($destination) .")";
+        $this->message = "Destination type (". get_class($destination)
+            .") does not match source type (". get_class($destination) .")";
     }
 
     public function getDestination(): Path
