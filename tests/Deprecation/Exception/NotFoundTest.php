@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for the "deprecation not found" exception tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -13,9 +10,7 @@ use Jstewmc\Gravity\Id\Data\Id;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for the "circular deprecation" exception
- *
- * @since  0.1.0
+ * @group  deprecation
  */
 class NotFoundTest extends TestCase
 {
