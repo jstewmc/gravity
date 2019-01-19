@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for the uarray_merge_recursive tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -10,11 +7,6 @@ namespace Jstewmc\Gravity;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * Tests for the uarray_merge_recursive custom function
- *
- * @since  0.1.0
- */
 class uarray_merge_recursive_test extends TestCase
 {
     // test that PHP's function behaves as we expect
@@ -27,15 +19,11 @@ class uarray_merge_recursive_test extends TestCase
         $actual   = array_merge_recursive($a, $b);
 
         $this->assertEquals($expected, $actual);
-
-        return;
     }
 
     public function testIfArraysAreEmpty(): void
     {
         $this->assertEquals([], uarray_merge_recursive([], []));
-
-        return;
     }
 
     public function testIfArraysAreOneDimensional(): void
@@ -47,8 +35,6 @@ class uarray_merge_recursive_test extends TestCase
         $actual   = uarray_merge_recursive($a, $b);
 
         $this->assertEquals($expected, $actual);
-
-        return;
     }
 
     public function testIfArraysAreManyDimensional(): void
@@ -60,8 +46,6 @@ class uarray_merge_recursive_test extends TestCase
         $actual   = uarray_merge_recursive($a, $b);
 
         $this->assertEquals($expected, $actual);
-
-        return;
     }
 
     public function testIfArraysAreMixedDimensions(): void
@@ -73,8 +57,6 @@ class uarray_merge_recursive_test extends TestCase
         $actual   = uarray_merge_recursive($a, $b);
 
         $this->assertEquals($expected, $actual);
-
-        return;
     }
 
     public function testIfArraysAreZeroIndexed(): void
@@ -86,7 +68,5 @@ class uarray_merge_recursive_test extends TestCase
         $actual   = uarray_merge_recursive($a, $b);
 
         $this->assertEquals($expected, $actual);
-
-        return;
     }
 }

@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for the custom uarray_merge_recursive function
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -33,11 +30,7 @@
  */
 function uarray_merge_recursive(array $a, array $b): array
 {
-    // loop through the second array
     foreach ($b as $k => $v) {
-        // if the value is an array, the key exists in $a, and the value in
-        // $a is an array, merge it recursively; otherwise, just set it in
-        // $a
         if (is_array($v) && isset($a[$k]) && is_array($a[$k])) {
             $a[$k] = uarray_merge_recursive($a[$k], $v);
         } elseif (is_integer($k)) {
