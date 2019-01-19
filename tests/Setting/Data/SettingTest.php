@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for setting tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -13,9 +10,7 @@ use Jstewmc\Gravity\Id\Data\Setting as Id;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for a setting
- *
- * @since  0.1.0
+ * @group  setting
  */
 class SettingTest extends TestCase
 {
@@ -26,19 +21,15 @@ class SettingTest extends TestCase
         $setting = new Setting($id, []);
 
         $this->assertSame($id, $setting->getId());
-
-        return;
     }
 
     public function testGetArray(): void
     {
-        $id = $this->createMock(Id::class);
-        $array      = ['foo' => 'bar'];
+        $id    = $this->createMock(Id::class);
+        $array = ['foo' => 'bar'];
 
         $setting = new Setting($id, $array);
 
         $this->assertEquals($array, $setting->getArray());
-
-        return;
     }
 }
