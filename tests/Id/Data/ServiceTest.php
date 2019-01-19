@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for service id tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -13,9 +10,7 @@ use Jstewmc\Gravity\Path\Data\Service as Path;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for a service id
- *
- * @since  0.1.0
+ * @group  id
  */
 class ServiceTest extends TestCase
 {

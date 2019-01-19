@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for the resolve-identifier service tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -16,9 +13,7 @@ use Jstewmc\Gravity\Project\Data\Project;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for the resolve-identifier service
- *
- * @since  0.1.0
+ * @group  id
  */
 class ResolveTest extends TestCase
 {

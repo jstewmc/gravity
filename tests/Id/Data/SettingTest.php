@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for setting id tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -13,9 +10,7 @@ use Jstewmc\Gravity\Path\Data\Setting as Path;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for a setting id
- *
- * @since  0.1.0
+ * @group  id
  */
 class SettingTest extends TestCase
 {
