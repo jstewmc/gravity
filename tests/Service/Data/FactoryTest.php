@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for factory service tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -13,9 +10,7 @@ use Jstewmc\Gravity\Id\Data\Service as Id;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for a factory service
- *
- * @since  0.1.0
+ * @group  service
  */
 class FactoryTest extends TestCase
 {
@@ -26,8 +21,6 @@ class FactoryTest extends TestCase
         $service = new Factory($id, 'foo');
 
         $this->assertSame($id, $service->getId());
-
-        return;
     }
 
     public function testGetDefinition(): void
@@ -37,7 +30,5 @@ class FactoryTest extends TestCase
         $service = new Factory($id, 'foo');
 
         $this->assertSame('foo', $service->getDefinition());
-
-        return;
     }
 }

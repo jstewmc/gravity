@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for instance service tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -14,9 +11,7 @@ use PHPUnit\Framework\TestCase;
 use StdClass;
 
 /**
- * Tests for an instance service
- *
- * @since  0.1.0
+ * @group  service
  */
 class InstanceTest extends TestCase
 {
@@ -27,19 +22,16 @@ class InstanceTest extends TestCase
         $service = new Instance($id, new StdClass());
 
         $this->assertSame($id, $service->getId());
-
-        return;
     }
 
     public function testGetDefinition(): void
     {
         $id = $this->createMock(Id::class);
+        
         $definition = new StdClass();
 
         $service = new Instance($id, $definition);
 
         $this->assertSame($definition, $service->getDefinition());
-
-        return;
     }
 }
