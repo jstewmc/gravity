@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for the setting path tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -12,9 +9,7 @@ namespace Jstewmc\Gravity\Path\Data;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for a setting path
- *
- * @since  0.1.0
+ * @group  path
  */
 class SettingTest extends TestCase
 {
@@ -24,20 +19,32 @@ class SettingTest extends TestCase
             'foo.bar.baz',
             (string)new Setting(['foo', 'bar', 'baz'])
         );
+    }
 
-        return;
+    public function testGetFirstSegment(): void
+    {
+        $this->assertEquals(
+            'foo',
+            (new Setting(['foo', 'baz', 'baz']))->getFirstSegment()
+        );
+    }
+
+    public function testGetLastSegment(): void
+    {
+        $this->assertEquals(
+            'baz',
+            (new Setting(['foo', 'bar', 'baz']))->getLastSegment()
+        );
     }
 
     public function testGetLength(): void
     {
-        $segments = ['foo', 'bar'];
+        $segments = ['foo', 'bar', 'baz'];
 
         $this->assertEquals(
             count($segments),
             (new Service($segments))->getLength()
         );
-
-        return;
     }
 
     public function testGetSegments(): void
@@ -48,7 +55,47 @@ class SettingTest extends TestCase
             $segments,
             (new Service($segments))->getSegments()
         );
+    }
 
-        return;
+    public function testHasLeadingSeparator(): void
+    {
+        $path = new Setting(['foo', 'bar', 'baz']);
+
+        $this->assertFalse($path->hasLeadingSeparator());
+    }
+
+    public function testHasTrailingSeparator(): void
+    {
+        $path = new Setting(['foo', 'bar', 'baz']);
+
+        $this->assertFalse($path->hasTrailingSeparator());
+    }
+
+    public function testPopSegment(): void
+    {
+        $path = new Setting(['foo', 'bar', 'baz']);
+
+        $this->assertEquals('baz', $path->popSegment());
+    }
+
+    public function testSetHasLeadingSeparator(): void
+    {
+        $path = new Setting(['foo', 'bar', 'baz']);
+
+        $this->assertSame($path, $path->setHasLeadingSeparator(true));
+    }
+
+    public function testSetHasTrailingSeparator(): void
+    {
+        $path = new Setting(['foo', 'bar', 'baz']);
+
+        $this->assertSame($path, $path->setHasLeadingSeparator(true));
+    }
+
+    public function testShiftSegment(): void
+    {
+        $path = new Setting(['foo', 'bar', 'baz']);
+
+        $this->assertEquals('foo', $path->shiftSegment());
     }
 }

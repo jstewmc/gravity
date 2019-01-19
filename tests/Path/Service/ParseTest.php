@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for the parse-path tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -10,20 +7,17 @@
 namespace Jstewmc\Gravity\Path\Service;
 
 use Jstewmc\Gravity\Path\Data\Setting as Path;
-use Jstewmc\Gravity\Path\Exception\BadLength;
-use Jstewmc\Gravity\Path\Exception\BadSeparator;
+use Jstewmc\Gravity\Path\Exception\{EmptyPath, InvalidSeparator};
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for the parse-path service
- *
- * @since  0.1.0
+ * @group  path
  */
 class ParseTest extends TestCase
 {
-    public function testInvokeThrowsExceptionIfBadSeparator(): void
+    public function testInvokeThrowsExceptionIfInvalidSeparator(): void
     {
-        $this->expectException(BadSeparator::class);
+        $this->expectException(InvalidSeparator::class);
 
         (new Parse())('foo-bar-baz');
 
@@ -32,7 +26,7 @@ class ParseTest extends TestCase
 
     public function testInvokeThrowsExceptionIfBadLengthBeforeParsing(): void
     {
-        $this->expectException(BadLength::class);
+        $this->expectException(EmptyPath::class);
 
         (new Parse())('');
 
@@ -41,7 +35,7 @@ class ParseTest extends TestCase
 
     public function testInvokeThrowsExceptionIfBadLengthAfterParsing(): void
     {
-        $this->expectException(BadLength::class);
+        $this->expectException(EmptyPath::class);
 
         (new Parse())('...');
 
@@ -98,7 +92,7 @@ class ParseTest extends TestCase
         $path = implode(Path::SEPARATOR, $segments);
         $path = Path::SEPARATOR . $path;
 
-        $expected = new Path($segments);
+        $expected = (new Path($segments))->setHasLeadingSeparator(true);
         $actual   = (new Parse())($path);
 
         $this->assertEquals($expected, $actual);
@@ -113,7 +107,7 @@ class ParseTest extends TestCase
         $path = implode(Path::SEPARATOR, $segments);
         $path = $path . Path::SEPARATOR;
 
-        $expected = new Path($segments);
+        $expected = (new Path($segments))->setHasTrailingSeparator(true);
         $actual   = (new Parse())($path);
 
         $this->assertEquals($expected, $actual);

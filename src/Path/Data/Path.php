@@ -1,90 +1,91 @@
 <?php
 /**
- * The file for a setting or service path
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  Jack Clayton 2018
  * @license    MIT
  */
 
 namespace Jstewmc\Gravity\Path\Data;
 
-use Jstewmc\Gravity\Path\Exception\BadLength;
+use Jstewmc\Gravity\Path\Exception\EmptyPath;
 
 /**
- * A setting or service path
- *
- * A path is a full or partial location of a service or setting in the project.
- * A path is composed of one or more case-insensitive segments separated by a
- * character, which differs by type.
- *
- * @since  0.1.0
+ * Partial location of a service or setting in the project using one or more
+ * segments, separated by a separator, with or without a leading- and trailing-
+ * separator.
  */
 abstract class Path
 {
-    /* !Private properties */
+    private $hasLeadingSeparator = false;
 
-    /**
-     * @var    string[]  the path's segments
-     * @since  0.1.0
-     */
+    private $hasTrailingSeparator = false;
+
     private $segments;
 
-
-    /* !Magic methods */
-
-    /**
-     * Called when the path is constructed
-     *
-     * @param   string[]  $segments  the path's segments
-     * @throws  BadLength  if $segments is empty
-     * @since   0.1.0
-     */
     public function __construct(array $segments)
     {
-        if (!$segments) {
-            throw new BadLength();
+        if (count($segments) === 0) {
+            throw new EmptyPath();
         }
 
         $this->segments = $segments;
     }
 
-    /**
-     * Called when the path is treated like a string
-     *
-     * @return  string
-     * @since   0.1.0
-     */
     public function __toString(): string
     {
         return implode(static::SEPARATOR, $this->segments);
     }
 
+    public function getFirstSegment(): string
+    {
+        return reset($this->segments);
+    }
 
-    /* !Get methods */
+    public function getLastSegment(): string
+    {
+        return end($this->segments);
+    }
 
-    /**
-     * Returns the path's segments
-     *
-     * @return  string[]
-     * @since   0.1.0
-     */
+    public function getLength(): int
+    {
+        return count($this->segments);
+    }
+
     public function getSegments(): array
     {
         return $this->segments;
     }
 
-
-    /* !Public methods */
-
-    /**
-     * Returns the path's length
-     *
-     * @return  int
-     * @since   0.1.0
-     */
-    public function getLength(): int
+    public function hasLeadingSeparator(): bool
     {
-        return count($this->segments);
+        return $this->hasLeadingSeparator;
+    }
+
+    public function hasTrailingSeparator(): bool
+    {
+        return $this->hasTrailingSeparator;
+    }
+
+    public function popSegment(): string
+    {
+        return array_pop($this->segments);
+    }
+
+    public function setHasLeadingSeparator(bool $hasLeadingSeparator): self
+    {
+        $this->hasLeadingSeparator = $hasLeadingSeparator;
+
+        return $this;
+    }
+
+    public function setHasTrailingSeparator(bool $hasTrailingSeparator): self
+    {
+        $this->hasTrailingSeparator = $hasTrailingSeparator;
+
+        return $this;
+    }
+
+    public function shiftSegment(): string
+    {
+        return array_shift($this->segments);
     }
 }
