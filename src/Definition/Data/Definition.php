@@ -8,9 +8,9 @@ namespace Jstewmc\Gravity\Definition\Data;
 
 abstract class Definition
 {
-    private $key;
+    protected $key;
 
-    private $value;
+    protected $value;
 
     public function __construct($key)
     {

@@ -40,4 +40,15 @@ class SettingTest extends TestCase
 
         return;
     }
+
+    public function testGetSegments(): void
+    {
+        $segments = ['foo', 'bar', 'baz'];
+
+        $path = $this->createMock(Path::class);
+        $path->method('getLength')->willReturn(3);
+        $path->method('getSegments')->willReturn($segments);
+
+        $this->assertEquals($segments, (new Setting($path))->getSegments());
+    }
 }

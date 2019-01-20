@@ -20,6 +20,12 @@ class Resolved extends Definition
         return parent::getKey();
     }
 
+    // delegate method
+    public function getSegments(): array
+    {
+        return $this->key->getSegments();
+    }
+
     public function isService()
     {
         return $this->key instanceof Id\Service;

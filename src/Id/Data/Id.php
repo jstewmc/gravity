@@ -35,4 +35,10 @@ abstract class Id
     {
         return $this->path;
     }
+
+    // delegate method for getting path's segments
+    public function getSegments(): array
+    {
+        return $this->path->getSegments();
+    }
 }

@@ -23,6 +23,16 @@ class ResolvedTest extends TestCase
         return;
     }
 
+    public function testGetSegments(): void
+    {
+        $segments = ['foo', 'bar', 'baz'];
+
+        $id = $this->createMock(Id::class);
+        $id->method('getSegments')->willReturn($segments);
+
+        $this->assertEquals($segments, (new Resolved($id))->getSegments());
+    }
+
     public function testGetValue(): void
     {
         $id = $this->createMock(Id::class);
