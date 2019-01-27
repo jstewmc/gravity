@@ -1,31 +1,24 @@
 <?php
 /**
- * The file for the "not directory" filesystem exception
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
 
-namespace Jstewmc\Gravity\Filesystem\Exception;
+namespace Jstewmc\Gravity\Root\Exception;
 
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for the "not directory" filesystem exception
- *
- * @since  0.1.0
+ * @group  root
  */
 class NotDirectoryTest extends TestCase
 {
     public function testGetPathname(): void
     {
-        $pathname = 'foo';
+        $pathname = '/path/to/foo';
 
         $exception = new NotDirectory($pathname);
 
         $this->assertEquals($pathname, $exception->getPathname());
-
-        return;
     }
 }
