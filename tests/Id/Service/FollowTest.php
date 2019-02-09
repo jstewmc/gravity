@@ -6,7 +6,7 @@
 
 namespace Jstewmc\Gravity\Id\Service;
 
-use Jstewmc\Gravity\Alias\Data\Alias;
+use Jstewmc\Gravity\Alias\Data\Resolved as Alias;
 use Jstewmc\Gravity\Deprecation\Service\Warn as WarnDeprecation;
 use Jstewmc\Gravity\Id\Data\Id;
 use Jstewmc\Gravity\Project\Data\Project;
@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @group  id
  */
-class ResolveTest extends TestCase
+class FollowTest extends TestCase
 {
     public function testInvokeReturnsIdIfNeitherDeprecatedNorAlias(): void
     {
@@ -27,7 +27,7 @@ class ResolveTest extends TestCase
 
         $warnDeprecation = $this->createMock(WarnDeprecation::class);
 
-        $sut = new Resolve($warnDeprecation);
+        $sut = new Follow($warnDeprecation);
 
         $expected = $id;
         $actual   = $sut($id, $project);
@@ -53,7 +53,7 @@ class ResolveTest extends TestCase
 
         $warnDeprecation->expects($this->once())->method('__invoke');
 
-        $sut = new Resolve($warnDeprecation);
+        $sut = new Follow($warnDeprecation);
 
         $expected = $id;
         $actual   = $sut($id, $project);
@@ -84,7 +84,7 @@ class ResolveTest extends TestCase
         // stub the warn-deprecation service (no expectations)
         $warnDeprecation = $this->createMock(WarnDeprecation::class);
 
-        $sut = new Resolve($warnDeprecation);
+        $sut = new Follow($warnDeprecation);
 
         $expected = $destination;
         $actual   = $sut($source, $project);
@@ -126,7 +126,7 @@ class ResolveTest extends TestCase
         // stub the warn-deprecation service (no expectations)
         $warnDeprecation = $this->createMock(WarnDeprecation::class);
 
-        $sut = new Resolve($warnDeprecation);
+        $sut = new Follow($warnDeprecation);
 
         $expected = $destination2;
         $actual   = $sut($source, $project);

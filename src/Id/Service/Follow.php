@@ -6,12 +6,11 @@
 
 namespace Jstewmc\Gravity\Id\Service;
 
-use Jstewmc\Gravity\Deprecation\Data\Deprecation;
 use Jstewmc\Gravity\Deprecation\Service\Warn as WarnDeprecation;
 use Jstewmc\Gravity\Id\Data\Id;
 use Jstewmc\Gravity\Project\Data\Project;
 
-class Resolve
+class Follow
 {
     private $warnDeprecation;
 
@@ -22,9 +21,9 @@ class Resolve
 
     public function __invoke(Id $id, Project $project): Id
     {
-        // trigger now or never
+        // trigger deprecations now or never
         if ($project->hasDeprecation($id)) {
-            $this->warnDeprecation($project->getDeprecation($id));
+            ($this->warnDeprecation)($project->getDeprecation($id));
         }
 
         if ($project->hasAlias($id)) {
@@ -33,10 +32,5 @@ class Resolve
         }
 
         return $id;
-    }
-
-    private function warnDeprecation(Deprecation $deprecation): void
-    {
-        ($this->warnDeprecation)($deprecation);
     }
 }
