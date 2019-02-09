@@ -6,39 +6,37 @@
 
 namespace Jstewmc\Gravity\Project\Data;
 
-use Jstewmc\Gravity\Alias\Data\Alias;
+use Jstewmc\Gravity\Alias\Data\Resolved as Alias;
 use Jstewmc\Gravity\Alias\Exception\NotFound as AliasNotFound;
-use Jstewmc\Gravity\Deprecation\Data\Deprecation;
+use Jstewmc\Gravity\Deprecation\Data\Resolved as Deprecation;
 use Jstewmc\Gravity\Deprecation\Exception\NotFound as DeprecationNotFound;
-use Jstewmc\Gravity\Id\Data\Id;
-use Jstewmc\Gravity\Id\Data\Service as ServiceId;
-use Jstewmc\Gravity\Id\Data\Setting as SettingId;
+use Jstewmc\Gravity\Id\Data\{
+    Id,
+    Service as ServiceId,
+    Setting as SettingId
+};
+use Jstewmc\Gravity\Root\Data\Root;
 use Jstewmc\Gravity\Service\Data\Service;
 use Jstewmc\Gravity\Service\Exception\NotFound as ServiceNotFound;
 use Jstewmc\Gravity\Setting\Data\Setting;
 use Jstewmc\Gravity\Setting\Exception\NotFound as SettingNotFound;
 
-/**
- * A container for aliases, deprecations, services, settings, etc
- */
 class Project
 {
-    /**
-     * @var  Alias[]  the project's aliases, indexed by source
-     */
     private $aliases = [];
 
-    /**
-     * @var  Deprecation[]  the project's deprecations, indexed by source
-     */
     private $deprecations = [];
 
-    /**
-     * @var  Service[]  the project's services, indexed by source
-     */
+    private $root;
+
     private $services = [];
 
     private $settings = [];
+
+    public function __construct(Root $root)
+    {
+        $this->root = $root;
+    }
 
     public function addAlias(Alias $alias): self
     {

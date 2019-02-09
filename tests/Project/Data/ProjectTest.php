@@ -6,14 +6,15 @@
 
 namespace Jstewmc\Gravity\Project\Data;
 
-use Jstewmc\Gravity\Alias\Data\Alias;
+use Jstewmc\Gravity\Alias\Data\Resolved as Alias;
 use Jstewmc\Gravity\Alias\Exception\NotFound as AliasNotFound;
-use Jstewmc\Gravity\Deprecation\Data\Deprecation;
+use Jstewmc\Gravity\Deprecation\Data\Resolved as Deprecation;
 use Jstewmc\Gravity\Deprecation\Exception\NotFound as DeprecationNotFound;
 use Jstewmc\Gravity\Id\Data\Id;
 use Jstewmc\Gravity\Id\Data\Service as ServiceId;
 use Jstewmc\Gravity\Id\Data\Setting as SettingId;
 use Jstewmc\Gravity\Path\Data\Setting as SettingPath;
+use Jstewmc\Gravity\Root\Data\Root;
 use Jstewmc\Gravity\Service\Data\Service;
 use Jstewmc\Gravity\Service\Exception\NotFound as ServiceNotFound;
 use Jstewmc\Gravity\Setting\Data\Setting;
@@ -29,7 +30,7 @@ class ProjectTest extends TestCase
     {
         $alias = $this->createMock(Alias::class);
 
-        $project = new Project();
+        $project = new Project($this->mockRoot());
 
         $this->assertSame($project, $project->addAlias($alias));
     }
@@ -38,7 +39,7 @@ class ProjectTest extends TestCase
     {
         $deprecation = $this->createMock(Deprecation::class);
 
-        $project = new Project();
+        $project = new Project($this->mockRoot());
 
         $this->assertSame($project, $project->addDeprecation($deprecation));
     }
@@ -47,7 +48,7 @@ class ProjectTest extends TestCase
     {
         $service = $this->createMock(Service::class);
 
-        $project = new Project();
+        $project = new Project($this->mockRoot());
 
         $this->assertSame($project, $project->addService($service));
     }
@@ -57,7 +58,7 @@ class ProjectTest extends TestCase
         $setting = $this->createMock(Setting::class);
         $setting->method('getArray')->willReturn([]);
 
-        $project = new Project();
+        $project = new Project($this->mockRoot());
 
         $this->assertSame($project, $project->addSetting($setting));
     }
@@ -68,7 +69,7 @@ class ProjectTest extends TestCase
 
         $id = $this->createMock(Id::class);
 
-        (new Project())->getAlias($id);
+        (new Project($this->mockRoot()))->getAlias($id);
     }
 
     public function testGetAliasReturnsAliasIfDoesExist(): void
@@ -79,7 +80,7 @@ class ProjectTest extends TestCase
         $alias = $this->createMock(Alias::class);
         $alias->method('getSource')->willReturn($id);
 
-        $project = (new Project())->addAlias($alias);
+        $project = (new Project($this->mockRoot()))->addAlias($alias);
 
         $this->assertSame($alias, $project->getAlias($id));
     }
@@ -90,7 +91,7 @@ class ProjectTest extends TestCase
 
         $id = $this->createMock(Id::class);
 
-        (new Project())->getDeprecation($id);
+        (new Project($this->mockRoot()))->getDeprecation($id);
     }
 
     public function testGetDeprecationReturnsDeprecationIfDoesExist(): void
@@ -101,7 +102,7 @@ class ProjectTest extends TestCase
         $deprecation = $this->createMock(Deprecation::class);
         $deprecation->method('getSource')->willReturn($id);
 
-        $project = (new Project())->addDeprecation($deprecation);
+        $project = (new Project($this->mockRoot()))->addDeprecation($deprecation);
 
         $this->assertSame($deprecation, $project->getDeprecation($id));
     }
@@ -112,7 +113,7 @@ class ProjectTest extends TestCase
 
         $id = $this->createMock(ServiceId::class);
 
-        (new Project())->getService($id);
+        (new Project($this->mockRoot()))->getService($id);
     }
 
     public function testGetServiceReturnsServiceIfDoesExist(): void
@@ -123,7 +124,7 @@ class ProjectTest extends TestCase
         $service = $this->createMock(Service::class);
         $service->method('getId')->willReturn($id);
 
-        $project = (new Project())->addService($service);
+        $project = (new Project($this->mockRoot()))->addService($service);
 
         $this->assertSame($service, $project->getService($id));
     }
@@ -131,11 +132,11 @@ class ProjectTest extends TestCase
     public function testGetSettingThrowsExceptionIfDoesNotExist(): void
     {
         $this->expectException(SettingNotFound::class);
-        
+
         $id = $this->createMock(SettingId::class);
         $id->method('getSegments')->willReturn(['foo', 'bar', 'baz']);
 
-        (new Project())->getSetting($id);
+        (new Project($this->mockRoot()))->getSetting($id);
     }
 
     public function testGetSettingReturnsSettingIfDoesExist(): void
@@ -148,7 +149,7 @@ class ProjectTest extends TestCase
         $setting->method('getId')->willReturn($id);
         $setting->method('getArray')->willReturn(['foo' => ['bar' => ['baz' => 1]]]);
 
-        $project = (new Project())->addSetting($setting);
+        $project = (new Project($this->mockRoot()))->addSetting($setting);
 
         $this->assertEquals(1, $project->getSetting($id));
     }
@@ -157,7 +158,7 @@ class ProjectTest extends TestCase
     {
         $id = $this->createMock(Id::class);
 
-        $this->assertFalse((new Project())->hasAlias($id));
+        $this->assertFalse((new Project($this->mockRoot()))->hasAlias($id));
 
         return;
     }
@@ -170,7 +171,7 @@ class ProjectTest extends TestCase
         $alias = $this->createMock(Alias::class);
         $alias->method('getSource')->willReturn($id);
 
-        $project = (new Project())->addAlias($alias);
+        $project = (new Project($this->mockRoot()))->addAlias($alias);
 
         $this->assertTrue($project->hasAlias($id));
     }
@@ -179,7 +180,7 @@ class ProjectTest extends TestCase
     {
         $id = $this->createMock(Id::class);
 
-        $this->assertFalse((new Project())->hasDeprecation($id));
+        $this->assertFalse((new Project($this->mockRoot()))->hasDeprecation($id));
     }
 
     public function testHasDeprecationReturnsTrueIfDoesExist(): void
@@ -190,7 +191,7 @@ class ProjectTest extends TestCase
         $deprecation = $this->createMock(Deprecation::class);
         $deprecation->method('getSource')->willReturn($id);
 
-        $project = (new Project())->addDeprecation($deprecation);
+        $project = (new Project($this->mockRoot()))->addDeprecation($deprecation);
 
         $this->assertTrue($project->hasDeprecation($id));
     }
@@ -199,7 +200,7 @@ class ProjectTest extends TestCase
     {
         $id = $this->createMock(Id::class);
 
-        $this->assertFalse((new Project())->hasService($id));
+        $this->assertFalse((new Project($this->mockRoot()))->hasService($id));
     }
 
     public function testHasServiceReturnsTrueIfDoesExist(): void
@@ -210,7 +211,7 @@ class ProjectTest extends TestCase
         $service = $this->createMock(Service::class);
         $service->method('getId')->willReturn($id);
 
-        $project = (new Project())->addService($service);
+        $project = (new Project($this->mockRoot()))->addService($service);
 
         $this->assertTrue($project->hasService($id));
     }
@@ -220,7 +221,7 @@ class ProjectTest extends TestCase
         $id = $this->createMock(Id::class);
         $id->method('getSegments')->willReturn(['foo', 'bar', 'baz']);
 
-        $this->assertFalse((new Project())->hasSetting($id));
+        $this->assertFalse((new Project($this->mockRoot()))->hasSetting($id));
     }
 
     public function testHasSettingReturnsTrueIfDoesExist(): void
@@ -236,8 +237,13 @@ class ProjectTest extends TestCase
         $setting->method('getId')->willReturn($id);
         $setting->method('getArray')->willReturn(['foo' => ['bar' => ['baz' => 1]]]);
 
-        $project = (new Project())->addSetting($setting);
+        $project = (new Project($this->mockRoot()))->addSetting($setting);
 
         $this->assertTrue($project->hasSetting($id));
+    }
+
+    private function mockRoot(): Root
+    {
+        return $this->createMock(Root::class);
     }
 }
