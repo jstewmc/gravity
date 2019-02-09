@@ -1,0 +1,73 @@
+<?php
+/**
+ * @copyright  2018 Jack Clayton
+ * @license    MIT
+ */
+
+namespace Jstewmc\Gravity\Setting\Service;
+
+use Jstewmc\Gravity\{Cache, Id, Project};
+use PHPUnit\Framework\TestCase;
+
+/**
+ * @group  setting
+ */
+class GetTest extends TestCase
+{
+    public function testInvokeIfCached(): void
+    {
+        $value = 1;
+        $cache = $this->mockCache(true);
+        $cache->method('get')->willReturn($value);
+
+        $sut = new Get($cache);
+
+        // set up throw-away arguments
+        $id      = $this->mockId();
+        $project = $this->mockProject();
+
+        $expected = $value;
+        $actual   = $sut($id, $project);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testInvokeIfNotCached(): void
+    {
+        $cache = $this->mockCache(false);
+
+        $value   = 1;
+        $project = $this->mockProject();
+        $project->method('getSetting')->willReturn($value);
+
+        $sut = new Get($cache);
+
+        // set up throw-away arguments
+        $id = $this->mockId();
+
+        $expected = $value;
+        $actual   = $sut($id, $project);
+
+        $this->assertEquals($expected, $actual);
+
+        return;
+    }
+
+    private function mockCache($isCached): Cache\Data\Cache
+    {
+        $cache = $this->createMock(Cache\Data\Cache::class);
+        $cache->method('has')->willReturn($isCached);
+
+        return $cache;
+    }
+
+    private function mockId(): Id\Data\Setting
+    {
+        return $this->createMock(Id\Data\Setting::class);
+    }
+
+    private function mockProject(): Project\Data\Project
+    {
+        return $this->createMock(Project\Data\Project::class);
+    }
+}
