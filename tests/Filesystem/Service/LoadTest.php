@@ -1,90 +1,33 @@
 <?php
 /**
- * The file for the load-filesystem service tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
 
 namespace Jstewmc\Gravity\Filesystem\Service;
 
-use Jstewmc\Gravity\Filesystem\Data\Filesystem;
-use Jstewmc\Gravity\Manager;
-use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
+use Jstewmc\Gravity\File;
+use Jstewmc\Gravity\Filesystem\Data\{Loaded, Traversed};
 use PHPUnit\Framework\TestCase;
-use SplFileInfo;
 
 /**
- * Tests for the load-filesystem service
- *
- * @since  0.1.0
+ * @group  filesystem
  */
 class LoadTest extends TestCase
 {
-    /**
-     * @var    vfsStreamDirectory  the "root" virtual file system directory
-     * @since  0.1.0
-     */
-    private $root;
-
-    /**
-     * Called before each test
-     *
-     * @return  void
-     */
-    public function setUp(): void
-    {
-        $this->root = vfsStream::setup('test');
-
-        return;
-    }
-
-
     public function testInvoke(): void
     {
-        // create a valid gravity file (location doesn't matter)
-        $file = vfsStream::newFile('foo.php')
-            ->withContent(
-                '<?php
-                $g->alias("foo\bar\baz", "foo\bar\qux");
-                $g->set("foo\bar\qux");
-                $g->deprecate("foo\bar\baz");
-            '
-            )
-            ->at($this->root);
+        $traversed = new Traversed([]);
 
-        // set up a filesystem to return the file
-        $file = new SplFileInfo($file->url());
+        $get = $this->createMock(File\Service\Get::class);
 
-        $filesystem = $this->createMock(Filesystem::class);
-        $filesystem->method('getFiles')->willReturn([$file]);
+        $run = $this->createMock(File\Service\Run::class);
 
-        // set up the manager's expectations (skip the original constructor to
-        // avoid bootstrapping, loading, etc)
-        $manager = $this->getMockBuilder(Manager::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['alias', 'deprecate', 'set'])
-            ->getMock();
+        $sut = new Load($get, $run);
 
-        $manager
-            ->expects($this->once())
-            ->method('alias')
-            ->with('foo\bar\baz', 'foo\bar\qux');
+        $expected = new Loaded([]);
+        $actual   = $sut($traversed);
 
-        $manager
-            ->expects($this->once())
-            ->method('deprecate')
-            ->with('foo\bar\baz');
-
-        $manager
-            ->expects($this->once())
-            ->method('set')
-            ->with('foo\bar\qux');
-
-        (new Load())($filesystem, $manager);
-
-        return;
+        $this->assertEquals($expected, $actual);
     }
 }

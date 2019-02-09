@@ -1,30 +1,32 @@
 <?php
 /**
- * The file for the read-filesystem service tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
 
 namespace Jstewmc\Gravity\Filesystem\Service;
 
-use Jstewmc\Gravity\Filesystem\Data\Filesystem;
-use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
+use Jstewmc\Gravity\Filesystem\Data\Traversed;
+use Jstewmc\Gravity\Root\Data\Root;
+use org\bovigo\vfs\{vfsStream, vfsStreamDirectory};
 use PHPUnit\Framework\TestCase;
 use SplFileInfo;
 
 /**
- * Tests for the read-filesystem service
- *
- * @since  0.1.0
+ * @group  filesystem
  */
-class ReadTest extends TestCase
+class TraverseTest extends TestCase
 {
     /**
-     * @var    vfsStreamDirectory  the "root" virtual file system directory
-     * @since  0.1.0
+     * @var  string[]  an array of directory names
+     */
+    private $directories = [
+        'gravity' => '.gravity',
+        'vendors' => 'vendor'
+    ];
+
+    /**
+     * @var  vfsStreamDirectory  the "root" virtual file system directory
      */
     private $root;
 
@@ -42,8 +44,12 @@ class ReadTest extends TestCase
 
     public function testInvokeReturnsFilesystemIfEmpty(): void
     {
-        $expected = new Filesystem([]);
-        $actual   = (new Read())($this->root->url());
+        $root = new Root($this->root->url());
+
+        $sut = new Traverse($this->directories);
+
+        $expected = new Traversed([]);
+        $actual   = $sut($root);
 
         $this->assertEquals($expected, $actual);
 
@@ -52,9 +58,11 @@ class ReadTest extends TestCase
 
     public function testInvokeReturnsFilesystemIfProjectHasFiles(): void
     {
+        $root = new Root($this->root->url());
+
         // create a project-level gravity directory
         $gravity = vfsStream::newDirectory(
-            Filesystem::DIRECTORY_NAME_GRAVITY
+            $this->directories['gravity']
         )->at($this->root);
 
         // create a file outside a sub-directory
@@ -69,12 +77,14 @@ class ReadTest extends TestCase
         $subDirectory3 = vfsStream::newDirectory('qux')->at($subDirectory2);
         $file3 = vfsStream::newFile('qux.php')->at($subDirectory3);
 
-        $expected = new Filesystem([
+        $sut = new Traverse($this->directories);
+
+        $expected = new Traversed([
             new SplFileInfo($file1->url()),
             new SplFileInfo($file2->url()),
             new SplFileInfo($file3->url())
         ]);
-        $actual = (new Read())($this->root->url());
+        $actual = $sut($root);
 
         $this->assertEquals($expected, $actual);
 
@@ -83,37 +93,41 @@ class ReadTest extends TestCase
 
     public function testInvokeReturnsFilesystemIfPackagesHaveFiles(): void
     {
-        // create the Composer directory
+        $root = new Root($this->root->url());
+
+        // create Composer's directory
         $vendors = vfsStream::newDirectory(
-            Filesystem::DIRECTORY_NAME_VENDORS
+            $this->directories['vendors']
         )->at($this->root);
 
         // create a vendor, package, and gravity directory
         $vendor1  = vfsStream::newDirectory('vendor1')->at($vendors);
         $package1 = vfsStream::newDirectory('package1')->at($vendor1);
-        $gravity1 = vfsStream::newDirectory(Filesystem::DIRECTORY_NAME_GRAVITY)
+        $gravity1 = vfsStream::newDirectory($this->directories['gravity'])
             ->at($package1);
         $file1    = vfsStream::newFile('foo.php')->at($gravity1);
 
         // create a second vendor, package, and gravity directory
         $vendor2  = vfsStream::newDirectory('vendor2')->at($vendors);
         $package2 = vfsStream::newDirectory('package1')->at($vendor2);
-        $gravity2 = vfsStream::newDirectory(Filesystem::DIRECTORY_NAME_GRAVITY)
+        $gravity2 = vfsStream::newDirectory($this->directories['gravity'])
             ->at($package2);
         $file2    = vfsStream::newFile('bar.php')->at($gravity2);
 
         // create a second package in the second vendor directory
         $package3 = vfsStream::newDirectory('package2')->at($vendor2);
-        $gravity3 = vfsStream::newDirectory(Filesystem::DIRECTORY_NAME_GRAVITY)
+        $gravity3 = vfsStream::newDirectory($this->directories['gravity'])
             ->at($package3);
         $file3    = vfsStream::newFile('baz.php')->at($gravity3);
 
-        $expected = new Filesystem([
+        $sut = new Traverse($this->directories);
+
+        $expected = new Traversed([
             new SplFileInfo($file1->url()),
             new SplFileInfo($file2->url()),
             new SplFileInfo($file3->url())
         ]);
-        $actual = (new Read())($this->root->url());
+        $actual = $sut($root);
 
         $this->assertEquals($expected, $actual);
 

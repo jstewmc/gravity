@@ -1,0 +1,20 @@
+<?php
+/**
+ * @copyright  2018 Jack Clayton
+ * @license    MIT
+ */
+
+namespace Jstewmc\Gravity\Filesystem\Data;
+
+use PHPUnit\Framework\TestCase;
+
+/**
+ * @group  filesystem
+ */
+class TraversedTest extends TestCase
+{
+    public function testGetFiles(): void
+    {
+        $this->assertEquals([], (new Traversed([]))->getFiles());
+    }
+}
