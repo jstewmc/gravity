@@ -1,124 +1,171 @@
 <?php
 /**
- * The file for the manager tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
 
 namespace Jstewmc\Gravity;
 
+use Jstewmc\Gravity\{Id, Ns, Project, Service, Setting};
 use PHPUnit\Framework\TestCase;
 use StdClass;
 
 /**
- * Tests for the manager
- *
- * Hmm, none of the manager's services are injected, so we have no control
- * over them. We can't mock or stub them. I guess we have to test the manager's
- * literal reurn values?
- *
- * @since  0.1.0
+ * @group  manager
  */
 class ManagerTest extends TestCase
 {
-    public function testAlias(): void
+    public function testEnter()
     {
-        $g = new Manager();
+        $namespace = $this->createMock(Ns\Data\Parsed::class);
 
-        $this->assertSame($g, $g->alias('foo.baz.baz', 'foo.bar.qux'));
+        $manager = new Manager(
+            $this->createMock(Project\Data\Project::class),
+            $this->createMock(Id\Service\Get::class),
+            $this->createMock(Service\Service\Get::class),
+            $this->createMock(Setting\Service\Get::class)
+        );
+
+        $this->assertNull($manager->enter($namespace));
+    }
+
+    public function testExit()
+    {
+        $namespace = $this->createMock(Ns\Data\Parsed::class);
+
+        $manager = new Manager(
+            $this->createMock(Project\Data\Project::class),
+            $this->createMock(Id\Service\Get::class),
+            $this->createMock(Service\Service\Get::class),
+            $this->createMock(Setting\Service\Get::class)
+        );
+
+        $manager->enter($namespace);
+
+        $this->assertNull($manager->exit());
+    }
+
+    public function testGetSetting(): void
+    {
+        $path  = 'foo.bar.baz';
+        $value = 1;
+
+        $id    = $this->createMock(Id\Data\Setting::class);
+        $getId = $this->createMock(Id\Service\Get::class);
+        $getId->method('__invoke')->willReturn($id);
+
+        $getService = $this->createMock(Service\Service\Get::class);
+
+        $getSetting = $this->createMock(Setting\Service\Get::class);
+        $getSetting->method('__invoke')->willReturn($value);
+
+        $project = $this->createMock(Project\Data\Project::class);
+
+        $g = new Manager($project, $getId, $getService, $getSetting);
+
+        $expected = $value;
+        $actual   = $g->get($path);
+
+        $this->assertEquals($expected, $actual);
 
         return;
     }
 
-    public function testDeprecate(): void
+    public function testGetService(): void
     {
-        $g = new Manager();
+        $path     = 'Foo\Bar\Baz';
+        $instance = new StdClass();
 
-        $this->assertSame($g, $g->deprecate('foo.baz.baz'));
+        $id    = $this->createMock(Id\Data\Service::class);
+        $getId = $this->createMock(Id\Service\Get::class);
+        $getId->method('__invoke')->willReturn($id);
+
+        $getService = $this->createMock(Service\Service\Get::class);
+        $getService->method('__invoke')->willReturn($instance);
+
+        $getSetting = $this->createMock(Setting\Service\Get::class);
+
+        $project = $this->createMock(Project\Data\Project::class);
+
+        $g = new Manager($project, $getId, $getService, $getSetting);
+
+        $expected = $instance;
+        $actual   = $g->get($path);
+
+        $this->assertEquals($expected, $actual);
 
         return;
     }
 
-    public function testDestroy(): void
+    public function testHasIfServiceDoesExist(): void
     {
-        $this->assertNull((new Manager())->destroy());
+        $id = $this->createMock(Id\Data\Service::class);
 
-        return;
+        $getId = $this->createMock(Id\Service\Get::class);
+        $getId->method('__invoke')->willReturn($id);
+
+        $getService = $this->createMock(Service\Service\Get::class);
+        $getSetting = $this->createMock(Setting\Service\Get::class);
+
+        $project = $this->createMock(Project\Data\Project::class);
+        $project->method('hasService')->willReturn(true);
+
+        $g = new Manager($project, $getId, $getService, $getSetting);
+
+        $this->assertTrue($g->has('Foo\Bar\Baz'));
     }
 
-    public function testGet(): void
+    public function testHasIfServiceDoesNotExist(): void
     {
-        $identifier = 'foo.bar.baz';
-        $value      = 1;
+        $id = $this->createMock(Id\Data\Service::class);
 
-        $g = new Manager();
+        $getId = $this->createMock(Id\Service\Get::class);
+        $getId->method('__invoke')->willReturn($id);
 
-        $g->set($identifier, $value);
+        $getService = $this->createMock(Service\Service\Get::class);
+        $getSetting = $this->createMock(Setting\Service\Get::class);
 
-        $this->assertEquals($value, $g->get($identifier));
+        $project = $this->createMock(Project\Data\Project::class);
+        $project->method('hasService')->willReturn(false);
 
-        return;
+        $g = new Manager($project, $getId, $getService, $getSetting);
+
+        $this->assertFalse($g->has('Foo\Bar\Baz'));
     }
 
-    public function testHasReturnsFalseIfSettingDoesNotExist(): void
+    public function testHasIfSettingDoesExist(): void
     {
-        $g = new Manager();
+        $id = $this->createMock(Id\Data\Setting::class);
 
-        $this->assertFalse($g->has('foo.baz.baz'));
+        $getId = $this->createMock(Id\Service\Get::class);
+        $getId->method('__invoke')->willReturn($id);
 
-        return;
-    }
+        $getService = $this->createMock(Service\Service\Get::class);
+        $getSetting = $this->createMock(Setting\Service\Get::class);
 
-    public function testHasReturnsFalseIfServiceDoesNotExist(): void
-    {
-        $g = new Manager();
+        $project = $this->createMock(Project\Data\Project::class);
+        $project->method('hasSetting')->willReturn(true);
 
-        $this->assertFalse($g->has('foo\bar\baz'));
-
-        return;
-    }
-
-    public function testHasReturnsTrueIfSettingDoesExist(): void
-    {
-        $g = new Manager();
-
-        $g->set('foo.bar.baz', 1);
+        $g = new Manager($project, $getId, $getService, $getSetting);
 
         $this->assertTrue($g->has('foo.bar.baz'));
-
-        return;
     }
 
-    public function testHasReturnsTrueIfServiceDoesExist(): void
+    public function testHasIfSettingDoesNotExist(): void
     {
-        $g = new Manager();
+        $id = $this->createMock(Id\Data\Setting::class);
 
-        $g->set('foo\bar\baz', function () {
-            return new StdClass();
-        });
+        $getId = $this->createMock(Id\Service\Get::class);
+        $getId->method('__invoke')->willReturn($id);
 
-        $this->assertTrue($g->has('foo\bar\baz'));
+        $getService = $this->createMock(Service\Service\Get::class);
+        $getSetting = $this->createMock(Setting\Service\Get::class);
 
-        return;
-    }
+        $project = $this->createMock(Project\Data\Project::class);
+        $project->method('hasSetting')->willReturn(false);
 
-    public function testSetReturnsSelfIfSetting(): void
-    {
-        $g = new Manager();
+        $g = new Manager($project, $getId, $getService, $getSetting);
 
-        $this->assertSame($g, $g->set('foo.baz.baz', 1));
-
-        return;
-    }
-
-    public function testSetReturnsSelfIfService(): void
-    {
-        $g = new Manager();
-
-        $this->assertSame($g, $g->set('foo\bar\baz', new StdClass()));
-
-        return;
+        $this->assertFalse($g->has('foo.bar.baz'));
     }
 }
