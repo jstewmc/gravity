@@ -13,7 +13,7 @@ class NotDirectory extends Exception
     public function __construct(string $pathname)
     {
         $this->pathname = $pathname;
-        $this->message  = "'$pathname' is not a directory";
+        $this->message  = "Root '$pathname' is not a directory";
     }
 
     public function getPathname(): string

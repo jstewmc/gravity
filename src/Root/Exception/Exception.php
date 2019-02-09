@@ -6,9 +6,7 @@
 
 namespace Jstewmc\Gravity\Root\Exception;
 
-use Jstewmc\Gravity\Exception as GravityException;
-
-abstract class Exception extends GravityException
+abstract class Exception extends \Jstewmc\Gravity\Exception
 {
     // nothing yet
 }

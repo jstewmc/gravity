@@ -6,7 +6,6 @@
 
 namespace Jstewmc\Gravity\Root\Service;
 
-use Jstewmc\Gravity\Filesystem\Data\Filesystem;
 use Jstewmc\Gravity\Root\Data\Root;
 use Jstewmc\Gravity\Root\Exception\{NotDirectory, NotFound, NotReadable};
 use SplFileInfo;
@@ -15,29 +14,20 @@ use SplFileInfo;
  * Finds the project's root directory
  *
  * If this file's parent directories include a vendors directory, I'll assume
- * Gravity was installed by Composer. Gravity is likely being used for real.
- *
- * Otherwise, I'll return the package's root directory. Gravity is likely
- * being tested or developed.
- *
- * I assume the following directory structure:
+ * Gravity was installed by Composer. Otherwise, I'll return the package's root:
  *
  *     <root>                                # the project's root directory
  *     |-- vendor                            # the vendors directory
  *     |   |-- jstewmc
  *     |   |   |-- gravity                   # the package's root directory
  *     |   |   |   |-- src
- *     |   |   |   |   |-- Root
+ *     |   |   |   |   |-- Project
  *     |   |   |   |   |   |-- Service
  *     |   |   |   |   |   |   |-- __FILE__  # this file
  *     7   6   5   4   3   2   1
- *
- * @since  0.1.0
  */
 class Find
 {
-    /* !Private constants */
-
     /**
      * @var  int  the number of levels to the package's root directory
      */
@@ -52,6 +42,13 @@ class Find
      * @var  int  the number of levels to the vendors directory
      */
     private const VENDORS_DIRECTORY_LEVELS = self::PROJECT_DIRECTORY_LEVELS - 1;
+
+    private $vendorsDirectoryName;
+
+    public function __construct(string $vendorsDirectoryName)
+    {
+        $this->vendorsDirectoryName = $vendorsDirectoryName;
+    }
 
     public function __invoke(): Root
     {
@@ -102,7 +99,7 @@ class Find
             return false;
         }
 
-        if ($directory->getFilename() !== Filesystem::DIRECTORY_NAME_VENDORS) {
+        if ($directory->getFilename() !== $this->vendorsDirectoryName) {
             return false;
         }
 

@@ -16,7 +16,7 @@ class FindTest extends TestCase
     public function testInvokeReturnsPackageDirectoryIfNotComposer(): void
     {
         $expected = realpath(dirname(__FILE__, 4));
-        $actual   = (new Find())();
+        $actual   = (new Find('vendor'))();
 
         $this->assertEquals($expected, $actual);
 
