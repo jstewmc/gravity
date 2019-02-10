@@ -6,7 +6,7 @@
 
 namespace Jstewmc\Gravity\Service\Service;
 
-use Jstewmc\Gravity\Manager;
+use Jstewmc\Gravity\Manager\Data\Manager;
 use Jstewmc\Gravity\Service\Data\{Factory, Fx, Instance, Newable, Service};
 
 class Instantiate
@@ -38,13 +38,13 @@ class Instantiate
     {
         $fx = $service->getDefinition();
 
-        // TODO $g->pushNamespace($service->getNamespace());
+        $g->enter($service->getNamespace());
 
         $fx = $fx->bindTo($g);
 
         $service = $fx();
 
-        // TODO $g->popNamespace();
+        $g->exit();
 
         return $service;
     }
@@ -56,7 +56,11 @@ class Instantiate
 
     public function instantiateNewable(Newable $service): object
     {
-        $classname = (string)$service->getId();
+        $segments = $service->getId()->getSegments();
+        $segments = array_map('ucfirst', $segments);
+
+        $classname = implode('\\', $segments);
+        $classname = '\\' . $classname;
 
         return new $classname;
     }

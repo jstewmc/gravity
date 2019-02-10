@@ -25,7 +25,7 @@ use Jstewmc\Gravity\{
 use Jstewmc\Gravity\Project\Data\Project;
 
 /**
- * Not short, but it's as if Gravity bootstrapped itself.
+ * Excludes services defined during bootstrap (e.g., Path, Id, GetX, etc).
  */
 class Bootstrap
 {
@@ -36,22 +36,15 @@ class Bootstrap
         $this->namespace = new Ns\Data\Parsed();
     }
 
-    public function __invoke(Project $project, array $options = []): Project
+    public function __invoke(Project $project): Project
     {
-        $defaults = [
-            'cache' => null
-        ];
-
-        $options = array_merge($defaults, $options);
-
-        $project = $this->bootstrapServices($project, $options);
-
-        $project = $this->bootstrapSettings($project, $options);
+        $project = $this->bootstrapServices($project);
+        $project = $this->bootstrapSettings($project);
 
         return $project;
     }
 
-    private function bootstrapServices(Project $project, array $options): Project
+    private function bootstrapServices(Project $project): Project
     {
         $project->addService($this->getAliasParse());
         $project->addService($this->getAliasResolve());
@@ -63,8 +56,6 @@ class Bootstrap
         $project->addService($this->getDeprecationResolve());
         $project->addService($this->getDeprecationWarn());
 
-        $project->addService($this->getCache($options['cache']));
-
         $project->addService($this->getFileClose());
         $project->addService($this->getFileGet());
         $project->addService($this->getFileOpen());
@@ -75,34 +66,20 @@ class Bootstrap
         $project->addService($this->getFilesystemLoad());
         $project->addService($this->getFilesystemTraverse());
 
-        $project->addService($this->getIdFollow());
-        $project->addService($this->getIdGet());
-        $project->addService($this->getIdRender());
-
         $project->addService($this->getImportParse());
 
         $project->addService($this->getNamespaceClose());
         $project->addService($this->getNamespaceParse());
 
-        $project->addService($this->getPathMerge());
-        $project->addService($this->getPathParse());
-        $project->addService($this->getPathResolve());
-        $project->addService($this->getPathRender());
-
         $project->addService($this->getProjectHydrate());
-
-        $project->addService($this->getRootFind());
 
         $project->addService($this->getScriptClose());
         $project->addService($this->getScriptInterpret());
         $project->addService($this->getScriptParse());
         $project->addService($this->getScriptResolve());
 
-        $project->addService($this->getServiceGet());
-        $project->addService($this->getServiceInstantiate());
         $project->addService($this->getServiceInterpret());
 
-        $project->addService($this->getSettingGet());
         $project->addService($this->getSettingInterpret());
 
         return $project;
@@ -140,20 +117,6 @@ class Bootstrap
                 $this->get(Path\Service\Resolve::class)
             );
         }, $this->namespace);
-
-        return $service;
-    }
-
-    private function getCache($instance = null): Service\Data\Service
-    {
-        if ($instance === null) {
-            $instance = new Cache\Data\Hash();
-        }
-
-        $segments = ['jstewmc', 'gravity', 'cache'];
-        $path     = new Path\Data\Service($segments);
-        $id       = new Id\Data\Service($path);
-        $service  = new Service\Data\Instance($id, $instance);
 
         return $service;
     }
@@ -354,50 +317,6 @@ class Bootstrap
         return $service;
     }
 
-    private function getIdFollow(): Service\Data\Service
-    {
-        $segments = ['jstewmc', 'gravity', 'id', 'service', 'follow'];
-        $path     = new Path\Data\Service($segments);
-        $id       = new Id\Data\Service($path);
-        $service  = new Service\Data\Fx($id, function () {
-            return new Id\Service\Follow(
-                $this->get(Deprecation\Service\Warn::class)
-            );
-        }, $this->namespace);
-
-        return $service;
-    }
-
-    private function getIdGet(): Service\Data\Service
-    {
-        $segments = ['jstewmc', 'gravity', 'id', 'service', 'get'];
-        $path     = new Path\Data\Service($segments);
-        $id       = new Id\Data\Service($path);
-        $service  = new Service\Data\Fx($id, function () {
-            return new Id\Service\Get(
-                $this->get(Id\Service\Render::class),
-                $this->get(Id\Service\Follow::class)
-            );
-        }, $this->namespace);
-
-        return $service;
-    }
-
-    private function getIdRender(): Service\Data\Service
-    {
-        $segments = ['jstewmc', 'gravity', 'id', 'service', 'render'];
-        $path     = new Path\Data\Service($segments);
-        $id       = new Id\Data\Service($path);
-        $service  = new Service\Data\Fx($id, function () {
-            return new Id\Service\Render(
-                $this->get(Path\Service\Parse::class),
-                $this->get(Path\Service\Resolve::class)
-            );
-        }, $this->namespace);
-
-        return $service;
-    }
-
     private function getImportParse(): Service\Data\Service
     {
         $segments = ['jstewmc', 'gravity', 'import', 'service', 'parse'];
@@ -437,75 +356,12 @@ class Bootstrap
         return $service;
     }
 
-    private function getPathMerge(): Service\Data\Service
-    {
-        $segments = ['jstewmc', 'gravity', 'path', 'service', 'merge'];
-        $path     = new Path\Data\Service($segments);
-        $id       = new Id\Data\Service($path);
-        $service  = new Service\Data\Newable($id);
-
-        return $service;
-    }
-
-    private function getPathParse(): Service\Data\Service
-    {
-        $segments = ['jstewmc', 'gravity', 'path', 'service', 'parse'];
-        $path     = new Path\Data\Service($segments);
-        $id       = new Id\Data\Service($path);
-        $service  = new Service\Data\Newable($id);
-
-        return $service;
-    }
-
-    private function getPathResolve(): Service\Data\Service
-    {
-        $segments = ['jstewmc', 'gravity', 'path', 'service', 'resolve'];
-        $path     = new Path\Data\Service($segments);
-        $id       = new Id\Data\Service($path);
-        $service  = new Service\Data\Fx($id, function () {
-            return new Path\Service\Resolve(
-                $this->get(Path\Service\Merge::class)
-            );
-        }, $this->namespace);
-
-        return $service;
-    }
-
-    private function getPathRender(): Service\Data\Service
-    {
-        $segments = ['jstewmc', 'gravity', 'path', 'service', 'render'];
-        $path     = new Path\Data\Service($segments);
-        $id       = new Id\Data\Service($path);
-        $service  = new Service\Data\Fx($id, function () {
-            return new Path\Service\Render(
-                $this->get(Path\Service\Parse::class),
-                $this->get(Path\Service\Resolve::class)
-            );
-        }, $this->namespace);
-
-        return $service;
-    }
-
     private function getProjectHydrate(): Service\Data\Service
     {
         $segments = ['jstewmc', 'gravity', 'project', 'service', 'hydrate'];
         $path     = new Path\Data\Service($segments);
         $id       = new Id\Data\Service($path);
         $service  = new Service\Data\Newable($id);
-
-        return $service;
-    }
-
-    private function getRootFind(): Service\Data\Service
-    {
-        $segments = ['jstewmc', 'gravity', 'root', 'service', 'find'];
-        $path     = new Path\Data\Service($segments);
-        $id       = new Id\Data\Service($path);
-        $service  = new Service\Data\Fx($id, function () {
-            return new Root\Service\Find(
-                $this->get('jstewmc.gravity.directories.vendors')
-            );
-        }, $this->namespace);
 
         return $service;
     }
@@ -586,51 +442,12 @@ class Bootstrap
         return $setting;
     }
 
-    private function getServiceGet(): Service\Data\Service
-    {
-        $segments = ['jstewmc', 'gravity', 'service', 'service', 'get'];
-        $path     = new Path\Data\Service($segments);
-        $id       = new Id\Data\Service($path);
-        $service  = new Service\Data\Fx($id, function () {
-            return new Service\Service\Get(
-                $this->get(Service\Service\Instantiate::class),
-                $this->get('Jstewmc\Gravity\Cache')
-            );
-        }, $this->namespace);
-
-        return $service;
-    }
-
-    private function getServiceInstantiate(): Service\Data\Service
-    {
-        $segments = ['jstewmc', 'gravity', 'service', 'service', 'instantiate'];
-        $path     = new Path\Data\Service($segments);
-        $id       = new Id\Data\Service($path);
-        $service  = new Service\Data\Newable($id);
-
-        return $service;
-    }
-
     private function getServiceInterpret(): Service\Data\Service
     {
         $segments = ['jstewmc', 'gravity', 'service', 'service', 'interpret'];
         $path     = new Path\Data\Service($segments);
         $id       = new Id\Data\Service($path);
         $service  = new Service\Data\Newable($id);
-
-        return $service;
-    }
-
-    private function getSettingGet(): Service\Data\Service
-    {
-        $segments = ['jstewmc', 'gravity', 'setting', 'service', 'get'];
-        $path     = new Path\Data\Service($segments);
-        $id       = new Id\Data\Service($path);
-        $service  = new Service\Data\Fx($id, function () {
-            return new Setting\Service\Get(
-                $this->get('Jstewmc\Gravity\Cache')
-            );
-        }, $this->namespace);
 
         return $service;
     }

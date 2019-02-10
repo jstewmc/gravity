@@ -8,7 +8,7 @@ namespace Jstewmc\Gravity\Service\Service;
 
 use Jstewmc\Gravity\Cache\Data\Cache;
 use Jstewmc\Gravity\Id\Data\Service as Id;
-use Jstewmc\Gravity\Manager;
+use Jstewmc\Gravity\Manager\Data\Manager;
 use Jstewmc\Gravity\Project\Data\Project;
 
 class Get
