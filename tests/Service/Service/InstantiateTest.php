@@ -8,7 +8,7 @@ namespace Jstewmc\Gravity\Service\Service;
 
 use Jstewmc\Gravity\FactoryTest;
 use Jstewmc\Gravity\Id\Data\Service as Id;
-use Jstewmc\Gravity\Manager;
+use Jstewmc\Gravity\Manager\Data\Manager;
 use Jstewmc\Gravity\Ns\Data\Parsed as Ns;
 use Jstewmc\Gravity\Service\Data\{Factory, Fx, Instance, Newable};
 use PHPUnit\Framework\TestCase;
