@@ -10,9 +10,6 @@ use Jstewmc\Gravity\Id\Data\Service as Id;
 use Jstewmc\Gravity\Ns\Data\Parsed as Ns;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  service
- */
 class FxTest extends TestCase
 {
     public function testGetDefinition(): void

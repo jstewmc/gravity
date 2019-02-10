@@ -15,9 +15,6 @@ use Jstewmc\Gravity\Service\Exception\InvalidDefinition;
 use PHPUnit\Framework\TestCase;
 use StdClass;
 
-/**
- * @group  service
- */
 class ParseTest extends TestCase
 {
     public function testInvokeThrowsExceptionIfInvalidDefinition(): void

@@ -11,9 +11,6 @@ use Jstewmc\Gravity\Script\Data\Opened as Script;
 use org\bovigo\vfs\{vfsStream, vfsStreamDirectory, vfsStreamFile};
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  file
- */
 class OpenedTest extends TestCase
 {
     /**
@@ -34,7 +31,7 @@ class OpenedTest extends TestCase
 
         return;
     }
-    
+
     public function testAlias(): void
     {
         $file = $this->getFile();

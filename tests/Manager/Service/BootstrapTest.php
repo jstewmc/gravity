@@ -12,9 +12,6 @@ use Jstewmc\Gravity\Manager\Data\Manager;
 use Jstewmc\Gravity\Project\Data\Project;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  manager
- */
 class BootstrapTest extends TestCase
 {
     public function testInvoke(): void

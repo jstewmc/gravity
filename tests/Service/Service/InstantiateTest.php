@@ -14,9 +14,6 @@ use Jstewmc\Gravity\Service\Data\{Factory, Fx, Instance, Newable};
 use PHPUnit\Framework\TestCase;
 use StdClass;
 
-/**
- * @group  service
- */
 class InstantiateTest extends TestCase
 {
     public function testInvokeIfFactory()

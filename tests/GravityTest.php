@@ -8,9 +8,6 @@ namespace Jstewmc\Gravity;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  gravity
- */
 class GravityTest extends TestCase
 {
     public function testPull(): void

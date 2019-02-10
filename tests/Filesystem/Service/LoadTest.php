@@ -10,9 +10,6 @@ use Jstewmc\Gravity\File;
 use Jstewmc\Gravity\Filesystem\Data\{Loaded, Traversed};
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  filesystem
- */
 class LoadTest extends TestCase
 {
     public function testInvoke(): void

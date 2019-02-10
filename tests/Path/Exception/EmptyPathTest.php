@@ -8,9 +8,6 @@ namespace Jstewmc\Gravity\Path\Exception;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  path
- */
 class EmptyPathTest extends TestCase
 {
     public function testConstruct(): void

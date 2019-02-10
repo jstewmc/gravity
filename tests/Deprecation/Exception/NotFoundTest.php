@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Deprecation\Exception;
 use Jstewmc\Gravity\Id\Data\Id;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  deprecation
- */
 class NotFoundTest extends TestCase
 {
     public function testGetId(): void

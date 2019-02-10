@@ -23,7 +23,6 @@
  * @param   mixed[] $a the first array
  * @param   mixed[] $b the second array (takes precedence)
  * @return  mixed[]
- * @since    0.1.0
  * @see      http://php.net/manual/en/function.array-merge-recursive.php#92195
  *           gabriel dot sobrinho at gmail dot com's commnent on the
  *           array_merge_recursive() man page (accessed 11/26/17)

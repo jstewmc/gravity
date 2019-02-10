@@ -8,9 +8,6 @@ namespace Jstewmc\Gravity\Alias\Exception;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  alias
- */
 class CircularTest extends TestCase
 {
     public function testGetValue(): void

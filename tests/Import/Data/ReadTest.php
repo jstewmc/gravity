@@ -8,9 +8,6 @@ namespace Jstewmc\Gravity\Import\Data;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  import
- */
 class ReadTest extends TestCase
 {
     public function testGetNameIfNameDoesExist(): void

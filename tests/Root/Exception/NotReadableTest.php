@@ -8,9 +8,6 @@ namespace Jstewmc\Gravity\Root\Exception;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  root
- */
 class NotReadableTest extends TestCase
 {
     public function testGetPathname(): void

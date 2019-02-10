@@ -8,9 +8,6 @@ namespace Jstewmc\Gravity\Filesystem\Data;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  filesystem
- */
 class TraversedTest extends TestCase
 {
     public function testGetFiles(): void

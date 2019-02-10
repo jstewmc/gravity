@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Definition\Data;
 use Jstewmc\Gravity\Id\Data as Id;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  definition
- */
 class ResolvedTest extends TestCase
 {
     public function testGetKey(): void

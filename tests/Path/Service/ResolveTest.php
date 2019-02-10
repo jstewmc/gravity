@@ -17,9 +17,6 @@ use Jstewmc\Gravity\Path\Data\{
 };
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  path
- */
 class ResolveTest extends TestCase
 {
     public function testInvokeIfNamespaceIsEmpty(): void

@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Id\Service;
 use Jstewmc\Gravity\{Id, Ns, Path};
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  id
- */
 class RenderTest extends TestCase
 {
     public function testInvoke(): void

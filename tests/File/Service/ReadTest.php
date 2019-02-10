@@ -12,9 +12,6 @@ use Jstewmc\Gravity\Script\Data\Opened as Script;
 use org\bovigo\vfs\{vfsStream, vfsStreamDirectory, vfsStreamFile};
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  file
- */
 class ReadTest extends TestCase
 {
     protected $root;

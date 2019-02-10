@@ -10,9 +10,6 @@ use Jstewmc\Gravity\Deprecation\Exception\Circular;
 use Jstewmc\Gravity\Id\Data\Id;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group deprecation
- */
 class ResolvedTest extends TestCase
 {
     public function testConstruct()

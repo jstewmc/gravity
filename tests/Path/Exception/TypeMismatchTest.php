@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Path\Exception;
 use Jstewmc\Gravity\Path\Data\Path;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  path
- */
 class TypeMismatchTest extends TestCase
 {
     public function testGetA(): void

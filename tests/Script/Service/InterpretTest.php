@@ -12,9 +12,6 @@ use Jstewmc\Gravity\Service\Service\Interpret as InterpretService;
 use Jstewmc\Gravity\Setting\Service\Interpret as InterpretSetting;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  script
- */
 class InterpretTest extends TestCase
 {
     public function testInvoke(): void

@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Id\Data;
 use Jstewmc\Gravity\Path\Data\Setting as Path;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  id
- */
 class SettingTest extends TestCase
 {
     public function testToString(): void

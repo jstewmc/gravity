@@ -10,9 +10,6 @@ use Jstewmc\Gravity\Root\Exception\{NotDirectory, NotReadable};
 use org\bovigo\vfs\{vfsStream, vfsStreamDirectory, vfsStreamFile};
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  root
- */
 class FoundTest extends TestCase
 {
     /**

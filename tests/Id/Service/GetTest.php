@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Id\Service;
 use Jstewmc\Gravity\{Id, Ns, Project};
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  id
- */
 class GetTest extends TestCase
 {
     public function testInvoke()

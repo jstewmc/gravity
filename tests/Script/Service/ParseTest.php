@@ -12,9 +12,6 @@ use Jstewmc\Gravity\Deprecation\Service\Parse as ParseDeprecation;
 use Jstewmc\Gravity\Script\Data\{Closed, Parsed};
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  script
- */
 class ParseTest extends TestCase
 {
     public function testInvoke(): void

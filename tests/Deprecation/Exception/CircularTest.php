@@ -8,9 +8,6 @@ namespace Jstewmc\Gravity\Deprecation\Exception;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  deprecation
- */
 class CircularTest extends TestCase
 {
     public function testGetValue(): void

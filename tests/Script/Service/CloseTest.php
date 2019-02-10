@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Script\Service;
 use Jstewmc\Gravity\Script\Data\{Closed, Opened};
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  script
- */
 class CloseTest extends TestCase
 {
     public function testInvoke(): void

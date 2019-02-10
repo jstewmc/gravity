@@ -10,9 +10,6 @@ use Jstewmc\Gravity\{Cache, Id, Manager, Project};
 use PHPUnit\Framework\TestCase;
 use StdClass;
 
-/**
- * @group  service
- */
 class GetTest extends TestCase
 {
     public function testInvokeIfCached(): void

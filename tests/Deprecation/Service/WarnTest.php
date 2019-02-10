@@ -18,7 +18,6 @@ use PHPUnit\Framework\TestCase;
  * @see    https://stackoverflow.com/a/1227686  jason's answer to "Test the
  *  return value of a method that triggers an error with PHPUnit" on
  *  StackOverflow (accessed 12/3/17)
- * @group  deprecation
  */
 class WarnTest extends TestCase
 {

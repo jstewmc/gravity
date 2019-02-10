@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Service\Data;
 use Jstewmc\Gravity\Id\Data\Service as Id;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  service
- */
 class FactoryTest extends TestCase
 {
     public function testGetId(): void

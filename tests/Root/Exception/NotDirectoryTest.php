@@ -8,9 +8,6 @@ namespace Jstewmc\Gravity\Root\Exception;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  root
- */
 class NotDirectoryTest extends TestCase
 {
     public function testGetPathname(): void

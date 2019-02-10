@@ -8,9 +8,6 @@ namespace Jstewmc\Gravity\Import\Exception;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  import
- */
 class NotFoundTest extends TestCase
 {
     public function testGetName(): void

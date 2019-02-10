@@ -8,9 +8,6 @@ namespace Jstewmc\Gravity\Path\Exception;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @path  path
- */
 class InvalidSeparatorTest extends TestCase
 {
     public function testGetPath(): void

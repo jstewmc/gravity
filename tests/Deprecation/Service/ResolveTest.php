@@ -13,9 +13,6 @@ use Jstewmc\Gravity\Path\Data\Path;
 use Jstewmc\Gravity\Path\Service\Resolve as ResolvePath;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  deprecation
- */
 class ResolveTest extends TestCase
 {
     public function testInvokeIfReplacementDoesNotExist(): void

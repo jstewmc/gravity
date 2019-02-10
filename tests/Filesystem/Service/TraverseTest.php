@@ -12,9 +12,6 @@ use org\bovigo\vfs\{vfsStream, vfsStreamDirectory};
 use PHPUnit\Framework\TestCase;
 use SplFileInfo;
 
-/**
- * @group  filesystem
- */
 class TraverseTest extends TestCase
 {
     /**

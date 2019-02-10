@@ -21,9 +21,6 @@ use Jstewmc\Gravity\Setting\Data\Setting;
 use Jstewmc\Gravity\Setting\Exception\NotFound as SettingNotFound;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  project
- */
 class ProjectTest extends TestCase
 {
     public function testAddAlias(): void

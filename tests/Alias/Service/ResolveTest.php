@@ -13,9 +13,6 @@ use Jstewmc\Gravity\Ns\Data\Parsed as ParsedNs;
 use Jstewmc\Gravity\Path\Service\Resolve as ResolvePath;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  alias
- */
 class ResolveTest extends TestCase
 {
     public function testInvoke(): void

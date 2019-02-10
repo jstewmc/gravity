@@ -12,8 +12,6 @@ use PHPUnit\Framework\TestCase;
 /**
  * An empty output string is considered a success, because the examples include
  * assert() statements.
- *
- * @group  example
  */
 class Test extends TestCase
 {
@@ -63,16 +61,6 @@ class Test extends TestCase
         return;
     }
 
-
-    /* !Private methods */
-
-    /**
-     * Returns the example scripts pathname
-     *
-     * @param   string  $filename  the script's pathname
-     * @return  string
-     * @since   0.1.0
-     */
     private function getPathname(string $filename): string
     {
         return realpath(

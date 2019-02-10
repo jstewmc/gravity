@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Alias\Exception;
 use Jstewmc\Gravity\Id\Data\Id;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  alias
- */
 class NotFoundTest extends TestCase
 {
     public function testGetId(): void

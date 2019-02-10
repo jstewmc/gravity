@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Id\Exception;
 use Jstewmc\Gravity\Path\Data\Path;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  id
- */
 class TooShortTest extends TestCase
 {
     public function testGetId(): void

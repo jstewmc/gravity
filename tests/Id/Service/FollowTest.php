@@ -12,9 +12,6 @@ use Jstewmc\Gravity\Id\Data\Id;
 use Jstewmc\Gravity\Project\Data\Project;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  id
- */
 class FollowTest extends TestCase
 {
     public function testInvokeReturnsIdIfNeitherDeprecatedNorAlias(): void

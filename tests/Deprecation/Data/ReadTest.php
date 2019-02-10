@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Deprecation\Data;
 use Jstewmc\Gravity\Deprecation\Exception\Circular;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group deprecation
- */
 class ReadTest extends TestCase
 {
     public function testConstruct()

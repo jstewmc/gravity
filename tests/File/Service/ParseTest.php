@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\File\Service;
 use Jstewmc\Gravity\{File, Ns, Script};
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group file
- */
 class ParseTest extends TestCase
 {
     public function testInvoke(): void

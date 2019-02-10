@@ -8,9 +8,6 @@ namespace Jstewmc\Gravity\Path\Data;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  path
- */
 class ServiceTest extends TestCase
 {
     public function testToString(): void

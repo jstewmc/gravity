@@ -10,9 +10,6 @@ use Jstewmc\Gravity\Deprecation\Exception\TypeMismatch;
 use Jstewmc\Gravity\Path\Data\Path;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  deprecation
- */
 class TypeMismatchTest extends TestCase
 {
     public function testGetReplacement(): void

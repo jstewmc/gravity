@@ -11,9 +11,6 @@ use Jstewmc\Gravity\Id\Data\Setting as Id;
 use Jstewmc\Gravity\Setting\Data\Setting;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  setting
- */
 class InterpretTest extends TestCase
 {
     public function testInvokeReturnsSettingIfValueIsScalar(): void

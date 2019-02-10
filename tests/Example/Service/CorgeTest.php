@@ -8,9 +8,6 @@ namespace Jstewmc\Gravity\Example\Service;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  example
- */
 class CorgeTest extends TestCase
 {
     public function testInvoke(): void

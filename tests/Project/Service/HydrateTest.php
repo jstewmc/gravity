@@ -17,9 +17,6 @@ use Jstewmc\Gravity\{
 };
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  project
- */
 class HydrateTest extends TestCase
 {
     public function testInvoke(): void

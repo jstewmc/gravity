@@ -8,9 +8,6 @@ namespace Jstewmc\Gravity\Root\Service;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  root
- */
 class FindTest extends TestCase
 {
     public function testInvokeReturnsPackageDirectoryIfNotComposer(): void

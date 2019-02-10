@@ -11,9 +11,6 @@ use Jstewmc\Gravity\Path\Data\Path;
 use Jstewmc\Gravity\Path\Service\Parse as ParsePath;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  definition
- */
 class ParseTest extends TestCase
 {
     public function testInvoke(): void

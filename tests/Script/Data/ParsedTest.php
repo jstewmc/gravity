@@ -8,9 +8,6 @@ namespace Jstewmc\Gravity\Script\Data;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  script
- */
 class ParsedTest extends TestCase
 {
     public function testGetAliases(): void

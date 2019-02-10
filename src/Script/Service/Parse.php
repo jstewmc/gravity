@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for the parse-script service
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */

@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Setting\Exception;
 use Jstewmc\Gravity\Id\Data\Setting as Id;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  setting
- */
 class NotFoundTest extends TestCase
 {
     public function testGetId(): void

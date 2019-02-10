@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Service\Exception;
 use Jstewmc\Gravity\Definition\Data\Resolved as Definition;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  service
- */
 class InvalidDefinitionTest extends TestCase
 {
     public function testGetDefinition(): void

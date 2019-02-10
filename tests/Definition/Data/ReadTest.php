@@ -8,9 +8,6 @@ namespace Jstewmc\Gravity\Definition\Data;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  definition
- */
 class ReadTest extends TestCase
 {
     public function testGetKey(): void

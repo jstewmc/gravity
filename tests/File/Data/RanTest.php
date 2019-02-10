@@ -11,9 +11,6 @@ use Jstewmc\Gravity\Script\Data\Interpreted as Script;
 use org\bovigo\vfs\{vfsStream, vfsStreamDirectory, vfsStreamFile};
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  file
- */
 class RanTest extends TestCase
 {
     /**

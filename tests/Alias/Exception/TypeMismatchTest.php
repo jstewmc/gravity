@@ -10,9 +10,6 @@ use Jstewmc\Gravity\Alias\Exception\TypeMismatch;
 use Jstewmc\Gravity\Path\Data\Path;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  alias
- */
 class TypeMismatchTest extends TestCase
 {
     public function testGetDestination(): void

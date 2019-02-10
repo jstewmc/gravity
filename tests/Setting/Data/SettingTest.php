@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Setting\Data;
 use Jstewmc\Gravity\Id\Data\Setting as Id;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  setting
- */
 class SettingTest extends TestCase
 {
     public function testGetId(): void

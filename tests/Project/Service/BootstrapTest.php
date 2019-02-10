@@ -10,9 +10,6 @@ use Jstewmc\Gravity\Project\Data\Project;
 use Jstewmc\Gravity\Root\Data\Root;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  project
- */
 class BootstrapTest extends TestCase
 {
     public function testInvoke(): void

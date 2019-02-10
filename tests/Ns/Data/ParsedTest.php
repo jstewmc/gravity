@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Ns\Data;
 use Jstewmc\Gravity\Import\Exception\NotFound;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  namespace
- */
 class ParsedTest extends TestCase
 {
     public function testGetImportThrowsExceptionIfDoesNotExist(): void

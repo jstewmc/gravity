@@ -10,9 +10,6 @@ use Jstewmc\Gravity\{Id, Ns, Project, Service, Setting};
 use PHPUnit\Framework\TestCase;
 use StdClass;
 
-/**
- * @group  manager
- */
 class ManagerTest extends TestCase
 {
     public function testEnter()

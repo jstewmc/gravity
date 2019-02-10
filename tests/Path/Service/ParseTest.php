@@ -10,9 +10,6 @@ use Jstewmc\Gravity\Path\Data\Setting as Path;
 use Jstewmc\Gravity\Path\Exception\{EmptyPath, InvalidSeparator};
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  path
- */
 class ParseTest extends TestCase
 {
     public function testInvokeThrowsExceptionIfInvalidSeparator(): void

@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Ns\Data;
 use Jstewmc\Gravity\Import\Data\Read as Import;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  namespace
- */
 class OpenedTest extends TestCase
 {
     public function testAddImport(): void

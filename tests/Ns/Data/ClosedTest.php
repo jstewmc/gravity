@@ -8,9 +8,6 @@ namespace Jstewmc\Gravity\Ns\Data;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  namespace
- */
 class ClosedTest extends TestCase
 {
     public function testGetImports(): void

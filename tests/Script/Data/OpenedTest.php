@@ -11,9 +11,6 @@ use Jstewmc\Gravity\Definition\Data\Read as Definition;
 use Jstewmc\Gravity\Deprecation\Data\Read as Deprecation;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  script
- */
 class OpenedTest extends TestCase
 {
     public function testAddAlias(): void

@@ -10,9 +10,6 @@ use Jstewmc\Gravity\Path\Data\{Service, Setting};
 use Jstewmc\Gravity\Path\Exception\TypeMismatch;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  path
- */
 class MergeTest extends TestCase
 {
     public function testInvokeThrowsExceptionIfTypeMismatch(): void

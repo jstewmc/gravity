@@ -13,9 +13,6 @@ use Jstewmc\Gravity\Path\Data\Path;
 use Jstewmc\Gravity\Path\Service\Parse as ParsePath;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  namespace
- */
 class ParseTest extends TestCase
 {
     public function testInvokeIfNameExists(): void

@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Cache\Service;
 use Jstewmc\Gravity\Cache\Data\Hash;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  cache
- */
 class WarmTest extends TestCase
 {
     public function testInvoke(): void

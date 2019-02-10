@@ -11,12 +11,6 @@ use Jstewmc\Gravity\Path\Data\Path;
 use Jstewmc\Gravity\Path\Service\Parse as ParsePath;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Tests for the parse-alias service
- *
- * @since  0.1.0
- * @group  alias
- */
 class ParseTest extends TestCase
 {
     public function testInvoke(): void

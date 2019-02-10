@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Definition\Data;
 use Jstewmc\Gravity\Path\Data\Path;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  definition
- */
 class ParsedTest extends TestCase
 {
     public function testGetKey(): void

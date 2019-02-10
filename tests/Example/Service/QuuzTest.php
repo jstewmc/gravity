@@ -8,9 +8,6 @@ namespace Jstewmc\Gravity\Example\Service;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  example
- */
 class QuuzTest extends TestCase
 {
     public function testInvoke(): void
