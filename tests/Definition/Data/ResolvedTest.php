@@ -59,15 +59,4 @@ class ResolvedTest extends TestCase
 
         $this->assertTrue($definition->isSetting());
     }
-
-    public function testSetValue(): void
-    {
-        $id = $this->createMock(Id\Id::class);
-
-        $definition = new Resolved($id);
-
-        $this->assertSame($definition, $definition->setValue('bar'));
-
-        return;
-    }
 }

@@ -31,15 +31,4 @@ class ParsedTest extends TestCase
 
         return;
     }
-
-    public function testSetValue(): void
-    {
-        $path = $this->createMock(Path::class);
-
-        $definition = new Parsed($path);
-
-        $this->assertSame($definition, $definition->setValue('bar'));
-
-        return;
-    }
 }

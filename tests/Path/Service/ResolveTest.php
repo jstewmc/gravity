@@ -93,13 +93,13 @@ class ResolveTest extends TestCase
         return;
     }
 
-    public function testInvokeIfPathIsRelative(): void
-    {
-        // @todo, hmm, can we do this without stubbing the entire world?!
-    }
+    // public function testInvokeIfPathIsRelative(): void
+    // {
+    //     // hmm, can we do this without stubbing the entire world?!
+    // }
 
-    public function testInvokeIfNamespaceHasName(): void
-    {
-        // @todo, hmm, can we do this without stubbing the entire world?!
-    }
+    // public function testInvokeIfNamespaceHasName(): void
+    // {
+    //     // hmm, can we do this without stubbing the entire world?!
+    // }
 }

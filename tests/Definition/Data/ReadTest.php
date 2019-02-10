@@ -22,13 +22,4 @@ class ReadTest extends TestCase
     {
         $this->assertNull((new Read('foo'))->getValue());
     }
-
-    public function testSetValue(): void
-    {
-        $definition = new Read('foo');
-
-        $this->assertSame($definition, $definition->setValue('bar'));
-
-        return;
-    }
 }

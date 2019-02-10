@@ -74,7 +74,7 @@ class InstantiateTest extends TestCase
     public function testInvokeIfNewable()
     {
         $id = $this->createMock(Id::class);
-        $id->method('__toString')->willReturn('StdClass');
+        $id->method('getSegments')->willReturn(['stdClass']);
 
         $service = new Newable($id);
 

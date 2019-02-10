@@ -27,9 +27,9 @@ class BootstrapTest extends TestCase
 
         $cache = $this->createMock(Cache::class);
         $map   = [
-            ['Jstewmc\Gravity\Id\Service\Render', $render],
-            ['Jstewmc\Gravity\Id\Service\Follow', $follow],
-            ['Jstewmc\Gravity\Service\Service\Instantiate', $instantiate]
+            ['jstewmc\gravity\id\service\render', $render],
+            ['jstewmc\gravity\id\service\follow', $follow],
+            ['jstewmc\gravity\service\service\instantiate', $instantiate]
         ];
         $cache->method('get')->will($this->returnValueMap($map));
 
