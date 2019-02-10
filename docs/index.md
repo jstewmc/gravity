@@ -2,7 +2,11 @@
 
 # Getting started
 
-Gravity is a framework-agnostic service and configuration manager. It makes it easy to use other people's settings and services in your application.
+Welome to Gravity's documentation!
+
+Gravity is a service and configuration manager for everyone. It makes it easy to use other people's settings and services in your application.
+
+We started Gravity because we wanted to define services in plain old PHP libraries without having to adhere to the service and configuration rules of one framework or another.
 
 Suppose:
 
@@ -17,8 +21,10 @@ Gravity:
 4. Returns it to you, and
 5. Saves it for the next request.
 
-It works the same for configuration settings.
+It's the same for configuration settings.
 
-Gravity makes it easy to create and share services and settings.
+Gravity makes it easy to create and share services and settings!
+
+## Welcome to Gravity!
 
 Get started with [identifying settings and services](identifying.md)!

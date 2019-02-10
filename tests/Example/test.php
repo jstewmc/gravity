@@ -26,9 +26,9 @@ class Test extends TestCase
         return;
     }
 
-    public function testBasic(): void
+    public function testFirst(): void
     {
-        require($this->getPathname('basic.php'));
+        require($this->getPathname('first.php'));
 
         $this->expectOutputString('');
 

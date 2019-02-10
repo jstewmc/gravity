@@ -69,6 +69,8 @@ $g->get('jstewmc.gravity.example.deprecating.bar');
 $g->get(Deprecating\Bar::class);
 ```
 
-That's about it!
+## That's it!
 
-If you've made it here, you've learned how to [identify](identifying.md), [get](getting.md), [set](setting.md), and [alias](aliasing.md) services and settings. If you have any questions, [let us know](mailto:clayjs0@gmail.com). Otherwise, get [coding](https://github.com/jstewmc/gravity)!
+If you've made it here, you've learned how to [identify](identifying.md), [get](getting.md), [set](setting.md), and [alias](aliasing.md) services and settings.
+
+If you have any questions, [let us know](mailto:clayjs0@gmail.com). Otherwise, get [coding](https://github.com/jstewmc/gravity)!

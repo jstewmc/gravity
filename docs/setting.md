@@ -24,7 +24,7 @@ A Gravity directory many contain any number of files and subdirectories. Any fil
 Within a Gravity file, the magic `$g` variable will always be defined ("g" is the abbreviation for [gravity](https://en.wikipedia.org/wiki/Gravity_of_Earth)). You'll use `$g` and its methods to define services and settings:
 
 ```php
-# /path/to/jstewmc/gravity/.gravity/examples/basic.php
+# /path/to/jstewmc/gravity/.gravity/examples/first.php
 
 namespace Jstewmc\Gravity\Example\Service;
 
@@ -259,5 +259,7 @@ $g->set('jstewmc.gravity.example.waldo-three', 3);
 // good
 $g->set('jstewmc.gravity.example.waldo', [1, 2, 3]);
 ```
+
+## That's it!
 
 Next up, [getting services and setting](getting.md)!
