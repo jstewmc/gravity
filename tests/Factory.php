@@ -6,6 +6,7 @@
 
 namespace Jstewmc\Gravity;
 
+use Jstewmc\Gravity\Manager\Data\Manager;
 use Jstewmc\Gravity\Factory;
 use StdClass;
 

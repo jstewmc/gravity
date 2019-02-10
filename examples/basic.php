@@ -2,11 +2,11 @@
 
 namespace Jstewmc\Gravity\Example\Service;
 
-use Jstewmc\Gravity\Manager;
+use Jstewmc\Gravity\Gravity;
 
 require_once realpath(__DIR__ . '/../vendor/autoload.php');
 
-$g = new Manager();
+$g = (new Gravity())->pull();
 
 // Gravity returns an instance of Foo
 assert($g->get(Foo::class) instanceof Foo);

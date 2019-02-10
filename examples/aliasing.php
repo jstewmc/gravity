@@ -2,11 +2,11 @@
 
 namespace Jstewmc\Gravity\Example;
 
-use Jstewmc\Gravity\Manager;
+use Jstewmc\Gravity\Gravity;
 
 require_once realpath(__DIR__ . '/../vendor/autoload.php');
 
-$g = new Manager();
+$g = (new Gravity())->pull();
 
 $a = $g->get('jstewmc.gravity.example.aliasing.foo');
 $b = $g->get('jstewmc.gravity.example.aliasing.bar');

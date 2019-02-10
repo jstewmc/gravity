@@ -2,11 +2,11 @@
 
 namespace Jstewmc\Gravity\Example\Service;
 
-use Jstewmc\Gravity\Manager;
+use Jstewmc\Gravity\Gravity;
 
 require_once realpath(__DIR__ . '/../vendor/autoload.php');
 
-$g = new Manager();
+$g = (new Gravity())->pull();
 
 $expected = 2;
 $actual   = $g->get('jstewmc.gravity.example.setting.quux');

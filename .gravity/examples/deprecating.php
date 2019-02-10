@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * @copyright  2018 Jack Clayton
+ * @license    MIT
+ */
+ 
 namespace Jstewmc\Gravity\Example;
 
 // define settings to deprecate (use an array in real life)

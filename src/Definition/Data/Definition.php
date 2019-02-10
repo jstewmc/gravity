@@ -12,9 +12,10 @@ abstract class Definition
 
     protected $value;
 
-    public function __construct($key)
+    public function __construct($key, $value = null)
     {
-        $this->key = $key;
+        $this->key   = $key;
+        $this->value = $value;
     }
 
     public function getKey()
@@ -25,12 +26,5 @@ abstract class Definition
     public function getValue()
     {
         return $this->value;
-    }
-
-    public function setValue($value): self
-    {
-        $this->value = $value;
-
-        return $this;
     }
 }

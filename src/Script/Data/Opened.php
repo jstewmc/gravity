@@ -21,14 +21,14 @@ class Opened extends Script
 
     public function addDefinition(Definition $definition): self
     {
-        $this->definition[] = $definition;
+        $this->definitions[] = $definition;
 
         return $this;
     }
 
     public function addDeprecation(Deprecation $deprecation): self
     {
-        $this->deprecation[] = $deprecation;
+        $this->deprecations[] = $deprecation;
 
         return $this;
     }

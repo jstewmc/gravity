@@ -9,7 +9,7 @@
 
 namespace Jstewmc\Gravity\Example;
 
-use Jstewmc\Gravity\Manager;
+use Jstewmc\Gravity\Manager\Data\Manager;
 use PHPUnit\Framework\TestCase;
 
 /**

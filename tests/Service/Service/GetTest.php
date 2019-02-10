@@ -87,7 +87,7 @@ class GetTest extends TestCase
 
     private function mockManager(): Manager
     {
-        return $this->createMock(Manager::class);
+        return $this->createMock(Manager\Data\Manager::class);
     }
 
     private function mockProject(): Project\Data\Project

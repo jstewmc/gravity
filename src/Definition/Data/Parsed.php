@@ -10,9 +10,9 @@ use Jstewmc\Gravity\Path\Data\Path;
 
 class Parsed extends Definition
 {
-    public function __construct(Path $key)
+    public function __construct(Path $key, $value = null)
     {
-        parent::__construct($key);
+        parent::__construct($key, $value);
     }
 
     public function getKey(): Path

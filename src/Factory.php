@@ -6,7 +6,7 @@
 
 namespace Jstewmc\Gravity;
 
-use Jstewmc\Gravity\Manager;
+use Jstewmc\Gravity\Manager\Data\Manager;
 
 interface Factory
 {

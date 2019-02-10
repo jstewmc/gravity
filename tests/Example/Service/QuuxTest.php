@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for the "quux" example tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -12,9 +9,7 @@ namespace Jstewmc\Gravity\Example\Service;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for the "quux" example service
- *
- * @since  0.1.0
+ * @group  example
  */
 class QuuxTest extends TestCase
 {

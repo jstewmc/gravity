@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for the example scripts
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -13,12 +10,10 @@ use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for the example scripts
+ * An empty output string is considered a success, because the examples include
+ * assert() statements.
  *
- * Usually, an empty output string is considered a success, because the examples
- * include assert() statements.
- *
- * @since  0.1.0
+ * @group  example
  */
 class Test extends TestCase
 {

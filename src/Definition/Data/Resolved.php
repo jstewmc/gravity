@@ -10,9 +10,9 @@ use Jstewmc\Gravity\Id\Data as Id;
 
 class Resolved extends Definition
 {
-    public function __construct(Id\Id $key)
+    public function __construct(Id\Id $key, $value = null)
     {
-        parent::__construct($key);
+        parent::__construct($key, $value);
     }
 
     public function getKey(): Id\Id
