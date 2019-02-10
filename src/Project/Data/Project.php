@@ -69,6 +69,53 @@ class Project
         return $this;
     }
 
+    public function getAlias(Id $id): Alias
+    {
+        if (!$this->hasAlias($id)) {
+            throw new AliasNotFound($id);
+        }
+
+        return $this->aliases[(string)$id];
+    }
+
+    public function getDeprecation(Id $id): Deprecation
+    {
+        if (!$this->hasDeprecation($id)) {
+            throw new DeprecationNotFound($id);
+        }
+
+        return $this->deprecations[(string)$id];
+    }
+
+    public function getRoot(): Root
+    {
+        return $this->root;
+    }
+
+    public function getService(ServiceId $id): Service
+    {
+        if (!$this->hasService($id)) {
+            throw new ServiceNotFound($id);
+        }
+
+        return $this->services[(string)$id];
+    }
+
+    public function getSetting(SettingId $id)
+    {
+        if (!$this->hasSetting($id)) {
+            throw new SettingNotFound($id);
+        }
+
+        $settings = $this->settings;
+
+        foreach ($id->getSegments() as $segment) {
+            $settings = $settings[$segment];
+        }
+
+        return $settings;
+    }
+
     public function hasAlias(Id $id): bool
     {
         return array_key_exists((string)$id, $this->aliases);
@@ -96,47 +143,5 @@ class Project
         }
 
         return true;
-    }
-
-    public function getAlias(Id $id): Alias
-    {
-        if (!$this->hasAlias($id)) {
-            throw new AliasNotFound($id);
-        }
-
-        return $this->aliases[(string)$id];
-    }
-
-    public function getDeprecation(Id $id): Deprecation
-    {
-        if (!$this->hasDeprecation($id)) {
-            throw new DeprecationNotFound($id);
-        }
-
-        return $this->deprecations[(string)$id];
-    }
-
-    public function getService(ServiceId $id): Service
-    {
-        if (!$this->hasService($id)) {
-            throw new ServiceNotFound($id);
-        }
-
-        return $this->services[(string)$id];
-    }
-
-    public function getSetting(SettingId $id)
-    {
-        if (!$this->hasSetting($id)) {
-            throw new SettingNotFound($id);
-        }
-
-        $settings = $this->settings;
-
-        foreach ($id->getSegments() as $segment) {
-            $settings = $settings[$segment];
-        }
-
-        return $settings;
     }
 }
