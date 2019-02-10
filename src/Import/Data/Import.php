@@ -6,8 +6,6 @@
 
 namespace Jstewmc\Gravity\Import\Data;
 
-use Jstewmc\Gravity\Path\Data\Path;
-
 abstract class Import
 {
     private $path;

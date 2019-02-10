@@ -11,9 +11,6 @@ use Jstewmc\Gravity\Alias\Exception\TypeMismatch;
 use Jstewmc\Gravity\Path\Data as Path;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  alias
- */
 class ParseTest extends TestCase
 {
     public function testConstructThrowsExceptionIfCircular(): void

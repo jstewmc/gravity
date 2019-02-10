@@ -6,7 +6,6 @@
 
 namespace Jstewmc\Gravity\Alias\Data;
 
-use Jstewmc\Gravity\Alias\Exception\TypeMismatch;
 use Jstewmc\Gravity\Id\Data\Id;
 
 class Resolved extends Alias

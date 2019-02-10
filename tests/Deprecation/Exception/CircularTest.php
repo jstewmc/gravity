@@ -6,7 +6,6 @@
 
 namespace Jstewmc\Gravity\Deprecation\Exception;
 
-use Jstewmc\Gravity\Id\Data\Id;
 use PHPUnit\Framework\TestCase;
 
 /**

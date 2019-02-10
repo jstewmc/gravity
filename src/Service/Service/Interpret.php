@@ -9,8 +9,7 @@ namespace Jstewmc\Gravity\Service\Service;
 use Closure;
 use Jstewmc\Gravity\Definition\Data\Resolved as Definition;
 use Jstewmc\Gravity\Factory as FactoryInterface;
-use Jstewmc\Gravity\Id\Data\Service as Id;
-use Jstewmc\Gravity\Ns\Data\Parsed as NS;
+use Jstewmc\Gravity\Ns\Data\Parsed as Ns;
 use Jstewmc\Gravity\Service\Data\{Factory, Fx, Instance, Newable, Service};
 use Jstewmc\Gravity\Service\Exception\InvalidDefinition;
 

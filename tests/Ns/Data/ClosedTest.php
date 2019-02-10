@@ -6,7 +6,6 @@
 
 namespace Jstewmc\Gravity\Ns\Data;
 
-use Jstewmc\Gravity\Import\Data\Import;
 use PHPUnit\Framework\TestCase;
 
 /**

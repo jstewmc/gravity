@@ -9,9 +9,6 @@ namespace Jstewmc\Gravity\Alias\Data;
 use Jstewmc\Gravity\Alias\Exception\Circular;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  alias
- */
 class ReadTest extends TestCase
 {
     public function testConstructThrowsExceptionIfCircular(): void

@@ -45,7 +45,9 @@ class ParseTest extends TestCase
     {
         $namespace = $this->mockNamespace();
 
-        $definition = $this->mockDefinition(function () { return; });
+        $definition = $this->mockDefinition(function () {
+            return;
+        });
 
         $expected = new Fx(
             $definition->getKey(),

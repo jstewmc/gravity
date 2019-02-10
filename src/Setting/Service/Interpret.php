@@ -7,7 +7,6 @@
 namespace Jstewmc\Gravity\Setting\Service;
 
 use Jstewmc\Gravity\Definition\Data\Resolved as Definition;
-use Jstewmc\Gravity\Id\Data\Setting as Id;
 use Jstewmc\Gravity\Setting\Data\Setting;
 
 /**

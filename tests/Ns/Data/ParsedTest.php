@@ -6,9 +6,7 @@
 
 namespace Jstewmc\Gravity\Ns\Data;
 
-use Jstewmc\Gravity\Import\Data as Import;
 use Jstewmc\Gravity\Import\Exception\NotFound;
-use Jstewmc\Gravity\Path\Data\Path;
 use PHPUnit\Framework\TestCase;
 
 /**

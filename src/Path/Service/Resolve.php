@@ -41,7 +41,7 @@ class Resolve
      */
     public function __invoke(Path $path, Ns $namespace): Id
     {
-        if ( ! $namespace->isEmpty() || ! $this->isFullyQualified($path)) {
+        if (!$namespace->isEmpty() || !$this->isFullyQualified($path)) {
             if ($this->isRelative($path, $namespace)) {
                 $path = $this->resolveRelative($path, $namespace);
             } elseif ($namespace->hasName()) {

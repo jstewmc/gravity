@@ -49,7 +49,7 @@ class ResolveTest extends TestCase
         $source      = $this->mockSource();
         $replacement = $this->mockReplacement();
 
-        $resolvePath = $this->createMock(resolvePath::class);
+        $resolvePath = $this->createMock(ResolvePath::class);
         $resolvePath
             ->method('__invoke')
             ->will($this->onConsecutiveCalls($source, $replacement));

@@ -7,7 +7,7 @@
 namespace Jstewmc\Gravity\Filesystem\Service;
 
 use DirectoryIterator;
-use Jstewmc\Gravity\Filesystem\Data\{Found, Traversed};
+use Jstewmc\Gravity\Filesystem\Data\Traversed;
 use Jstewmc\Gravity\Root\Data\Root;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;

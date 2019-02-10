@@ -6,7 +6,7 @@
 
 namespace Jstewmc\Gravity\Filesystem\Data;
 
-use Jstewmc\Gravity\File\Data\File;
+use SplFileInfo;
 
 abstract class Filesystem
 {

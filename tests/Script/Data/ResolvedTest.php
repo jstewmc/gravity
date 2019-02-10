@@ -6,9 +6,6 @@
 
 namespace Jstewmc\Gravity\Script\Data;
 
-use Jstewmc\Gravity\Alias\Data\Read as Alias;
-use Jstewmc\Gravity\Definition\Data\Read as Definition;
-use Jstewmc\Gravity\Deprecation\Data\Read as Deprecation;
 use PHPUnit\Framework\TestCase;
 
 /**

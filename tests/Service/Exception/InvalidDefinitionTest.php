@@ -7,7 +7,6 @@
 namespace Jstewmc\Gravity\Service\Exception;
 
 use Jstewmc\Gravity\Definition\Data\Resolved as Definition;
-use Jstewmc\Gravity\Id\Data\Id;
 use PHPUnit\Framework\TestCase;
 
 /**

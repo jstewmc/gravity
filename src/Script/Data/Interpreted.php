@@ -6,9 +6,6 @@
 
 namespace Jstewmc\Gravity\Script\Data;
 
-use Jstewmc\Gravity\Service\Data\Service;
-use Jstewmc\Gravity\Setting\Data\Setting;
-
 class Interpreted extends Script
 {
     private $services = [];

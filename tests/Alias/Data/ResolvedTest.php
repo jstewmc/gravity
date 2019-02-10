@@ -7,14 +7,9 @@
 namespace Jstewmc\Gravity\Alias\Data;
 
 use Jstewmc\Gravity\Alias\Exception\Circular;
-use Jstewmc\Gravity\Alias\Exception\TypeMismatch;
 use Jstewmc\Gravity\Id\Data as Id;
-use Jstewmc\Gravity\Path\Data as Path;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group  alias
- */
 class ResolvedTest extends TestCase
 {
     public function testConstructThrowsExceptionIfCircular(): void

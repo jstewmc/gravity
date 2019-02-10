@@ -36,7 +36,9 @@ class FxTest extends TestCase
 
         $service = new Fx(
             $id,
-            function () { return; },
+            function () {
+                return;
+            },
             $this->createMock(Ns::class)
         );
 
@@ -49,7 +51,9 @@ class FxTest extends TestCase
 
         $service = new Fx(
             $this->createMock(Id::class),
-            function () { return; },
+            function () {
+                return;
+            },
             $namespace
         );
 

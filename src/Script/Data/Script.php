@@ -6,10 +6,6 @@
 
 namespace Jstewmc\Gravity\Script\Data;
 
-use Jstewmc\Gravity\Alias\Data\Alias;
-use Jstewmc\Gravity\Definition\Data\Definition;
-use Jstewmc\Gravity\Deprecation\Data\Deprecation;
-
 abstract class Script
 {
     protected $aliases = [];
