@@ -2,11 +2,11 @@
 
 namespace Jstewmc\Gravity\Example;
 
-use Jstewmc\Gravity\Manager;
+use Jstewmc\Gravity\Gravity;
 
 require_once realpath(__DIR__ . '/../vendor/autoload.php');
 
-$g = new Manager();
+$g = (new Gravity())->pull();
 
 // using the settings from ../.gravity/examples/setting.php:31
 $expected = true;

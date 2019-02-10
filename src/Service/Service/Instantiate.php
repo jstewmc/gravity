@@ -1,63 +1,22 @@
 <?php
 /**
- * The file for the instantiate-service service
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
 
 namespace Jstewmc\Gravity\Service\Service;
 
-use Jstewmc\Gravity\Manager;
-use Jstewmc\Gravity\Service\Data\Factory;
-use Jstewmc\Gravity\Service\Data\Fx;
-use Jstewmc\Gravity\Service\Data\Instance;
-use Jstewmc\Gravity\Service\Data\Newable;
-use Jstewmc\Gravity\Service\Data\Service;
+use Jstewmc\Gravity\Manager\Data\Manager;
+use Jstewmc\Gravity\Service\Data\{Factory, Fx, Instance, Newable, Service};
 
-/**
- * Instantiates a service
- *
- * @since  0.1.0
- */
 class Instantiate
 {
-    /* !Private properties */
-
-    /**
-     * @var    Manager  the Gravity manager
-     * @since  0.1.0
-     */
-    private $g;
-
-
-    /* !Magic methods */
-
-    /**
-     * Called when the service is constructed
-     *
-     * @param  Manager  $g  the Gravity manager
-     * @since  0.1.0
-     */
-    public function __construct(Manager $g)
-    {
-        $this->g = $g;
-    }
-
-    /**
-     * Called when the service is treated like a function
-     *
-     * @param   Service  $service  the service to instantiate
-     * @return  object
-     * @since   0.1.0
-     */
-    public function __invoke(Service $service): object
+    public function __invoke(Service $service, Manager $g): object
     {
         if ($service instanceof Fx) {
-            $instance = $this->instantiateFx($service);
+            $instance = $this->instantiateFx($service, $g);
         } elseif ($service instanceof Factory) {
-            $instance = $this->instantiateFactory($service);
+            $instance = $this->instantiateFactory($service, $g);
         } elseif ($service instanceof Instance) {
             $instance = $this->instantiateInstance($service);
         } elseif ($service instanceof Newable) {
@@ -68,60 +27,40 @@ class Instantiate
     }
 
 
-    /* !Private methods */
-
-    /**
-     * Instantiates an factory service
-     *
-     * @param   Factory  $service  the service to instantiate
-     * @return  object
-     * @since   0.1.0
-     */
-    public function instantiateFactory(Factory $service): object
+    public function instantiateFactory(Factory $service, Manager $g): object
     {
-        $factory = $this->g->get($service->getDefinition());
+        $factory = $g->get($service->getDefinition());
 
-        return $factory($this->g);
+        return $factory($g);
     }
 
-    /**
-     * Instantiates an anonymous function (aka, "fx") service
-     *
-     * @param   Fx  $service  the service to instantiate
-     * @return  object
-     * @since   0.1.0
-     */
-    public function instantiateFx(Fx $service): object
+    public function instantiateFx(Fx $service, Manager $g): object
     {
         $fx = $service->getDefinition();
 
-        $fx = $fx->bindTo($this->g);
+        $g->enter($service->getNamespace());
 
-        return $fx();
+        $fx = $fx->bindTo($g);
+
+        $service = $fx();
+
+        $g->exit();
+
+        return $service;
     }
 
-    /**
-     * Instantiates an instance service
-     *
-     * @param   Instance  $service  the service to instantiate
-     * @return  object
-     * @since   0.1.0
-     */
     public function instantiateInstance(Instance $service): object
     {
         return $service->getDefinition();
     }
 
-    /**
-     * Instantiates a newable service
-     *
-     * @param   Newable  $service  the service to instantiate
-     * @return  object
-     * @since   0.1.0
-     */
     public function instantiateNewable(Newable $service): object
     {
-        $classname = (string)$service->getId();
+        $segments = $service->getId()->getSegments();
+        $segments = array_map('ucfirst', $segments);
+
+        $classname = implode('\\', $segments);
+        $classname = '\\' . $classname;
 
         return new $classname;
     }

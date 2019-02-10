@@ -1,106 +1,85 @@
 <?php
 /**
- * The file for the parse-deprecation service tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
 
 namespace Jstewmc\Gravity\Deprecation\Service;
 
-use Jstewmc\Gravity\Deprecation\Data\Service as ServiceDeprecation;
-use Jstewmc\Gravity\Deprecation\Data\Setting as SettingDeprecation;
-use Jstewmc\Gravity\Deprecation\Exception\Circular;
-use Jstewmc\Gravity\Id\Data\Id;
-use Jstewmc\Gravity\Id\Data\Service as ServiceId;
-use Jstewmc\Gravity\Id\Data\Setting as SettingId;
-use Jstewmc\Gravity\Id\Service\Parse as ParseId;
+use Jstewmc\Gravity\Deprecation\Data\{Parsed, Read};
+use Jstewmc\Gravity\Path\Data\Path;
+use Jstewmc\Gravity\Path\Service\Parse as ParsePath;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Tests for the parse-deprecation service
- *
- * @since  0.1.0
- */
 class ParseTest extends TestCase
 {
-    public function testInvokeThrowsExceptionIfCircular(): void
+    public function testInvokeIfReplacementDoesNotExist(): void
     {
-        $this->expectException(Circular::class);
+        // set up a path for the parse-path servie to return
+        $source = $this->mockSource();
 
-        // set up identifier and replacement identifiers
-        $id = $this->createMock(Id::class);
-        $id->method('__toString')->willReturn('foo');
+        // set up the parse-path service to return path
+        $parsePath = $this->createMock(ParsePath::class);
+        $parsePath->method('__invoke')->willReturn($source);
 
-        $replacement = $this->createMock(Id::class);
-        $replacement->method('__toString')->willReturn('foo');
+        // set up the system-under-test
+        $sut = new Parse($parsePath);
 
-        // set up the parse-identifier service
-        $parseId = $this->createMock(ParseId::class);
-        $parseId
-            ->method('__invoke')
-            ->will($this->onConsecutiveCalls($id, $replacement));
+        // set up a throwaway input deprecation
+        $deprecation = $this->createMock(Read::class);
+        $deprecation->method('hasReplacement')->willReturn(false);
 
-        // instantiate the system under test
-        $sut = new Parse($parseId);
-
-        $sut('foo', 'foo');
-
-        return;
-    }
-
-    public function testInvokeReturnsDeprecationIfService(): void
-    {
-        // set up identifier and replacement _service_ identifiers
-        $id = $this->createMock(ServiceId::class);
-        $id->method('__toString')->willReturn('foo\bar\baz');
-
-        $replacement = $this->createMock(ServiceId::class);
-        $replacement->method('__toString')->willReturn('foo\bar\qux');
-
-        // set up the parse-identifier service
-        $parseId = $this->createMock(ParseId::class);
-        $parseId
-            ->method('__invoke')
-            ->will($this->onConsecutiveCalls($id, $replacement));
-
-        // instantiate the system under test
-        $sut = new Parse($parseId);
-
-        // instantiate the system under test
-        $expected = new ServiceDeprecation($id, $replacement);
-        $actual   = $sut('foo\bar\baz', 'foo\bar\qux');
+        // set up expectations
+        $expected = new Parsed($source);
+        $actual   = $sut($deprecation);
 
         $this->assertEquals($expected, $actual);
 
         return;
     }
 
-    public function testInvokeReturnsDeprecationIfSetting(): void
+    public function testInvokeIfReplacementDoesExist(): void
     {
-        // set up identifier and replacement _setting_ identifiers
-        $id = $this->createMock(SettingId::class);
-        $id->method('__toString')->willReturn('foo.bar.baz');
-
-        $replacement = $this->createMock(SettingId::class);
-        $replacement->method('__toString')->willReturn('foo.bar.qux');
+        // set up paths for the parse-path service to return
+        $source      = $this->mockSource();
+        $replacement = $this->mockReplacement();
 
         // set up the parse-identifier service
-        $parseId = $this->createMock(ParseId::class);
-        $parseId
+        $parsePath = $this->createMock(ParsePath::class);
+        $parsePath
             ->method('__invoke')
-            ->will($this->onConsecutiveCalls($id, $replacement));
+            ->will($this->onConsecutiveCalls($source, $replacement));
 
-        // instantiate the system under test
-        $sut = new Parse($parseId);
+        // set up the system-under-test
+        $sut = new Parse($parsePath);
 
-        // instantiate the system under test
-        $expected = new SettingDeprecation($id, $replacement);
-        $actual   = $sut('foo.bar.baz', 'foo.bar.qux');
+        // set up a read deprecation input
+        $deprecation = $this->createMock(Read::class);
+        $deprecation->method('hasReplacement')->willReturn(true);
+        $deprecation->method('getReplacement')->willReturn('baz');
+
+        // set up expectations
+        $expected = new Parsed($source, $replacement);
+        $actual   = $sut($deprecation);
 
         $this->assertEquals($expected, $actual);
 
         return;
+    }
+
+    private function mockReplacement($path = 'bar')
+    {
+        $replacement = $this->createMock(Path::class);
+        $replacement->method('__toString')->willReturn($path);
+
+        return $replacement;
+    }
+
+    private function mockSource($path = 'foo')
+    {
+        $source = $this->createMock(Path::class);
+        $source->method('__toString')->willReturn($path);
+
+        return $source;
     }
 }

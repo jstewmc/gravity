@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * @copyright  2018 Jack Clayton
+ * @license    MIT
+ */
+ 
 namespace Jstewmc\Gravity\Example;
 
 // define a service using null

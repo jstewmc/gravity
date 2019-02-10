@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for a hash-based cache
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -13,14 +10,9 @@ use Jstewmc\Gravity\Cache\Exception\NotFound;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for a hash-based cache
- *
  * Hmm, these are tough to do without creating dependencies between the set(),
  * get(), and has() methods. But, if we don't, we're not really testing
  * behavior, just the static return types, which isn't helpful.
- *
- * @since  0.1.0
- * @group  todo
  */
 class HashTest extends TestCase
 {

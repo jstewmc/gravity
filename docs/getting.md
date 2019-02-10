@@ -8,7 +8,7 @@ Use Gravity to get services and settings from yourself or others.
 
 To get a setting or service from Gravity you need an instance of the manager, often abbreviated `$g` (the abbreviation for [gravity](https://en.wikipedia.org/wiki/Gravity_of_Earth)).
 
-When the Gravity manager is instantiated, it loads settings and services from the project filesystem. Sometimes, this may involve reading hundreds of files and thousands of settings and services. This is not a cheap operation!
+When the Gravity manager is instantiated, it loads settings and services from the project filesystem. Sometimes, this may involve reading hundreds of files and thousands of settings and services. This is not an inexpensive operation!
 
 For best performance, use a single instance of the Gravity manager as long as possible.
 
@@ -25,11 +25,11 @@ The first time you request a service, Gravity will instantiate and return it. Un
 
 namespace Jstewmc\Gravity\Example;
 
-use Jstewmc\Gravity\Manager;
+use Jstewmc\Gravity\Gravity;
 
 require_once realpath(__DIR__ . '/../vendor/autoload.php');
 
-$g = new Manager();
+$g = (new Gravity())->pull();
 
 // using the settings from ../.gravity/examples/setting.php:31
 $expected = true;
@@ -50,5 +50,7 @@ assert($a === $b);
 ```
 
 That's it. Getting services and settings is the easy part!
+
+## That's it!
 
 Next up, [aliasing services and setting](aliasing.md)!

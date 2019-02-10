@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for anonymouse function service tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -10,39 +7,53 @@
 namespace Jstewmc\Gravity\Service\Data;
 
 use Jstewmc\Gravity\Id\Data\Service as Id;
+use Jstewmc\Gravity\Ns\Data\Parsed as Ns;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Tests for an anonymous function service
- *
- * @since  0.1.0
- */
 class FxTest extends TestCase
 {
-    public function testGetId(): void
-    {
-        $id = $this->createMock(Id::class);
-
-        $service = new Fx($id, function () {
-            return;
-        });
-
-        $this->assertSame($id, $service->getId());
-
-        return;
-    }
-
     public function testGetDefinition(): void
     {
-        $id = $this->createMock(Id::class);
         $definition = function () {
             return;
         };
 
-        $service = new Fx($id, $definition);
+        $service = new Fx(
+            $this->createMock(Id::class),
+            $definition,
+            $this->createMock(Ns::class)
+        );
 
         $this->assertSame($definition, $service->getDefinition());
+    }
 
-        return;
+    public function testGetId(): void
+    {
+        $id = $this->createMock(Id::class);
+
+        $service = new Fx(
+            $id,
+            function () {
+                return;
+            },
+            $this->createMock(Ns::class)
+        );
+
+        $this->assertSame($id, $service->getId());
+    }
+
+    public function testGetNamespace(): void
+    {
+        $namespace = $this->createMock(Ns::class);
+
+        $service = new Fx(
+            $this->createMock(Id::class),
+            function () {
+                return;
+            },
+            $namespace
+        );
+
+        $this->assertSame($namespace, $service->getNamespace());
     }
 }

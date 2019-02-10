@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for the service path tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -11,11 +8,6 @@ namespace Jstewmc\Gravity\Path\Data;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * Tests for a service path
- *
- * @since  0.1.0
- */
 class ServiceTest extends TestCase
 {
     public function testToString(): void
@@ -24,8 +16,20 @@ class ServiceTest extends TestCase
             'foo\bar\baz',
             (string)new Service(['foo', 'bar', 'baz'])
         );
+    }
 
-        return;
+    public function testGetFirstSegment(): void
+    {
+        $path = new Service(['foo', 'baz', 'baz']);
+
+        $this->assertEquals('foo', $path->getFirstSegment());
+    }
+
+    public function testGetLastSegment(): void
+    {
+        $path = new Service(['foo', 'baz', 'baz']);
+
+        $this->assertEquals('baz', $path->getLastSegment());
     }
 
     public function testGetLength(): void
@@ -36,8 +40,6 @@ class ServiceTest extends TestCase
             count($segments),
             (new Service($segments))->getLength()
         );
-
-        return;
     }
 
     public function testGetSegments(): void
@@ -48,7 +50,47 @@ class ServiceTest extends TestCase
             $segments,
             (new Service($segments))->getSegments()
         );
+    }
 
-        return;
+    public function testHasLeadingSeparator(): void
+    {
+        $path = new Service(['foo', 'baz', 'baz']);
+
+        $this->assertFalse($path->hasLeadingSeparator());
+    }
+
+    public function testHasTrailingSeparator(): void
+    {
+        $path = new Service(['foo', 'baz', 'baz']);
+
+        $this->assertFalse($path->hasTrailingSeparator());
+    }
+
+    public function popSegment(): void
+    {
+        $path = new Service(['foo', 'bar', 'baz']);
+
+        $this->assertEquals('baz', $path->popSegment());
+    }
+
+    public function testSetHasLeadingSeparator(): void
+    {
+        $path = new Service(['foo', 'bar', 'baz']);
+
+        $this->assertSame($path, $path->setHasLeadingSeparator(true));
+    }
+
+    public function testSetHasTrailingSeparator(): void
+    {
+        $path = new Service(['foo', 'bar', 'baz']);
+
+        $this->assertSame($path, $path->setHasLeadingSeparator(true));
+    }
+
+    public function shiftSegment(): void
+    {
+        $path = new Service(['foo', 'bar', 'baz']);
+
+        $this->assertEquals('foo', $path->shiftSegment());
     }
 }

@@ -1,40 +1,37 @@
 <?php
 /**
- * The file for the load-filesystem service
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
 
 namespace Jstewmc\Gravity\Filesystem\Service;
 
-use Jstewmc\Gravity\Filesystem\Data\Filesystem;
-use Jstewmc\Gravity\Manager;
+use Jstewmc\Gravity\File\Service\{Get, Run};
+use Jstewmc\Gravity\Filesystem\Data\{Loaded, Traversed};
 
-/**
- * Loads the filesystem into the Gravity manager
- *
- * @since  0.1.0
- */
 class Load
 {
-    /* !Magic methods */
+    private $get;
 
-    /**
-     * Called when the service is treated like a function
-     *
-     * @param   Filesystem $filesystem the filesystem to read
-     * @param   Manager    $g          the Gravity manager
-     * @return  Manager
-     * @since   0.1.0
-     */
-    public function __invoke(Filesystem $filesystem, Manager $g): Manager
+    private $run;
+
+    public function __construct(Get $get, Run $run)
     {
+        $this->get = $get;
+        $this->run = $run;
+    }
+
+    public function __invoke(Traversed $filesystem): Loaded
+    {
+        $files = [];
+
         foreach ($filesystem->getFiles() as $file) {
-            include $file->getPathname();
+            $file = ($this->get)($file);
+            $file = ($this->run)($file);
+
+            $files[] = $file;
         }
 
-        return $g;
+        return new Loaded($files);
     }
 }

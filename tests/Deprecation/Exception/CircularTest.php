@@ -1,31 +1,22 @@
 <?php
 /**
- * The file for the "circular deprecation" exception tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
 
 namespace Jstewmc\Gravity\Deprecation\Exception;
 
-use Jstewmc\Gravity\Id\Data\Id;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Tests for the "circular deprecation" exception
- *
- * @since  0.1.0
- */
 class CircularTest extends TestCase
 {
-    public function testGetId(): void
+    public function testGetValue(): void
     {
-        $id = $this->createMock(Id::class);
+        $value = 'foo';
 
-        $exception = new Circular($id);
+        $exception = new Circular($value);
 
-        $this->assertSame($id, $exception->getId());
+        $this->assertEquals($value, $exception->getValue());
 
         return;
     }

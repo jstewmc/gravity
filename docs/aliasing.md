@@ -61,4 +61,6 @@ assert($c === $d);
 
 Aliases can be chained, and Gravity will attempt to recursively resolve them. However, if you are chaining aliases, there is likely a better solution!
 
+## That's it!
+
 Next up, [deprecating services and setting](deprecating.md)!

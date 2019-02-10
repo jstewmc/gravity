@@ -1,32 +1,23 @@
 <?php
 /**
- * The file for the warn-deprecation service tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
 
 namespace Jstewmc\Gravity\Deprecation\Service;
 
-use Jstewmc\Gravity\Deprecation\Data\Service as Deprecation;
+use Jstewmc\Gravity\Deprecation\Data\Resolved;
 use Jstewmc\Gravity\Id\Data\Service as Id;
 use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\TestCase;
 
-// either one
-
 /**
- * Tests for the warn-deprecation service
- *
- * Keep in mind, based on our phpunit.xml settings, PHPUnit will convert
- * E_USER_DEPRECATED errors to PHPUnit\Framework\Error exceptions.
+ * Based on phpunit.xml settings, PHPUnit will convert E_USER_DEPRECATED errors
+ * to PHPUnit\Framework\Error\Deprecated exceptions.
  *
  * @see    https://stackoverflow.com/a/1227686  jason's answer to "Test the
- *     return value of a method that triggers an error with PHPUnit" on
- *     StackOverflow (accessed 12/3/17)
- *
- * @since  0.1.0
+ *  return value of a method that triggers an error with PHPUnit" on
+ *  StackOverflow (accessed 12/3/17)
  */
 class WarnTest extends TestCase
 {
@@ -34,9 +25,7 @@ class WarnTest extends TestCase
     {
         $this->expectException(Deprecated::class);
 
-        $id = $this->createMock(Id::class);
-
-        $deprecation = new Deprecation($id);
+        $deprecation = new Resolved($this->mockSource());
 
         (new Warn())($deprecation);
 
@@ -47,13 +36,26 @@ class WarnTest extends TestCase
     {
         $this->expectException(Deprecated::class);
 
-        $id          = $this->createMock(Id::class);
-        $replacement = $this->createMock(Id::class);
-
-        $deprecation = new Deprecation($id, $replacement);
+        $deprecation = new Resolved($this->mockSource(), $this->mockReplacement());
 
         (new Warn())($deprecation);
 
         return;
+    }
+
+    private function mockSource($path = 'foo')
+    {
+        $source = $this->createMock(Id::class);
+        $source->method('__toString')->willReturn($path);
+
+        return $source;
+    }
+
+    private function mockReplacement($path = 'bar')
+    {
+        $replacement = $this->createMock(Id::class);
+        $replacement->method('__toString')->willReturn($path);
+
+        return $replacement;
     }
 }

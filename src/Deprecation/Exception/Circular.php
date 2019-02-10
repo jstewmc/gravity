@@ -1,35 +1,23 @@
 <?php
 /**
- * The file for a circular deprecation exception
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
 
 namespace Jstewmc\Gravity\Deprecation\Exception;
 
-use Jstewmc\Gravity\Id\Data\Id;
-
-/**
- * Thrown when an deprecation's identifier and replacement are the same
- *
- * @since  0.1.0
- */
 class Circular extends Exception
 {
-    /* !Magic methods */
+    private $value;
 
-    /**
-     * Called when the exception is constructed
-     *
-     * @param  Id $id the deprecated identifier
-     * @since  0.1.
-     */
-    public function __construct(Id $id)
+    public function __construct(string $value)
     {
-        parent::__construct($id);
+        $this->value   = $value;
+        $this->message = "Circular deprecation for '$value'";
+    }
 
-        $this->message = "Cicular deprecation for '$id'";
+    public function getValue(): string
+    {
+        return $this->value;
     }
 }

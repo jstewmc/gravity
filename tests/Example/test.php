@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for the example scripts
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -13,12 +10,8 @@ use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for the example scripts
- *
- * Usually, an empty output string is considered a success, because the examples
- * include assert() statements.
- *
- * @since  0.1.0
+ * An empty output string is considered a success, because the examples include
+ * assert() statements.
  */
 class Test extends TestCase
 {
@@ -31,9 +24,9 @@ class Test extends TestCase
         return;
     }
 
-    public function testBasic(): void
+    public function testFirst(): void
     {
-        require($this->getPathname('basic.php'));
+        require($this->getPathname('first.php'));
 
         $this->expectOutputString('');
 
@@ -68,16 +61,6 @@ class Test extends TestCase
         return;
     }
 
-
-    /* !Private methods */
-
-    /**
-     * Returns the example scripts pathname
-     *
-     * @param   string  $filename  the script's pathname
-     * @return  string
-     * @since   0.1.0
-     */
     private function getPathname(string $filename): string
     {
         return realpath(

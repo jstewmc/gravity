@@ -10,6 +10,10 @@
  <!--Generic Rules-->
  <rule ref="PSR1"/>
  <rule ref="PSR2"/>
+ <!-- Let me use grouped use statements! -->
+ <rule ref="PSR2.Namespaces.UseDeclaration">
+    <exclude-pattern>*</exclude-pattern>
+ </rule>
  <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
  <rule ref="Generic.CodeAnalysis.EmptyStatement"/>
  <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
@@ -50,7 +54,8 @@
  <rule ref="SlevomatCodingStandard.ControlStructures.RequireShortTernaryOperator"/>
  <rule ref="SlevomatCodingStandard.Namespaces.NamespaceDeclaration"/>
  <rule ref="SlevomatCodingStandard.Namespaces.RequireOneNamespaceInFile"/>
- <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
+ <!-- Allow mutli-line argument lists
+ <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/> -->
  <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
 
  <!--Arguments-->

@@ -1,8 +1,5 @@
 <?php
 /**
- * The file for setting id tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
@@ -12,11 +9,6 @@ namespace Jstewmc\Gravity\Id\Data;
 use Jstewmc\Gravity\Path\Data\Setting as Path;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Tests for a setting id
- *
- * @since  0.1.0
- */
 class SettingTest extends TestCase
 {
     public function testToString(): void
@@ -44,5 +36,16 @@ class SettingTest extends TestCase
         $this->assertSame($path, $id->getPath());
 
         return;
+    }
+
+    public function testGetSegments(): void
+    {
+        $segments = ['foo', 'bar', 'baz'];
+
+        $path = $this->createMock(Path::class);
+        $path->method('getLength')->willReturn(3);
+        $path->method('getSegments')->willReturn($segments);
+
+        $this->assertEquals($segments, (new Setting($path))->getSegments());
     }
 }

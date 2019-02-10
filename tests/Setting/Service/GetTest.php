@@ -1,39 +1,70 @@
 <?php
 /**
- * The file for the get-setting tests
- *
- * @author     Jack Clayton <clayjs0@gmail.com>
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
 
 namespace Jstewmc\Gravity\Setting\Service;
 
-use Jstewmc\Gravity\Id\Data\Setting as Id;
-use Jstewmc\Gravity\Project\Data\Project;
+use Jstewmc\Gravity\{Cache, Id, Project};
 use PHPUnit\Framework\TestCase;
 
-/**
- * Tests for the get-setting service
- *
- * @since  0.1.0
- */
 class GetTest extends TestCase
 {
-    // hmm, we could mock or stub, but does it matter?
-    public function testInvoke(): void
+    public function testInvokeIfCached(): void
     {
-        $value = true;
+        $value = 1;
+        $cache = $this->mockCache(true);
+        $cache->method('get')->willReturn($value);
 
-        $id = $this->createMock(Id::class);
+        $sut = new Get($cache);
 
-        $project = $this->createMock(Project::class);
+        // set up throw-away arguments
+        $id      = $this->mockId();
+        $project = $this->mockProject();
+
+        $expected = $value;
+        $actual   = $sut($id, $project);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testInvokeIfNotCached(): void
+    {
+        $cache = $this->mockCache(false);
+
+        $value   = 1;
+        $project = $this->mockProject();
         $project->method('getSetting')->willReturn($value);
 
-        $sut = new Get();
+        $sut = new Get($cache);
 
-        $this->assertEquals($value, $sut($id, $project));
+        // set up throw-away arguments
+        $id = $this->mockId();
+
+        $expected = $value;
+        $actual   = $sut($id, $project);
+
+        $this->assertEquals($expected, $actual);
 
         return;
+    }
+
+    private function mockCache($isCached): Cache\Data\Cache
+    {
+        $cache = $this->createMock(Cache\Data\Cache::class);
+        $cache->method('has')->willReturn($isCached);
+
+        return $cache;
+    }
+
+    private function mockId(): Id\Data\Setting
+    {
+        return $this->createMock(Id\Data\Setting::class);
+    }
+
+    private function mockProject(): Project\Data\Project
+    {
+        return $this->createMock(Project\Data\Project::class);
     }
 }
