@@ -45,7 +45,7 @@ class Opened extends File
         return $this;
     }
 
-    public function set(string $key, $value): self
+    public function set(string $key, $value = null): self
     {
         $this->script->addDefinition(new Definition($key, $value));
 
