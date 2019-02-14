@@ -13,8 +13,6 @@ class Warn
     public function __invoke(Deprecation $deprecation): void
     {
         trigger_error($this->getMessage($deprecation), E_USER_DEPRECATED);
-
-        return;
     }
 
     private function getMessage(Deprecation $deprecation): string
