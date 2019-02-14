@@ -98,8 +98,8 @@ class Resolve
         $import = $namespace->getImport($path->getFirstSegment());
 
         // shift the first segment off the path (or, alternatively, shift the
-        // last segment off the import's path), because they're shared
-        $path->shiftFirstSegment();
+        // last segment off the import's path), because they're the same
+        $path->shiftSegment();
 
         return $this->merge($import->getPath(), $path);
     }
