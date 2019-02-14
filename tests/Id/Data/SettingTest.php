@@ -6,11 +6,22 @@
 
 namespace Jstewmc\Gravity\Id\Data;
 
+use Jstewmc\Gravity\Id\Exception\TooShort;
 use Jstewmc\Gravity\Path\Data\Setting as Path;
 use PHPUnit\Framework\TestCase;
 
 class SettingTest extends TestCase
 {
+    public function testConstructThrowsExceptionIfShort(): void
+    {
+        $this->expectException(TooShort::class);
+
+        $path = $this->createMock(Path::class);
+        $path->method('getLength')->willReturn(1);
+
+        $id = new Setting($path);
+    }
+
     public function testToString(): void
     {
         $string = 'foo.bar.baz';

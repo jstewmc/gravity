@@ -13,8 +13,14 @@ class CloseTest extends TestCase
 {
     public function testInvoke(): void
     {
-        $expected = new Closed();
-        $actual   = (new Close())(new Opened());
+        $opened = $this->createMock(Opened::class);
+        $opened->method('hasName')->willReturn(true);
+        $opened->method('getname')->willReturn('foo');
+        $opened->method('hasImports')->willReturn(true);
+        $opened->method('getImports')->willReturn([]);
+
+        $expected = (new Closed())->setName('foo')->setImports([]);
+        $actual   = (new Close())($opened);
 
         $this->assertEquals($expected, $actual);
     }

@@ -19,7 +19,7 @@ class ResolvedTest extends TestCase
         $source      = $this->mockSource();
         $destination = $source;
 
-        $deprecation = new Read($source, $destination);
+        $deprecation = new Resolved($source, $destination);
 
         return;
     }
@@ -28,7 +28,7 @@ class ResolvedTest extends TestCase
     {
         $replacement = $this->mockReplacement();
 
-        $deprecation = new Read($this->mockSource(), $replacement);
+        $deprecation = new Resolved($this->mockSource(), $replacement);
 
         $this->assertSame($replacement, $deprecation->getReplacement());
 
@@ -39,7 +39,7 @@ class ResolvedTest extends TestCase
     {
         $source = $this->mockSource();
 
-        $deprecation = new Read($source);
+        $deprecation = new Resolved($source);
 
         $this->assertSame($source, $deprecation->getSource());
 
@@ -48,14 +48,14 @@ class ResolvedTest extends TestCase
 
     public function testHasReplacement(): void
     {
-        $deprecation = new Read($this->mockSource(), $this->mockReplacement());
+        $deprecation = new Resolved($this->mockSource(), $this->mockReplacement());
 
         $this->assertTrue($deprecation->hasReplacement());
 
         return;
     }
 
-    private function mockReplacement($path = 'bar'): string
+    private function mockReplacement($path = 'bar'): Id
     {
         $replacement = $this->createMock(Id::class);
         $replacement->method('__toString')->willReturn($path);
@@ -63,7 +63,7 @@ class ResolvedTest extends TestCase
         return $replacement;
     }
 
-    private function mockSource($path = 'foo'): string
+    private function mockSource($path = 'foo'): Id
     {
         $source = $this->createMock(Id::class);
         $source->method('__toString')->willReturn($path);

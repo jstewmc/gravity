@@ -10,6 +10,7 @@ use Jstewmc\Gravity\Id\Data\{
     Service as ServiceId,
     Setting as SettingId
 };
+use Jstewmc\Gravity\Import\Data\Parsed as Import;
 use Jstewmc\Gravity\Ns\Data\Parsed as Ns;
 use Jstewmc\Gravity\Path\Data\{
     Service as ServicePath,
@@ -37,8 +38,6 @@ class ResolveTest extends TestCase
         $actual   = $sut($path, $namespace);
 
         $this->assertEquals($expected, $actual);
-
-        return;
     }
 
     public function testInvokeIfPathIsFullyQualified(): void
@@ -60,8 +59,6 @@ class ResolveTest extends TestCase
         $actual   = $sut($path, $namespace);
 
         $this->assertEquals($expected, $actual);
-
-        return;
     }
 
     public function testInvokeIfPathIsIdentifier(): void
@@ -86,17 +83,68 @@ class ResolveTest extends TestCase
         $actual   = $sut($path, $namespace);
 
         $this->assertEquals($expected, $actual);
-
-        return;
     }
 
-    // public function testInvokeIfPathIsRelative(): void
-    // {
-    //     // hmm, can we do this without stubbing the entire world?!
-    // }
+    public function testInvokeIfPathIsRelative(): void
+    {
+        // stub a non-empty namespace without a name but with an import
+        $a = $this->createMock(ServicePath::class);
 
-    // public function testInvokeIfNamespaceHasName(): void
-    // {
-    //     // hmm, can we do this without stubbing the entire world?!
-    // }
+        $import = $this->createMock(Import::class);
+
+        $namespace = $this->createMock(Ns::class);
+        $namespace->method('isEmpty')->willReturn(false);
+        $namespace->method('hasImport')->willReturn(true);
+        $namespace->method('getImport')->willReturn($import);
+        $namespace->method('hasName')->willReturn(false);
+
+        // stub a non-empty path that is not fully-qualified
+        $b = $this->createMock(ServicePath::class);
+        $b->method('hasLeadingSeparator')->willReturn(false);
+        $b->method('getFirstSegment')->willReturn('foo');
+        $b->method('shiftSegment')->willReturn('foo');
+
+        $c = $this->createMock(ServicePath::class);
+        $c->method('getLength')->willReturn(3);
+
+        $merge = $this->createMock(Merge::class);
+        $merge->method('__invoke')->willReturn($c);
+
+        $sut = new Resolve($merge);
+
+        $expected = new ServiceId($c);
+        $actual   = $sut($b, $namespace);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testInvokeIfNamespaceHasName(): void
+    {
+        // stub a non-empty namespace with a name but without an import
+        $a = $this->createMock(ServicePath::class);
+
+        $namespace = $this->createMock(Ns::class);
+        $namespace->method('isEmpty')->willReturn(false);
+        $namespace->method('hasImport')->willReturn(false);
+        $namespace->method('hasName')->willReturn(true);
+        $namespace->method('getName')->willReturn($a);
+
+        // stub a non-empty path that is not fully-qualified
+        $b = $this->createMock(ServicePath::class);
+        $b->method('hasLeadingSeparator')->willReturn(false);
+        $b->method('getFirstSegment')->willReturn('foo');
+
+        $c = $this->createMock(ServicePath::class);
+        $c->method('getLength')->willReturn(3);
+
+        $merge = $this->createMock(Merge::class);
+        $merge->method('__invoke')->willReturn($c);
+
+        $sut = new Resolve($merge);
+
+        $expected = new ServiceId($c);
+        $actual   = $sut($b, $namespace);
+
+        $this->assertEquals($expected, $actual);
+    }
 }

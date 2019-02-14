@@ -6,17 +6,32 @@
 
 namespace Jstewmc\Gravity\Deprecation\Data;
 
-use Jstewmc\Gravity\Deprecation\Exception\Circular;
-use Jstewmc\Gravity\Path\Data\Path;
+use Jstewmc\Gravity\Deprecation\Exception\{Circular, TypeMismatch};
+use Jstewmc\Gravity\Path\Data\{Path, Service, Setting};
 use PHPUnit\Framework\TestCase;
 
 class ParsedTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstructThrowsExceptionIfCircular()
     {
         $this->expectException(Circular::class);
 
-        $deprecation = new Read('foo', 'foo');
+        $source      = new Service(['foo', 'bar', 'baz']);
+        $destination = new Service(['foo', 'bar', 'baz']);
+
+        new Parsed($source, $destination);
+
+        return;
+    }
+
+    public function testConstructThrowsExceptionIfTypeMismatch()
+    {
+        $this->expectException(TypeMismatch::class);
+
+        $source      = new Service(['foo', 'bar', 'baz']);
+        $destination = new Setting(['foo', 'bar', 'baz']);
+
+        new Parsed($source, $destination);
 
         return;
     }
@@ -25,7 +40,7 @@ class ParsedTest extends TestCase
     {
         $replacement = $this->mockReplacement();
 
-        $deprecation = new Read($this->mockSource(), $replacement);
+        $deprecation = new Parsed($this->mockSource(), $replacement);
 
         $this->assertSame($replacement, $deprecation->getReplacement());
 
@@ -36,7 +51,7 @@ class ParsedTest extends TestCase
     {
         $source = $this->mockSource();
 
-        $deprecation = new Read($source);
+        $deprecation = new Parsed($source);
 
         $this->assertSame($source, $deprecation->getSource());
 
@@ -45,14 +60,14 @@ class ParsedTest extends TestCase
 
     public function testHasReplacement(): void
     {
-        $deprecation = new Read($this->mockSource(), $this->mockReplacement());
+        $deprecation = new Parsed($this->mockSource(), $this->mockReplacement());
 
         $this->assertTrue($deprecation->hasReplacement());
 
         return;
     }
 
-    private function mockReplacement($path = 'bar'): string
+    private function mockReplacement($path = 'bar'): Path
     {
         $replacement = $this->createMock(Path::class);
         $replacement->method('__toString')->willReturn($path);
@@ -60,7 +75,7 @@ class ParsedTest extends TestCase
         return $replacement;
     }
 
-    private function mockSource($path = 'foo'): string
+    private function mockSource($path = 'foo'): Path
     {
         $source = $this->createMock(Path::class);
         $source->method('__toString')->willReturn($path);

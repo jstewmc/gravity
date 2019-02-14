@@ -6,10 +6,18 @@
 
 namespace Jstewmc\Gravity\Path\Data;
 
+use Jstewmc\Gravity\Path\Exception\EmptyPath;
 use PHPUnit\Framework\TestCase;
 
 class ServiceTest extends TestCase
 {
+    public function testConstruct(): void
+    {
+        $this->expectException(EmptyPath::class);
+
+        new Service([]);
+    }
+
     public function testToString(): void
     {
         $this->assertEquals(

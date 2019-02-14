@@ -6,6 +6,7 @@
 
 namespace Jstewmc\Gravity\Ns\Data;
 
+use Jstewmc\Gravity\Import\Data\Parsed as Import;
 use Jstewmc\Gravity\Import\Exception\NotFound;
 use PHPUnit\Framework\TestCase;
 
@@ -18,6 +19,18 @@ class ParsedTest extends TestCase
         (new Parsed())->getImport('foo');
 
         return;
+    }
+
+    public function testGetImport(): void
+    {
+        $name = 'foo';
+
+        $import = $this->createMock(Import::class);
+        $import->method('getName')->willReturn($name);
+
+        $namespace = (new Parsed())->setImports([$import]);
+
+        $this->assertSame($import, $namespace->getImport($name));
     }
 
     public function testGetImports(): void
