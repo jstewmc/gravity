@@ -6,18 +6,30 @@
 
 namespace Jstewmc\Gravity\Deprecation\Data;
 
-use Jstewmc\Gravity\Deprecation\Exception\Circular;
+use Jstewmc\Gravity\Deprecation\Exception\{Circular, TypeMismatch};
 use Jstewmc\Gravity\Path\Data\{Path, Service, Setting};
 use PHPUnit\Framework\TestCase;
 
 class ParsedTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstructThrowsExceptionIfCircular()
     {
         $this->expectException(Circular::class);
 
         $source      = new Service(['foo', 'bar', 'baz']);
         $destination = new Service(['foo', 'bar', 'baz']);
+
+        new Parsed($source, $destination);
+
+        return;
+    }
+
+    public function testConstructThrowsExceptionIfTypeMismatch()
+    {
+        $this->expectException(TypeMismatch::class);
+
+        $source      = new Service(['foo', 'bar', 'baz']);
+        $destination = new Setting(['foo', 'bar', 'baz']);
 
         new Parsed($source, $destination);
 
