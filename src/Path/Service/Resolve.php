@@ -17,17 +17,21 @@ use Jstewmc\Gravity\Path\Data\{
     Service as ServicePath,
     Setting as SettingPath
 };
+use Psr\Log\LoggerInterface;
 
 /**
  * Resolves a local path in a namespace into a global identifier
  */
 class Resolve
 {
+    private $logger;
+
     private $merge;
 
-    public function __construct(Merge $merge)
+    public function __construct(Merge $merge, LoggerInterface $logger)
     {
-        $this->merge = $merge;
+        $this->merge  = $merge;
+        $this->logger = $logger;
     }
 
     /**
@@ -54,6 +58,8 @@ class Resolve
         } else {
             $id = new SettingId($path);
         }
+
+        $this->logger->debug("Resolved path '$path' to id '$id'.");
 
         return $id;
     }

@@ -80,6 +80,6 @@ class Gravity
 
     private function warmCache(): void
     {
-        (new Cache\Service\Warm())($this->cache);
+        (new Cache\Service\Warm())($this->cache, $this->logger);
     }
 }

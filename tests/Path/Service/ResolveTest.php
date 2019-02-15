@@ -17,9 +17,17 @@ use Jstewmc\Gravity\Path\Data\{
     Setting as SettingPath
 };
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 class ResolveTest extends TestCase
 {
+    private $logger;
+
+    public function setUp(): void
+    {
+        $this->logger = $this->createMock(LoggerInterface::class);
+    }
+
     public function testInvokeIfNamespaceIsEmpty(): void
     {
         // three segments are required to pass validations
@@ -32,7 +40,7 @@ class ResolveTest extends TestCase
 
         $merge = $this->createMock(Merge::class);
 
-        $sut = new Resolve($merge);
+        $sut = new Resolve($merge, $this->logger);
 
         $expected = new ServiceId($path);
         $actual   = $sut($path, $namespace);
@@ -53,7 +61,7 @@ class ResolveTest extends TestCase
 
         $merge = $this->createMock(Merge::class);
 
-        $sut = new Resolve($merge);
+        $sut = new Resolve($merge, $this->logger);
 
         $expected = new ServiceId($path);
         $actual   = $sut($path, $namespace);
@@ -77,7 +85,7 @@ class ResolveTest extends TestCase
 
         $merge = $this->createMock(Merge::class);
 
-        $sut = new Resolve($merge);
+        $sut = new Resolve($merge, $this->logger);
 
         $expected = new ServiceId($path);
         $actual   = $sut($path, $namespace);
@@ -110,7 +118,7 @@ class ResolveTest extends TestCase
         $merge = $this->createMock(Merge::class);
         $merge->method('__invoke')->willReturn($c);
 
-        $sut = new Resolve($merge);
+        $sut = new Resolve($merge, $this->logger);
 
         $expected = new ServiceId($c);
         $actual   = $sut($b, $namespace);
@@ -140,7 +148,7 @@ class ResolveTest extends TestCase
         $merge = $this->createMock(Merge::class);
         $merge->method('__invoke')->willReturn($c);
 
-        $sut = new Resolve($merge);
+        $sut = new Resolve($merge, $this->logger);
 
         $expected = new ServiceId($c);
         $actual   = $sut($b, $namespace);

@@ -8,15 +8,17 @@ namespace Jstewmc\Gravity\Cache\Service;
 
 use Jstewmc\Gravity\Cache\Data\Hash;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 class WarmTest extends TestCase
 {
     public function testInvoke(): void
     {
-        $cache = new Hash();
+        $cache  = new Hash();
+        $logger = $this->createMock(LoggerInterface::class);
 
         $sut = new Warm();
 
-        $this->assertSame($cache, $sut($cache));
+        $this->assertSame($cache, $sut($cache, $logger));
     }
 }
