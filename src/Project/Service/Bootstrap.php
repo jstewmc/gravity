@@ -22,7 +22,9 @@ use Jstewmc\Gravity\{
     Service,
     Setting
 };
+use Jstewmc\Gravity\Cache\Data\Cache as CacheInterface;
 use Jstewmc\Gravity\Project\Data\Project;
+use Psr\Log\LoggerInterface;
 
 /**
  * Excludes services defined during bootstrap (e.g., Path, Id, GetX, etc).
@@ -36,10 +38,20 @@ class Bootstrap
         $this->namespace = new Ns\Data\Parsed();
     }
 
-    public function __invoke(Project $project): Project
+    public function __invoke(Project $project, LoggerInterface $logger): Project
     {
+        $project = $this->bootstrapConfig($project, $logger);
+
         $project = $this->bootstrapServices($project);
+
         $project = $this->bootstrapSettings($project);
+
+        return $project;
+    }
+
+    private function bootstrapConfig(Project $project, LoggerInterface $logger): Project
+    {
+        $project->addService($this->getLogger($logger));
 
         return $project;
     }
@@ -310,7 +322,8 @@ class Bootstrap
         $id       = new Id\Data\Service($path);
         $service  = new Service\Data\Fx($id, function () {
             return new Filesystem\Service\Traverse(
-                $this->get('jstewmc.gravity.directories')
+                $this->get('jstewmc.gravity.directories'),
+                $this->get('jstewmc\gravity\logger')
             );
         }, $this->namespace);
 
@@ -327,6 +340,16 @@ class Bootstrap
                 $this->get(Path\Service\Parse::class)
             );
         }, $this->namespace);
+
+        return $service;
+    }
+
+    private function getLogger(LoggerInterface $logger): Service\Data\Service
+    {
+        $segments = ['jstewmc', 'gravity', 'logger'];
+        $path     = new Path\Data\Service($segments);
+        $id       = new Id\Data\Service($path);
+        $service  = new Service\Data\Instance($id, $logger);
 
         return $service;
     }

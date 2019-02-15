@@ -9,6 +9,7 @@ namespace Jstewmc\Gravity\Project\Service;
 use Jstewmc\Gravity\Project\Data\Project;
 use Jstewmc\Gravity\Root\Data\Root;
 use PHPUnit\Framework\TestCase;
+use Psr\Log;
 
 class BootstrapTest extends TestCase
 {
@@ -18,9 +19,11 @@ class BootstrapTest extends TestCase
 
         $project = new Project($root);
 
+        $logger = $this->createMock(Log\LoggerInterface::class);
+
         $sut = new Bootstrap();
 
-        $this->assertSame($project, $sut($project));
+        $this->assertSame($project, $sut($project, $logger));
 
         return;
     }
