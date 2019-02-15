@@ -9,6 +9,7 @@ namespace Jstewmc\Gravity\Filesystem\Service;
 use Jstewmc\Gravity\File;
 use Jstewmc\Gravity\Filesystem\Data\{Loaded, Traversed};
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 class LoadTest extends TestCase
 {
@@ -20,7 +21,9 @@ class LoadTest extends TestCase
 
         $run = $this->createMock(File\Service\Run::class);
 
-        $sut = new Load($get, $run);
+        $logger = $this->createMock(LoggerInterface::class);
+
+        $sut = new Load($get, $run, $logger);
 
         $expected = new Loaded([]);
         $actual   = $sut($traversed);

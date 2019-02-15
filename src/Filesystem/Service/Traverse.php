@@ -9,6 +9,7 @@ namespace Jstewmc\Gravity\Filesystem\Service;
 use DirectoryIterator;
 use Jstewmc\Gravity\Filesystem\Data\Traversed;
 use Jstewmc\Gravity\Root\Data\Root;
+use Psr\Log\LoggerInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -21,17 +22,23 @@ class Traverse
      * @param  string[]  $directories  an array of directory names with keys
      *   "gravity" and "vendors"
      */
-    public function __construct(array $directories)
+    public function __construct(array $directories, LoggerInterface $logger)
     {
         $this->directories = $directories;
+        $this->logger      = $logger;
     }
 
     public function __invoke(Root $root): Traversed
     {
+        $this->logger->info("Starting traversal of $root...");
+
         $projectFiles = $this->getProjectFiles($root);
         $packageFiles = $this->getPackageFiles($root);
 
         $files = array_merge($projectFiles, $packageFiles);
+
+        $total = number_format(count($files));
+        $this->logger->info("Found $total files.");
 
         $filesystem = new Traversed($files);
 

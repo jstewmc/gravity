@@ -308,7 +308,8 @@ class Bootstrap
         $service  = new Service\Data\Fx($id, function () {
             return new Filesystem\Service\Load(
                 $this->get(File\Service\Get::class),
-                $this->get(File\Service\Run::class)
+                $this->get(File\Service\Run::class),
+                $this->get('Jstewmc\Gravity\Logger')
             );
         }, $this->namespace);
 
