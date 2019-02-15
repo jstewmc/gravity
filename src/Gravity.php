@@ -7,6 +7,7 @@
 namespace Jstewmc\Gravity;
 
 use Jstewmc\Gravity\{Cache, Manager, Project};
+use Psr\Log;
 
 
 // (new Gravity())->setCache($cache)->pull();
@@ -14,21 +15,31 @@ class Gravity
 {
     private $cache;
 
+    private $logger;
+
     public function __construct()
     {
-        $this->cache = new Cache\Data\Hash();
+        $this->cache  = new Cache\Data\Hash();
+        $this->logger = new Log\NullLogger();
     }
 
     public function pull()
     {
         $this->warmCache();
 
-        $project = $this->bootstrapProject();
+        $project = $this->bootstrapProject($this->logger);
         $manager = $this->bootstrapManager($project);
 
         $this->load($project, $manager);
 
         return $manager;
+    }
+
+    public function setLogger(Log\LoggerInterface $logger): self
+    {
+        $this->logger = $logger;
+
+        return $this;
     }
 
     public function setCache(Cache\Data\Cache $cache): self
@@ -43,12 +54,14 @@ class Gravity
         return (new Manager\Service\Bootstrap())($project, $this->cache);
     }
 
-    private function bootstrapProject(): Project\Data\Project
+    private function bootstrapProject(
+        Log\LoggerInterface $logger
+    ): Project\Data\Project
     {
         $root = (new Root\Service\Find('vendor'))();
 
         $project = new Project\Data\Project($root);
-        $project = (new Project\Service\Bootstrap())($project);
+        $project = (new Project\Service\Bootstrap())($project, $logger);
 
         return $project;
     }

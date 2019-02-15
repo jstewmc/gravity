@@ -7,12 +7,22 @@
 namespace Jstewmc\Gravity;
 
 use PHPUnit\Framework\TestCase;
+use Psr\Log;
 
 class GravityTest extends TestCase
 {
     public function testPull(): void
     {
         $this->assertInstanceOf(Manager\Data\Manager::class, (new Gravity())->pull());
+    }
+
+    public function testSetLogger(): void
+    {
+        $gravity = new Gravity();
+
+        $logger = $this->createMock(Log\LoggerInterface::class);
+
+        $this->assertSame($gravity, $gravity->setLogger($logger));
     }
 
     public function testSetCache(): void
