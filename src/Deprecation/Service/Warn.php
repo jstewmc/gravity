@@ -7,18 +7,29 @@
 namespace Jstewmc\Gravity\Deprecation\Service;
 
 use Jstewmc\Gravity\Deprecation\Data\Deprecation;
+use Psr\Log\LoggerInterface;
 
 class Warn
 {
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     public function __invoke(Deprecation $deprecation): void
     {
-        trigger_error($this->getMessage($deprecation), E_USER_DEPRECATED);
+        $message = $this->getMessage($deprecation);
+
+        $this->logger->warning($message);
+
+        trigger_error($message, E_USER_DEPRECATED);
     }
 
     private function getMessage(Deprecation $deprecation): string
     {
-        $message = "The service, setting, or alias "
-            . "'{$deprecation->getSource()}' has been deprecated and "
+        $message = "'{$deprecation->getSource()}' has been deprecated and "
             . "should be ";
 
         if ($deprecation->hasReplacement()) {

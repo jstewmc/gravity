@@ -8,7 +8,7 @@ namespace Jstewmc\Gravity\Cache\Service;
 
 use Jstewmc\Gravity\Cache\Data\Cache;
 use Jstewmc\Gravity\{Deprecation, Id, Path, Service};
-use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerInterface as Logger;
 
 /**
  * Defines the minimum services required for bootstraping. Excludes services
@@ -16,10 +16,10 @@ use Psr\Log\LoggerInterface;
  */
 class Warm
 {
-    public function __invoke(Cache $cache, LoggerInterface $logger)
+    public function __invoke(Cache $cache, Logger $logger)
     {
         $cache = $this->setServiceServices($cache);
-        $cache = $this->setDeprecationServices($cache);
+        $cache = $this->setDeprecationServices($cache, $logger);
         $cache = $this->setPathServices($cache, $logger);
 
         // requires path and deprecation
@@ -28,7 +28,7 @@ class Warm
         return $cache;
     }
 
-    private function setPathServices(Cache $cache, LoggerInterface $logger): Cache
+    private function setPathServices(Cache $cache, Logger $logger): Cache
     {
         $parse   = new Path\Service\Parse();
         $merge   = new Path\Service\Merge();
@@ -41,12 +41,11 @@ class Warm
         return $cache;
     }
 
-    private function setDeprecationServices(Cache $cache): Cache
+    private function setDeprecationServices(Cache $cache, Logger $logger): Cache
     {
-        $cache->set(
-            strtolower(Deprecation\Service\Warn::class),
-            new Deprecation\Service\Warn()
-        );
+        $warn = new Deprecation\Service\Warn($logger);
+
+        $cache->set(strtolower(Deprecation\Service\Warn::class), $warn);
 
         return $cache;
     }

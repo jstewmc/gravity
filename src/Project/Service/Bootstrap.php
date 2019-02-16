@@ -194,7 +194,11 @@ class Bootstrap
         $segments = ['jstewmc', 'gravity', 'deprecation', 'service', 'warn'];
         $path     = new Path\Data\Service($segments);
         $id       = new Id\Data\Service($path);
-        $service  = new Service\Data\Newable($id);
+        $service  = new Service\Data\Fx($id, function () {
+            return new Deprecation\Service\Warn(
+                $this->get('Jstewmc\Gravity\Logger')
+            );
+        }, $this->namespace);
 
         return $service;
     }

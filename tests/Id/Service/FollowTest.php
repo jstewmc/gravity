@@ -46,6 +46,7 @@ class FollowTest extends TestCase
         // mock the warn-deprecation service to expect a call
         $warnDeprecation = $this->getMockBuilder(WarnDeprecation::class)
             ->setMethods(['__invoke'])
+            ->disableOriginalConstructor()
             ->getMock();
 
         $warnDeprecation->expects($this->once())->method('__invoke');
