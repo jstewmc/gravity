@@ -18,12 +18,12 @@ class Warm
 {
     public function __invoke(Cache $cache, Logger $logger)
     {
-        $cache = $this->setServiceServices($cache);
+        $cache = $this->setServiceServices($cache, $logger);
         $cache = $this->setDeprecationServices($cache, $logger);
         $cache = $this->setPathServices($cache, $logger);
 
         // requires path and deprecation
-        $cache = $this->setIdServices($cache);
+        $cache = $this->setIdServices($cache, $logger);
 
         return $cache;
     }
@@ -50,7 +50,7 @@ class Warm
         return $cache;
     }
 
-    private function setIdServices(Cache $cache): Cache
+    private function setIdServices(Cache $cache, Logger $logger): Cache
     {
         $render = new Id\Service\Render(
             $cache->get(strtolower(Path\Service\Parse::class)),
@@ -58,7 +58,8 @@ class Warm
         );
 
         $follow = new Id\Service\Follow(
-            $cache->get(strtolower(Deprecation\Service\Warn::class))
+            $cache->get(strtolower(Deprecation\Service\Warn::class)),
+            $logger
         );
 
         $cache->set(strtolower(Id\Service\Render::class), $render);
@@ -67,7 +68,7 @@ class Warm
         return $cache;
     }
 
-    private function setServiceServices(Cache $cache): Cache
+    private function setServiceServices(Cache $cache, Logger $logger): Cache
     {
         $cache->set(
             strtolower(Service\Service\Instantiate::class),
