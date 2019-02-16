@@ -9,8 +9,6 @@ namespace Jstewmc\Gravity;
 use Jstewmc\Gravity\{Cache, Manager, Project};
 use Psr\Log;
 
-
-// (new Gravity())->setCache($cache)->pull();
 class Gravity
 {
     private $cache;
@@ -60,8 +58,7 @@ class Gravity
 
     private function bootstrapProject(
         Log\LoggerInterface $logger
-    ): Project\Data\Project
-    {
+    ): Project\Data\Project {
         $root = (new Root\Service\Find('vendor'))();
 
         $project = new Project\Data\Project($root);

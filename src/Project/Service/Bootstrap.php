@@ -10,7 +10,6 @@ use Jstewmc\Gravity\{
     Alias,
     Definition,
     Deprecation,
-    Cache,
     File,
     Filesystem,
     Id,
@@ -22,9 +21,8 @@ use Jstewmc\Gravity\{
     Service,
     Setting
 };
-use Jstewmc\Gravity\Cache\Data\Cache as CacheInterface;
 use Jstewmc\Gravity\Project\Data\Project;
-use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerInterface as Logger;
 
 /**
  * Excludes services defined during bootstrap (e.g., Path, Id, GetX, etc).
@@ -38,7 +36,7 @@ class Bootstrap
         $this->namespace = new Ns\Data\Parsed();
     }
 
-    public function __invoke(Project $project, LoggerInterface $logger): Project
+    public function __invoke(Project $project, Logger $logger): Project
     {
         $project = $this->bootstrapConfig($project, $logger);
 
@@ -49,7 +47,7 @@ class Bootstrap
         return $project;
     }
 
-    private function bootstrapConfig(Project $project, LoggerInterface $logger): Project
+    private function bootstrapConfig(Project $project, Logger $logger): Project
     {
         $project->addService($this->getLogger($logger));
 
@@ -349,7 +347,7 @@ class Bootstrap
         return $service;
     }
 
-    private function getLogger(LoggerInterface $logger): Service\Data\Service
+    private function getLogger(Logger $logger): Service\Data\Service
     {
         $segments = ['jstewmc', 'gravity', 'logger'];
         $path     = new Path\Data\Service($segments);
