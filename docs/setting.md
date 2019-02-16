@@ -1,4 +1,4 @@
-[Home](index.md) | [Identifying](identifying.md) | [**Setting**](setting.md) | [Getting](getting.md) | [Aliasing](aliasing.md) | [Deprecating](deprecating.md)
+[Home](index.md) | [Identifying](identifying.md) | [**Setting**](setting.md) | [Getting](getting.md) | [Aliasing](aliasing.md) | [Deprecating](deprecating.md) | [Logging](logging.md) | [Caching](caching.md)
 
 # Setting services and settings
 

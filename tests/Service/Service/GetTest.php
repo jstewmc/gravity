@@ -8,6 +8,7 @@ namespace Jstewmc\Gravity\Service\Service;
 
 use Jstewmc\Gravity\{Cache, Id, Manager, Project};
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface as Logger;
 use StdClass;
 
 class GetTest extends TestCase
@@ -20,7 +21,7 @@ class GetTest extends TestCase
 
         $instantiate = $this->mockInstantiate();
 
-        $sut = new Get($instantiate, $cache);
+        $sut = new Get($instantiate, $cache, $this->mockLogger());
 
         // set up throw-away arguments
         $id      = $this->mockId();
@@ -45,7 +46,7 @@ class GetTest extends TestCase
         $instantiate = $this->mockInstantiate();
         $instantiate->method('__invoke')->willReturn($instance);
 
-        $sut = new Get($instantiate, $cache);
+        $sut = new Get($instantiate, $cache, $this->mockLogger());
 
         // set up throw-away arguments
         $id      = $this->mockId();
@@ -80,6 +81,11 @@ class GetTest extends TestCase
     private function mockInstantiate(): Instantiate
     {
         return $this->createMock(Instantiate::class);
+    }
+
+    private function mockLogger(): Logger
+    {
+        return $this->createMock(Logger::class);
     }
 
     private function mockManager(): Manager\Data\Manager

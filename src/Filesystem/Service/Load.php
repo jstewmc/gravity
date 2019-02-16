@@ -8,6 +8,7 @@ namespace Jstewmc\Gravity\Filesystem\Service;
 
 use Jstewmc\Gravity\File\Service\{Get, Run};
 use Jstewmc\Gravity\Filesystem\Data\{Loaded, Traversed};
+use Psr\Log\LoggerInterface;
 
 class Load
 {
@@ -15,10 +16,11 @@ class Load
 
     private $run;
 
-    public function __construct(Get $get, Run $run)
+    public function __construct(Get $get, Run $run, LoggerInterface $logger)
     {
-        $this->get = $get;
-        $this->run = $run;
+        $this->get    = $get;
+        $this->run    = $run;
+        $this->logger = $logger;
     }
 
     public function __invoke(Traversed $filesystem): Loaded
@@ -26,6 +28,8 @@ class Load
         $files = [];
 
         foreach ($filesystem->getFiles() as $file) {
+            $this->logger->debug("Loading file {$file->getPathname()}...");
+
             $file = ($this->get)($file);
             $file = ($this->run)($file);
 

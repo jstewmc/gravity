@@ -1,4 +1,4 @@
-[Home](index.md) | [Identifying](identifying.md) | [Setting](setting.md) | [Getting](getting.md) | [Aliasing](aliasing.md) | [**Deprecating**](deprecating.md)
+[Home](index.md) | [Identifying](identifying.md) | [Setting](setting.md) | [Getting](getting.md) | [Aliasing](aliasing.md) | [**Deprecating**](deprecating.md) | [Logging](logging.md) | [Caching](caching.md)
 
 # Deprecating services and settings
 
@@ -71,6 +71,6 @@ $g->get(Deprecating\Bar::class);
 
 ## That's it!
 
-If you've made it here, you've learned how to [identify](identifying.md), [get](getting.md), [set](setting.md), and [alias](aliasing.md) services and settings.
+If you've made it here, you've learned how to [identify](identifying.md), [get](getting.md), [set](setting.md), and [alias](aliasing.md) services and settings. You can learn more about [logging](logging.md) and  [caching](caching.md), or get [coding](https://github.com/jstewmc/gravity)!
 
-If you have any questions, [let us know](mailto:clayjs0@gmail.com). Otherwise, get [coding](https://github.com/jstewmc/gravity)!
+If you have any questions, [let us know](mailto:clayjs0@gmail.com).

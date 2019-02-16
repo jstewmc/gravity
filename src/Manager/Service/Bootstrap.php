@@ -10,17 +10,18 @@ use Jstewmc\Gravity\{Id, Service, Setting};
 use Jstewmc\Gravity\Cache\Data\Cache;
 use Jstewmc\Gravity\Manager\Data\Manager;
 use Jstewmc\Gravity\Project\Data\Project;
+use Psr\Log\LoggerInterface as Logger;
 
 /**
  * Bootstraps the manager from the warmed cache and project.
  */
 class Bootstrap
 {
-    public function __invoke(Project $project, Cache $cache): Manager
+    public function __invoke(Project $project, Cache $cache, Logger $logger): Manager
     {
         $getId      = $this->getGetId($cache);
-        $getService = $this->getGetService($cache);
-        $getSetting = $this->getGetSetting($cache);
+        $getService = $this->getGetService($cache, $logger);
+        $getSetting = $this->getGetSetting($cache, $logger);
 
         $manager = new Manager($project, $getId, $getService, $getSetting);
 
@@ -35,16 +36,17 @@ class Bootstrap
         );
     }
 
-    private function getGetService(Cache $cache)
+    private function getGetService(Cache $cache, Logger $logger)
     {
         return new Service\Service\Get(
             $cache->get(strtolower(Service\Service\Instantiate::class)),
-            $cache
+            $cache,
+            $logger
         );
     }
 
-    private function getGetSetting(Cache $cache)
+    private function getGetSetting(Cache $cache, Logger $logger)
     {
-        return new Setting\Service\Get($cache);
+        return new Setting\Service\Get($cache, $logger);
     }
 }

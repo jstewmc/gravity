@@ -10,6 +10,7 @@ use Jstewmc\Gravity\Filesystem\Data\Traversed;
 use Jstewmc\Gravity\Root\Data\Root;
 use org\bovigo\vfs\{vfsStream, vfsStreamDirectory};
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use SplFileInfo;
 
 class TraverseTest extends TestCase
@@ -36,6 +37,8 @@ class TraverseTest extends TestCase
     {
         $this->root = vfsStream::setup('test');
 
+        $this->logger = $this->createMock(LoggerInterface::class);
+
         return;
     }
 
@@ -43,7 +46,7 @@ class TraverseTest extends TestCase
     {
         $root = new Root($this->root->url());
 
-        $sut = new Traverse($this->directories);
+        $sut = new Traverse($this->directories, $this->logger);
 
         $expected = new Traversed([]);
         $actual   = $sut($root);
@@ -74,7 +77,7 @@ class TraverseTest extends TestCase
         $subDirectory3 = vfsStream::newDirectory('qux')->at($subDirectory2);
         $file3 = vfsStream::newFile('qux.php')->at($subDirectory3);
 
-        $sut = new Traverse($this->directories);
+        $sut = new Traverse($this->directories, $this->logger);
 
         $expected = new Traversed([
             new SplFileInfo($file1->url()),
@@ -117,7 +120,7 @@ class TraverseTest extends TestCase
             ->at($package3);
         $file3    = vfsStream::newFile('baz.php')->at($gravity3);
 
-        $sut = new Traverse($this->directories);
+        $sut = new Traverse($this->directories, $this->logger);
 
         $expected = new Traversed([
             new SplFileInfo($file1->url()),

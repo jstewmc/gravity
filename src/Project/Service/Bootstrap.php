@@ -10,7 +10,6 @@ use Jstewmc\Gravity\{
     Alias,
     Definition,
     Deprecation,
-    Cache,
     File,
     Filesystem,
     Id,
@@ -23,6 +22,7 @@ use Jstewmc\Gravity\{
     Setting
 };
 use Jstewmc\Gravity\Project\Data\Project;
+use Psr\Log\LoggerInterface as Logger;
 
 /**
  * Excludes services defined during bootstrap (e.g., Path, Id, GetX, etc).
@@ -36,10 +36,20 @@ class Bootstrap
         $this->namespace = new Ns\Data\Parsed();
     }
 
-    public function __invoke(Project $project): Project
+    public function __invoke(Project $project, Logger $logger): Project
     {
+        $project = $this->bootstrapConfig($project, $logger);
+
         $project = $this->bootstrapServices($project);
+
         $project = $this->bootstrapSettings($project);
+
+        return $project;
+    }
+
+    private function bootstrapConfig(Project $project, Logger $logger): Project
+    {
+        $project->addService($this->getLogger($logger));
 
         return $project;
     }
@@ -182,7 +192,11 @@ class Bootstrap
         $segments = ['jstewmc', 'gravity', 'deprecation', 'service', 'warn'];
         $path     = new Path\Data\Service($segments);
         $id       = new Id\Data\Service($path);
-        $service  = new Service\Data\Newable($id);
+        $service  = new Service\Data\Fx($id, function () {
+            return new Deprecation\Service\Warn(
+                $this->get('Jstewmc\Gravity\Logger')
+            );
+        }, $this->namespace);
 
         return $service;
     }
@@ -296,7 +310,8 @@ class Bootstrap
         $service  = new Service\Data\Fx($id, function () {
             return new Filesystem\Service\Load(
                 $this->get(File\Service\Get::class),
-                $this->get(File\Service\Run::class)
+                $this->get(File\Service\Run::class),
+                $this->get('Jstewmc\Gravity\Logger')
             );
         }, $this->namespace);
 
@@ -310,7 +325,8 @@ class Bootstrap
         $id       = new Id\Data\Service($path);
         $service  = new Service\Data\Fx($id, function () {
             return new Filesystem\Service\Traverse(
-                $this->get('jstewmc.gravity.directories')
+                $this->get('jstewmc.gravity.directories'),
+                $this->get('jstewmc\gravity\logger')
             );
         }, $this->namespace);
 
@@ -327,6 +343,16 @@ class Bootstrap
                 $this->get(Path\Service\Parse::class)
             );
         }, $this->namespace);
+
+        return $service;
+    }
+
+    private function getLogger(Logger $logger): Service\Data\Service
+    {
+        $segments = ['jstewmc', 'gravity', 'logger'];
+        $path     = new Path\Data\Service($segments);
+        $id       = new Id\Data\Service($path);
+        $service  = new Service\Data\Instance($id, $logger);
 
         return $service;
     }

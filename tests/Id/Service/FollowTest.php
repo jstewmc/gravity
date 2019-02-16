@@ -11,6 +11,7 @@ use Jstewmc\Gravity\Deprecation\Service\Warn as WarnDeprecation;
 use Jstewmc\Gravity\Id\Data\Id;
 use Jstewmc\Gravity\Project\Data\Project;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface as Logger;
 
 class FollowTest extends TestCase
 {
@@ -22,9 +23,7 @@ class FollowTest extends TestCase
         $project->method('hasDeprecation')->willReturn(false);
         $project->method('hasAlias')->willReturn(false);
 
-        $warnDeprecation = $this->createMock(WarnDeprecation::class);
-
-        $sut = new Follow($warnDeprecation);
+        $sut = new Follow($this->mockWarnDeprecation(), $this->mockLogger());
 
         $expected = $id;
         $actual   = $sut($id, $project);
@@ -46,11 +45,12 @@ class FollowTest extends TestCase
         // mock the warn-deprecation service to expect a call
         $warnDeprecation = $this->getMockBuilder(WarnDeprecation::class)
             ->setMethods(['__invoke'])
+            ->disableOriginalConstructor()
             ->getMock();
 
         $warnDeprecation->expects($this->once())->method('__invoke');
 
-        $sut = new Follow($warnDeprecation);
+        $sut = new Follow($warnDeprecation, $this->mockLogger());
 
         $expected = $id;
         $actual   = $sut($id, $project);
@@ -78,10 +78,7 @@ class FollowTest extends TestCase
         $project->method('hasAlias')->will($this->onConsecutiveCalls(true, false));
         $project->method('getAlias')->willReturn($alias);
 
-        // stub the warn-deprecation service (no expectations)
-        $warnDeprecation = $this->createMock(WarnDeprecation::class);
-
-        $sut = new Follow($warnDeprecation);
+        $sut = new Follow($this->mockWarnDeprecation(), $this->mockLogger());
 
         $expected = $destination;
         $actual   = $sut($source, $project);
@@ -120,10 +117,7 @@ class FollowTest extends TestCase
             $this->onConsecutiveCalls($alias1, $alias2)
         );
 
-        // stub the warn-deprecation service (no expectations)
-        $warnDeprecation = $this->createMock(WarnDeprecation::class);
-
-        $sut = new Follow($warnDeprecation);
+        $sut = new Follow($this->mockWarnDeprecation(), $this->mockLogger());
 
         $expected = $destination2;
         $actual   = $sut($source, $project);
@@ -131,5 +125,15 @@ class FollowTest extends TestCase
         $this->assertSame($expected, $actual);
 
         return;
+    }
+
+    private function mockWarnDeprecation(): WarnDeprecation
+    {
+        return $this->createMock(WarnDeprecation::class);
+    }
+
+    private function mockLogger(): Logger
+    {
+        return $this->createMock(Logger::class);
     }
 }

@@ -10,6 +10,7 @@ use Jstewmc\Gravity\Deprecation\Data\Resolved;
 use Jstewmc\Gravity\Id\Data\Service as Id;
 use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 /**
  * Based on phpunit.xml settings, PHPUnit will convert E_USER_DEPRECATED errors
@@ -27,7 +28,7 @@ class WarnTest extends TestCase
 
         $deprecation = new Resolved($this->mockSource());
 
-        (new Warn())($deprecation);
+        (new Warn($this->mockLogger()))($deprecation);
 
         return;
     }
@@ -38,9 +39,14 @@ class WarnTest extends TestCase
 
         $deprecation = new Resolved($this->mockSource(), $this->mockReplacement());
 
-        (new Warn())($deprecation);
+        (new Warn($this->mockLogger()))($deprecation);
 
         return;
+    }
+
+    private function mockLogger(): LoggerInterface
+    {
+        return $this->createMock(LoggerInterface::class);
     }
 
     private function mockSource($path = 'foo')
