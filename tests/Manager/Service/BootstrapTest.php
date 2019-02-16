@@ -11,6 +11,7 @@ use Jstewmc\Gravity\Cache\Data\Cache;
 use Jstewmc\Gravity\Manager\Data\Manager;
 use Jstewmc\Gravity\Project\Data\Project;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface as Logger;
 
 class BootstrapTest extends TestCase
 {
@@ -21,6 +22,7 @@ class BootstrapTest extends TestCase
         $render      = $this->createMock(Id\Service\Render::class);
         $follow      = $this->createMock(Id\Service\Follow::class);
         $instantiate = $this->createMock(Service\Service\Instantiate::class);
+        $logger      = $this->createMock(Logger::class);
 
         $cache = $this->createMock(Cache::class);
         $map   = [
@@ -35,10 +37,10 @@ class BootstrapTest extends TestCase
         $expected = new Manager(
             $project,
             new Id\Service\Get($render, $follow),
-            new Service\Service\Get($instantiate, $cache),
+            new Service\Service\Get($instantiate, $cache, $logger),
             new Setting\Service\Get($cache)
         );
-        $actual = $sut($project, $cache);
+        $actual = $sut($project, $cache, $logger);
 
         $this->assertEquals($expected, $actual);
     }
