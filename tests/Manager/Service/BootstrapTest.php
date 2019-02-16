@@ -38,7 +38,7 @@ class BootstrapTest extends TestCase
             $project,
             new Id\Service\Get($render, $follow),
             new Service\Service\Get($instantiate, $cache, $logger),
-            new Setting\Service\Get($cache)
+            new Setting\Service\Get($cache, $logger)
         );
         $actual = $sut($project, $cache, $logger);
 

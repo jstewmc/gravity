@@ -21,7 +21,7 @@ class Bootstrap
     {
         $getId      = $this->getGetId($cache);
         $getService = $this->getGetService($cache, $logger);
-        $getSetting = $this->getGetSetting($cache);
+        $getSetting = $this->getGetSetting($cache, $logger);
 
         $manager = new Manager($project, $getId, $getService, $getSetting);
 
@@ -45,8 +45,8 @@ class Bootstrap
         );
     }
 
-    private function getGetSetting(Cache $cache)
+    private function getGetSetting(Cache $cache, Logger $logger)
     {
-        return new Setting\Service\Get($cache);
+        return new Setting\Service\Get($cache, $logger);
     }
 }
