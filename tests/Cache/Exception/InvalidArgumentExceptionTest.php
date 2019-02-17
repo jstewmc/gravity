@@ -12,6 +12,6 @@ class InvalidArgumentExceptionTest extends TestCase
 {
     public function testGetKey(): void
     {
-        $this->assertContains('foo', (new InvalidArgumentException('foo'))->getMessage());
+        $this->assertStringContainsString('foo', (new InvalidArgumentException('foo'))->getMessage());
     }
 }
