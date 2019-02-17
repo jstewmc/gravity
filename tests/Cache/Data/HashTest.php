@@ -55,6 +55,16 @@ class HashTest extends TestCase
         $cache->delete(['foo']);
     }
 
+    public function testDeleteThrowsExceptionIfObjectDoesNotImplementToString(): void
+    {
+        $cache   = new Hash();
+        $service = new class {};
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $cache->delete($service);
+    }
+
     public function testDeleteMultiple(): void
     {
         $key   = 'foo';
@@ -107,6 +117,16 @@ class HashTest extends TestCase
         $cache->get(['foo']);
     }
 
+    public function testGetThrowsExceptionIfObjectDoesNotImplementToString(): void
+    {
+        $cache   = new Hash();
+        $service = new class {};
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $cache->get($service);
+    }
+
     public function testGetMultiple(): void
     {
         $key   = 'foo';
@@ -138,11 +158,6 @@ class HashTest extends TestCase
         $this->assertSame($default, $cache->getMultiple($keys, $default));
     }
 
-    public function testHasReturnsFalseIfKeyDoesNotExist(): void
-    {
-        $this->assertFalse((new Hash())->has('foo'));
-    }
-
     public function testHas(): void
     {
         $cache = new Hash();
@@ -150,6 +165,30 @@ class HashTest extends TestCase
         $cache->set('foo', 1);
 
         $this->assertTrue($cache->has('foo'));
+    }
+
+    public function testHasReturnsFalseIfKeyDoesNotExist(): void
+    {
+        $this->assertFalse((new Hash())->has('foo'));
+    }
+
+    public function testHasThrowsExceptionIfInputTypeNotValid(): void
+    {
+        $cache = new Hash();
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $cache->has(['foo']);
+    }
+
+    public function testHasThrowsExceptionIfObjectDoesNotImplementToString(): void
+    {
+        $cache   = new Hash();
+        $service = new class {};
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $cache->has($service);
     }
 
     public function testSet(): void
@@ -168,6 +207,16 @@ class HashTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         $cache->set(['foo'], 'foo');
+    }
+
+    public function testSetThrowsExceptionIfObjectDoesNotImplementToString(): void
+    {
+        $cache   = new Hash();
+        $service = new class {};
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $cache->set($service, 'foo');
     }
 
     public function testSetMultiple(): void
