@@ -8,12 +8,10 @@ namespace Jstewmc\Gravity\Cache\Exception;
 
 use PHPUnit\Framework\TestCase;
 
-class NotFoundTest extends TestCase
+class InvalidArgumentExceptionTest extends TestCase
 {
     public function testGetKey(): void
     {
-        $this->assertSame('foo', (new NotFound('foo'))->getKey());
-
-        return;
+        $this->assertContains('foo', (new InvalidArgumentException('foo'))->getMessage());
     }
 }

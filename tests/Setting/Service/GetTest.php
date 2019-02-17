@@ -6,9 +6,10 @@
 
 namespace Jstewmc\Gravity\Setting\Service;
 
-use Jstewmc\Gravity\{Cache, Id, Project};
+use Jstewmc\Gravity\{Id, Project};
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface as Logger;
+use Psr\SimpleCache\CacheInterface;
 
 class GetTest extends TestCase
 {
@@ -51,9 +52,9 @@ class GetTest extends TestCase
         return;
     }
 
-    private function mockCache($isCached): Cache\Data\Cache
+    private function mockCache($isCached): CacheInterface
     {
-        $cache = $this->createMock(Cache\Data\Cache::class);
+        $cache = $this->createMock(CacheInterface::class);
         $cache->method('has')->willReturn($isCached);
 
         return $cache;

@@ -7,7 +7,7 @@
 namespace Jstewmc\Gravity\Manager\Service;
 
 use Jstewmc\Gravity\{Id, Service, Setting};
-use Jstewmc\Gravity\Cache\Data\Cache;
+use Psr\SimpleCache\CacheInterface;
 use Jstewmc\Gravity\Manager\Data\Manager;
 use Jstewmc\Gravity\Project\Data\Project;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +24,7 @@ class BootstrapTest extends TestCase
         $instantiate = $this->createMock(Service\Service\Instantiate::class);
         $logger      = $this->createMock(Logger::class);
 
-        $cache = $this->createMock(Cache::class);
+        $cache = $this->createMock(CacheInterface::class);
         $map   = [
             ['jstewmc\gravity\id\service\render', $render],
             ['jstewmc\gravity\id\service\follow', $follow],
