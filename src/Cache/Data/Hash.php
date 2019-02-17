@@ -91,6 +91,8 @@ class Hash implements CacheInterface
 
         foreach ($values as $key => $value) {
             $this->set($key, $value);
+
+            unset($values[$key]);
         }
     }
 
