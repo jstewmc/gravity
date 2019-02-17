@@ -54,9 +54,8 @@ class Gravity
     private function bootstrapManager(Project\Data\Project $project): Manager\Data\Manager
     {
         $bootstrap = new Manager\Service\Bootstrap();
-        $project   = $bootstrap($project, $this->cache, $this->logger);
 
-        return $project;
+        return $bootstrap($project, $this->cache, $this->logger);
     }
 
     private function bootstrapProject(
