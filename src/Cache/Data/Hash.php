@@ -29,7 +29,7 @@ class Hash implements CacheInterface
         $this->validateInput($key, 'string');
 
         if ($this->has($key)) {
-            unset($this->values[$key]);
+            unset($this->values[(string)$key]);
         }
     }
 
@@ -50,7 +50,7 @@ class Hash implements CacheInterface
             return $default;
         }
 
-        return $this->values[$key];
+        return $this->values[(string)$key];
     }
 
     public function getMultiple($keys, $default = null): array
@@ -77,14 +77,14 @@ class Hash implements CacheInterface
     {
         $this->validateInput($key, 'string');
 
-        return array_key_exists($key, $this->values);
+        return array_key_exists((string)$key, $this->values);
     }
 
     public function set($key, $value, $ttl = null): void
     {
         $this->validateInput($key, 'string');
 
-        $this->values[$key] = $value;
+        $this->values[(string)$key] = $value;
     }
 
     public function setMultiple($values, $ttl = null): void
