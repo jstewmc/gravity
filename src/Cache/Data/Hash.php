@@ -7,14 +7,14 @@
 namespace Jstewmc\Gravity\Cache\Data;
 
 use Jstewmc\Gravity\Cache\Exception\InvalidArgumentException;
-use Psr\SimpleCache\CacheInterface;
+use Psr\SimpleCache\CacheInterface as Cache;
 use function array_key_exists;
 use function count;
 use function gettype;
 use function is_object;
 use function method_exists;
 
-class Hash implements CacheInterface
+class Hash implements Cache
 {
     /** @var array */
     private $values = [];

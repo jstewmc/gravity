@@ -6,14 +6,14 @@
 
 namespace Jstewmc\Gravity;
 
-use Jstewmc\Gravity\{Manager, Project};
-use Psr\Log;
+use Jstewmc\Gravity\{Cache\Data\Hash, Cache\Service\Warm, Manager, Project};
 use Psr\Log\LoggerInterface;
-use Psr\SimpleCache\CacheInterface;
+use Psr\Log\NullLogger;
+use Psr\SimpleCache\CacheInterface as Cache;
 
 class Gravity
 {
-    /** @var CacheInterface */
+    /** @var Cache */
     private $cache;
 
     /** @var LoggerInterface  */
@@ -21,8 +21,8 @@ class Gravity
 
     public function __construct()
     {
-        $this->cache  = new Cache\Data\Hash();
-        $this->logger = new Log\NullLogger();
+        $this->cache  = new Hash();
+        $this->logger = new NullLogger();
     }
 
     public function pull(): Manager\Data\Manager
@@ -44,7 +44,7 @@ class Gravity
         return $this;
     }
 
-    public function setCache(CacheInterface $cache): self
+    public function setCache(Cache $cache): self
     {
         $this->cache = $cache;
 
@@ -84,6 +84,6 @@ class Gravity
 
     private function warmCache(): void
     {
-        (new Cache\Service\Warm())($this->cache, $this->logger);
+        (new Warm())($this->cache, $this->logger);
     }
 }
