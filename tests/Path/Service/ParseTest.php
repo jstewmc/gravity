@@ -49,7 +49,7 @@ class ParseTest extends TestCase
         $expected = new Path($segments);
         $actual   = (new Parse())($path);
 
-        $this->assertEquals((string)$expected, (string)$actual);
+        $this->assertEquals($expected, $actual);
 
         return;
     }
@@ -63,7 +63,7 @@ class ParseTest extends TestCase
         $expected = new Path(['foo', 'bar', 'baz']);
         $actual   = (new Parse())($path);
 
-        $this->assertEquals((string)$expected, (string)$actual);
+        $this->assertEquals($expected, $actual);
 
         return;
     }
@@ -77,7 +77,7 @@ class ParseTest extends TestCase
         $expected = new Path(['foo', 'bar', 'baz']);
         $actual   = (new Parse())($path);
 
-        $this->assertEquals((string)$expected, (string)$actual);
+        $this->assertEquals($expected, $actual);
 
         return;
     }
@@ -92,7 +92,9 @@ class ParseTest extends TestCase
         $expected = (new Path($segments))->setHasLeadingSeparator(true);
         $actual   = (new Parse())($path);
 
-        $this->assertEquals((string)$expected, (string)$actual);return;
+        $this->assertEquals($expected, $actual);
+
+        return;
     }
 
     public function testInvokeReturnsIdIfTrailingSeparatorExists(): void
@@ -105,6 +107,8 @@ class ParseTest extends TestCase
         $expected = (new Path($segments))->setHasTrailingSeparator(true);
         $actual   = (new Parse())($path);
 
-        $this->assertSame((string)$expected, (string)$actual);
+        $this->assertEquals($expected, $actual);
+
+        return;
     }
 }
