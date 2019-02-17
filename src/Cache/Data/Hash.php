@@ -108,8 +108,12 @@ class Hash implements CacheInterface
      */
     private function validateInput($actual, string $expectedType): void
     {
-    	if (is_object($actual) && !method_exists($actual, '__toString')) {
-			throw new InvalidArgumentException('string');
+    	if (is_object($actual)) {
+    		if (!method_exists($actual, '__toString')) {
+				throw new InvalidArgumentException('string');
+			}
+
+    		return;
 		}
 
         if (gettype($actual) !== $expectedType) {
