@@ -8,7 +8,7 @@ namespace Jstewmc\Gravity\Cache\Service;
 
 use Jstewmc\Gravity\{Deprecation, Id, Path, Service};
 use Psr\Log\LoggerInterface as Logger;
-use Psr\SimpleCache\CacheInterface;
+use Psr\SimpleCache\CacheInterface as Cache;
 use function strtolower;
 
 /**
@@ -17,7 +17,7 @@ use function strtolower;
  */
 class Warm
 {
-    public function __invoke(CacheInterface $cache, Logger $logger)
+    public function __invoke(Cache $cache, Logger $logger)
     {
         $this->setServiceServices($cache, $logger)
              ->setDeprecationServices($cache, $logger)
@@ -27,7 +27,7 @@ class Warm
         return $cache;
     }
 
-    private function setPathServices(CacheInterface $cache, Logger $logger): self
+    private function setPathServices(Cache $cache, Logger $logger): self
     {
         $parse   = new Path\Service\Parse();
         $merge   = new Path\Service\Merge();
@@ -40,7 +40,7 @@ class Warm
         return $this;
     }
 
-    private function setDeprecationServices(CacheInterface $cache, Logger $logger): self
+    private function setDeprecationServices(Cache $cache, Logger $logger): self
     {
         $warn = new Deprecation\Service\Warn($logger);
 
@@ -49,7 +49,7 @@ class Warm
         return $this;
     }
 
-    private function setIdServices(CacheInterface $cache, Logger $logger): self
+    private function setIdServices(Cache $cache, Logger $logger): self
     {
         $render = new Id\Service\Render(
             $cache->get(strtolower(Path\Service\Parse::class)),
@@ -67,7 +67,7 @@ class Warm
         return $this;
     }
 
-    private function setServiceServices(CacheInterface $cache, Logger $logger): self
+    private function setServiceServices(Cache $cache, Logger $logger): self
     {
         $cache->set(
             strtolower(Service\Service\Instantiate::class),
