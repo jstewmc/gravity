@@ -11,6 +11,8 @@ use Psr\SimpleCache\CacheInterface;
 use function array_key_exists;
 use function count;
 use function gettype;
+use function is_object;
+use function method_exists;
 
 class Hash implements CacheInterface
 {
@@ -106,7 +108,11 @@ class Hash implements CacheInterface
      */
     private function validateInput($actual, string $expectedType): void
     {
-        if ((is_object($actual) && !method_exists($actual, '__toString')) || gettype($actual) !== $expectedType) {
+    	if (is_object($actual) && !method_exists($actual, '__toString')) {
+			throw new InvalidArgumentException('string');
+		}
+
+        if (gettype($actual) !== $expectedType) {
             throw new InvalidArgumentException($expectedType);
         }
     }
