@@ -7,28 +7,26 @@
 namespace Jstewmc\Gravity\Manager\Service;
 
 use Jstewmc\Gravity\{Id, Service, Setting};
-use Jstewmc\Gravity\Cache\Data\Cache;
 use Jstewmc\Gravity\Manager\Data\Manager;
 use Jstewmc\Gravity\Project\Data\Project;
 use Psr\Log\LoggerInterface as Logger;
+use Psr\SimpleCache\CacheInterface;
 
 /**
  * Bootstraps the manager from the warmed cache and project.
  */
 class Bootstrap
 {
-    public function __invoke(Project $project, Cache $cache, Logger $logger): Manager
+    public function __invoke(Project $project, CacheInterface $cache, Logger $logger): Manager
     {
         $getId      = $this->getGetId($cache);
         $getService = $this->getGetService($cache, $logger);
         $getSetting = $this->getGetSetting($cache, $logger);
 
-        $manager = new Manager($project, $getId, $getService, $getSetting);
-
-        return $manager;
+        return new Manager($project, $getId, $getService, $getSetting);
     }
 
-    private function getGetId(Cache $cache)
+    private function getGetId(CacheInterface $cache): Id\Service\Get
     {
         return new Id\Service\Get(
             $cache->get(strtolower(Id\Service\Render::class)),
@@ -36,7 +34,7 @@ class Bootstrap
         );
     }
 
-    private function getGetService(Cache $cache, Logger $logger)
+    private function getGetService(CacheInterface $cache, Logger $logger): Service\Service\Get
     {
         return new Service\Service\Get(
             $cache->get(strtolower(Service\Service\Instantiate::class)),
@@ -45,7 +43,7 @@ class Bootstrap
         );
     }
 
-    private function getGetSetting(Cache $cache, Logger $logger)
+    private function getGetSetting(CacheInterface $cache, Logger $logger): Setting\Service\Get
     {
         return new Setting\Service\Get($cache, $logger);
     }

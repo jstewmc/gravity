@@ -8,8 +8,7 @@ namespace Jstewmc\Gravity\Manager\Data;
 
 use Jstewmc\Gravity\Id\Data\{
     Id,
-    Service as ServiceId,
-    Setting as SettingId
+    Service as ServiceId
 };
 use Jstewmc\Gravity\Id\Service\Get as GetId;
 use Jstewmc\Gravity\Ns\Data\Parsed as Ns;

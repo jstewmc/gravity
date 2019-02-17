@@ -6,9 +6,10 @@
 
 namespace Jstewmc\Gravity\Cache\Service;
 
-use Jstewmc\Gravity\Cache\Data\Cache;
 use Jstewmc\Gravity\{Deprecation, Id, Path, Service};
 use Psr\Log\LoggerInterface as Logger;
+use Psr\SimpleCache\CacheInterface;
+use function strtolower;
 
 /**
  * Defines the minimum services required for bootstraping. Excludes services
@@ -16,19 +17,17 @@ use Psr\Log\LoggerInterface as Logger;
  */
 class Warm
 {
-    public function __invoke(Cache $cache, Logger $logger)
+    public function __invoke(CacheInterface $cache, Logger $logger)
     {
-        $cache = $this->setServiceServices($cache, $logger);
-        $cache = $this->setDeprecationServices($cache, $logger);
-        $cache = $this->setPathServices($cache, $logger);
-
-        // requires path and deprecation
-        $cache = $this->setIdServices($cache, $logger);
+        $this->setServiceServices($cache, $logger)
+             ->setDeprecationServices($cache, $logger)
+             ->setPathServices($cache, $logger)
+		     ->setIdServices($cache, $logger);
 
         return $cache;
     }
 
-    private function setPathServices(Cache $cache, Logger $logger): Cache
+    private function setPathServices(CacheInterface $cache, Logger $logger): self
     {
         $parse   = new Path\Service\Parse();
         $merge   = new Path\Service\Merge();
@@ -38,19 +37,19 @@ class Warm
         $cache->set(strtolower(Path\Service\Merge::class), $merge);
         $cache->set(strtolower(Path\Service\Resolve::class), $resolve);
 
-        return $cache;
+        return $this;
     }
 
-    private function setDeprecationServices(Cache $cache, Logger $logger): Cache
+    private function setDeprecationServices(CacheInterface $cache, Logger $logger): self
     {
         $warn = new Deprecation\Service\Warn($logger);
 
         $cache->set(strtolower(Deprecation\Service\Warn::class), $warn);
 
-        return $cache;
+        return $this;
     }
 
-    private function setIdServices(Cache $cache, Logger $logger): Cache
+    private function setIdServices(CacheInterface $cache, Logger $logger): self
     {
         $render = new Id\Service\Render(
             $cache->get(strtolower(Path\Service\Parse::class)),
@@ -65,16 +64,16 @@ class Warm
         $cache->set(strtolower(Id\Service\Render::class), $render);
         $cache->set(strtolower(Id\Service\Follow::class), $follow);
 
-        return $cache;
+        return $this;
     }
 
-    private function setServiceServices(Cache $cache, Logger $logger): Cache
+    private function setServiceServices(CacheInterface $cache, Logger $logger): self
     {
         $cache->set(
             strtolower(Service\Service\Instantiate::class),
             new Service\Service\Instantiate()
         );
 
-        return $cache;
+        return $this;
     }
 }
