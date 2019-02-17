@@ -8,10 +8,8 @@ namespace Jstewmc\Gravity\Path\Data;
 
 class Service extends Path
 {
-	public function __construct(array $segments)
+	public static function getSeparator(): string
 	{
-		self::$separator = '\\';
-
-		parent::__construct($segments);
+		return '\\';
 	}
 }

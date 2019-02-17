@@ -25,12 +25,8 @@ class BootstrapTest extends TestCase
         $logger      = $this->createMock(Logger::class);
 
         $cache = $this->createMock(CacheInterface::class);
-        $map   = [
-            ['jstewmc\gravity\id\service\render', $render],
-            ['jstewmc\gravity\id\service\follow', $follow],
-            ['jstewmc\gravity\service\service\instantiate', $instantiate]
-        ];
-        $cache->method('get')->will($this->returnValueMap($map));
+
+        $cache->method('get')->willReturnOnConsecutiveCalls($render, $follow, $instantiate);
 
         $sut = new Bootstrap();
 

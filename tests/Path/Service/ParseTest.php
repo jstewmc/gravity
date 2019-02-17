@@ -43,7 +43,7 @@ class ParseTest extends TestCase
     {
         $segments = ['foo', 'bar', 'baz'];
 
-        $path = implode(Path::$separator, $segments);
+        $path = implode(Path::getSeparator(), $segments);
         $path = "   $path   ";
 
         $expected = new Path($segments);
@@ -58,7 +58,7 @@ class ParseTest extends TestCase
     {
         $segments = ['FOO', 'bar', 'BaZ'];
 
-        $path = implode(Path::$separator, $segments);
+        $path = implode(Path::getSeparator(), $segments);
 
         $expected = new Path(['foo', 'bar', 'baz']);
         $actual   = (new Parse())($path);
@@ -72,7 +72,7 @@ class ParseTest extends TestCase
     {
         $segments = ['foo', null, 'bar', 'baz'];
 
-        $path = implode(Path::$separator, $segments);
+        $path = implode(Path::getSeparator(), $segments);
 
         $expected = new Path(['foo', 'bar', 'baz']);
         $actual   = (new Parse())($path);
@@ -86,8 +86,8 @@ class ParseTest extends TestCase
     {
         $segments = ['foo', 'bar', 'baz'];
 
-        $path = implode(Path::$separator, $segments);
-        $path = Path::$separator . $path;
+        $path = implode(Path::getSeparator(), $segments);
+        $path = Path::getSeparator() . $path;
 
         $expected = (new Path($segments))->setHasLeadingSeparator(true);
         $actual   = (new Parse())($path);
@@ -101,8 +101,8 @@ class ParseTest extends TestCase
     {
         $segments = ['foo', 'bar', 'baz'];
 
-        $path = implode(Path::$separator, $segments);
-        $path .= Path::$separator;
+        $path = implode(Path::getSeparator(), $segments);
+        $path .= Path::getSeparator();
 
         $expected = (new Path($segments))->setHasTrailingSeparator(true);
         $actual   = (new Parse())($path);

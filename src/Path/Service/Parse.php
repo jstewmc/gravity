@@ -18,14 +18,14 @@ class Parse
         }
 
         if ($this->isService($path)) {
-            $path = $this->parseService($path);
+            $pathService = $this->parseService($path);
         } elseif ($this->isSetting($path)) {
-            $path = $this->parseSetting($path);
+			$pathService = $this->parseSetting($path);
         } else {
-            throw new InvalidSeparator($path);
+            throw new InvalidSeparator($path, '');
         }
 
-        return $path;
+        return $pathService;
     }
 
 
@@ -69,50 +69,34 @@ class Parse
 
     private function isService(string $path): bool
     {
-        return strpos($path, Service::$separator) !== false;
+        return strpos($path, Service::getSeparator()) !== false;
     }
 
     private function isSetting(string $path): bool
     {
-        return strpos($path, Setting::$separator) !== false;
+        return strpos($path, Setting::getSeparator()) !== false;
     }
 
     private function parseService(string $path): Service
     {
-        $hasLeadingSeparator = $this->hasLeadingSeparator(
-            $path,
-            Service::$separator
-        );
+		$separator 			  = Service::getSeparator();
+        $hasLeadingSeparator  = $this->hasLeadingSeparator($path, $separator);
+        $hasTrailingSeparator = $this->hasTrailingSeparator($path, $separator);
 
-        $hasTrailingSeparator = $this->hasTrailingSeparator(
-            $path,
-            Service::$separator
-        );
-
-        $path = (new Service($this->getSegments($path, Service::$separator)))
+        return (new Service($this->getSegments($path, $separator)))
             ->setHasLeadingSeparator($hasLeadingSeparator)
             ->setHasTrailingSeparator($hasTrailingSeparator);
-
-        return $path;
     }
 
     private function parseSetting(string $path): Setting
     {
-        $hasLeadingSeparator = $this->hasLeadingSeparator(
-            $path,
-            Setting::$separator
-        );
+		$separator 			  = Setting::getSeparator();
+		$hasLeadingSeparator  = $this->hasLeadingSeparator($path, $separator);
+		$hasTrailingSeparator = $this->hasTrailingSeparator($path, $separator);
 
-        $hasTrailingSeparator = $this->hasTrailingSeparator(
-            $path,
-            Setting::$separator
-        );
-
-        $path = (new Setting($this->getSegments($path, Setting::$separator)))
+        return (new Setting($this->getSegments($path, $separator)))
             ->setHasLeadingSeparator($hasLeadingSeparator)
             ->setHasTrailingSeparator($hasTrailingSeparator);
-
-        return $path;
     }
 
     private function popSeparator(string $path, string $separator): string

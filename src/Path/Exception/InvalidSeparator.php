@@ -6,18 +6,16 @@
 
 namespace Jstewmc\Gravity\Path\Exception;
 
-use Jstewmc\Gravity\Path\Data\{Service, Setting};
-
 class InvalidSeparator extends Exception
 {
     private $path;
 
-    public function __construct(string $path)
+    public function __construct(string $path, string $separator)
     {
         $this->path = $path;
 
-        $message = "Service (". Service::$separator .") or setting ("
-            . Setting::$separator .") separator missing from path '$path'";
+        $message = 'Service (' . $separator . ') or setting ('
+            . $separator .") separator missing from path '$path'";
 
         parent::__construct($message);
     }

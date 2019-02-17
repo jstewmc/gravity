@@ -27,7 +27,7 @@ abstract class Path
 
     private $segments;
 
-    public static $separator = '.';
+    abstract public static function getSeparator(): string;
 
     public function __construct(array $segments)
     {
@@ -40,7 +40,7 @@ abstract class Path
 
     public function __toString(): string
     {
-        return implode(self::$separator, $this->segments);
+        return implode($this::getSeparator(), $this->segments);
     }
 
     public function getFirstSegment(): string
