@@ -15,6 +15,7 @@ use Jstewmc\Gravity\Id\Data\{
     Service as ServiceId,
     Setting as SettingId
 };
+use Jstewmc\Gravity\Requirement\Data\Resolved as Requirement;
 use Jstewmc\Gravity\Root\Data\Root;
 use Jstewmc\Gravity\Service\Data\Service;
 use Jstewmc\Gravity\Service\Exception\NotFound as ServiceNotFound;
@@ -26,6 +27,8 @@ class Project
     private $aliases = [];
 
     private $deprecations = [];
+
+    private $requirements = [];
 
     private $root;
 
@@ -48,6 +51,13 @@ class Project
     public function addDeprecation(Deprecation $deprecation): self
     {
         $this->deprecations[(string)$deprecation->getSource()] = $deprecation;
+
+        return $this;
+    }
+
+    public function addRequirement(Requirement $requirement): self
+    {
+        $this->requirements[(string)$requirement->getKey()] = $requirement;
 
         return $this;
     }
@@ -85,6 +95,11 @@ class Project
         }
 
         return $this->deprecations[(string)$id];
+    }
+
+    public function getRequirements(): array
+    {
+        return $this->requirements;
     }
 
     public function getRoot(): Root

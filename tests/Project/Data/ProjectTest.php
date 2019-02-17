@@ -14,6 +14,7 @@ use Jstewmc\Gravity\Id\Data\Id;
 use Jstewmc\Gravity\Id\Data\Service as ServiceId;
 use Jstewmc\Gravity\Id\Data\Setting as SettingId;
 use Jstewmc\Gravity\Path\Data\Setting as SettingPath;
+use Jstewmc\Gravity\Requirement\Data\Resolved as Requirement;
 use Jstewmc\Gravity\Root\Data\Root;
 use Jstewmc\Gravity\Service\Data\Service;
 use Jstewmc\Gravity\Service\Exception\NotFound as ServiceNotFound;
@@ -39,6 +40,15 @@ class ProjectTest extends TestCase
         $project = new Project($this->mockRoot());
 
         $this->assertSame($project, $project->addDeprecation($deprecation));
+    }
+
+    public function testAddRequirement(): void
+    {
+        $requirement = $this->createMock(Requirement::class);
+
+        $project = new Project($this->mockRoot());
+
+        $this->assertSame($project, $project->addRequirement($requirement));
     }
 
     public function testAddService(): void
@@ -102,6 +112,18 @@ class ProjectTest extends TestCase
         $project = (new Project($this->mockRoot()))->addDeprecation($deprecation);
 
         $this->assertSame($deprecation, $project->getDeprecation($id));
+    }
+
+    public function testGetRequirements(): void
+    {
+        $this->assertEquals([], (new Project($this->mockRoot()))->getRequirements());
+    }
+
+    public function testGetRoot(): void
+    {
+        $root = $this->mockRoot();
+
+        $this->assertEquals($root, (new Project($root))->getRoot());
     }
 
     public function testGetServiceThrowsExceptionIfDoesNotExist(): void
