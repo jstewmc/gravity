@@ -6,13 +6,17 @@
 
 namespace Jstewmc\Gravity;
 
-use Jstewmc\Gravity\{Cache, Manager, Project};
+use Jstewmc\Gravity\{Manager, Project};
 use Psr\Log;
+use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 
 class Gravity
 {
+	/** @var CacheInterface */
     private $cache;
 
+    /** @var LoggerInterface  */
     private $logger;
 
     public function __construct()
@@ -21,7 +25,7 @@ class Gravity
         $this->logger = new Log\NullLogger();
     }
 
-    public function pull()
+    public function pull(): Manager\Data\Manager
     {
         $this->warmCache();
 
@@ -33,14 +37,14 @@ class Gravity
         return $manager;
     }
 
-    public function setLogger(Log\LoggerInterface $logger): self
+    public function setLogger(LoggerInterface $logger): self
     {
         $this->logger = $logger;
 
         return $this;
     }
 
-    public function setCache(Cache\Data\Cache $cache): self
+    public function setCache(CacheInterface $cache): self
     {
         $this->cache = $cache;
 
@@ -50,14 +54,13 @@ class Gravity
     private function bootstrapManager(Project\Data\Project $project): Manager\Data\Manager
     {
         $bootstrap = new Manager\Service\Bootstrap();
-
-        $project = $bootstrap($project, $this->cache, $this->logger);
+        $project   = $bootstrap($project, $this->cache, $this->logger);
 
         return $project;
     }
 
     private function bootstrapProject(
-        Log\LoggerInterface $logger
+        LoggerInterface $logger
     ): Project\Data\Project {
         $root = (new Root\Service\Find('vendor'))();
 
