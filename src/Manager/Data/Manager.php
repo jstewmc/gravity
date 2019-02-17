@@ -20,14 +20,19 @@ use SplStack;
 
 class Manager
 {
+    /** @var GetId */
     private $getId;
 
+    /** @var GetService */
     private $getService;
 
+    /** @var GetSetting */
     private $getSetting;
 
+    /** @var SplStack */
     private $namespaces;
 
+    /** @var Project */
     private $project;
 
     public function __construct(
