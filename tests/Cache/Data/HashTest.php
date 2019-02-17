@@ -58,7 +58,7 @@ class HashTest extends TestCase
     public function testDeleteThrowsExceptionIfObjectDoesNotImplementToString(): void
     {
         $cache   = new Hash();
-        $service = new class {};
+        $service = $this->getAnonymousClass();
 
         $this->expectException(InvalidArgumentException::class);
 
@@ -120,7 +120,7 @@ class HashTest extends TestCase
     public function testGetThrowsExceptionIfObjectDoesNotImplementToString(): void
     {
         $cache   = new Hash();
-        $service = new class {};
+        $service = $this->getAnonymousClass();
 
         $this->expectException(InvalidArgumentException::class);
 
@@ -184,7 +184,7 @@ class HashTest extends TestCase
     public function testHasThrowsExceptionIfObjectDoesNotImplementToString(): void
     {
         $cache   = new Hash();
-        $service = new class {};
+        $service = $this->getAnonymousClass();
 
         $this->expectException(InvalidArgumentException::class);
 
@@ -212,7 +212,7 @@ class HashTest extends TestCase
     public function testSetThrowsExceptionIfObjectDoesNotImplementToString(): void
     {
         $cache   = new Hash();
-        $service = new class {};
+        $service = $this->getAnonymousClass();
 
         $this->expectException(InvalidArgumentException::class);
 
@@ -235,5 +235,12 @@ class HashTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         $cache->setMultiple('foo');
+    }
+
+    private function getAnonymousClass()
+    {
+        return new class {
+
+        };
     }
 }
