@@ -16,8 +16,10 @@ class InvalidSeparator extends Exception
     {
         $this->path = $path;
 
-        $this->message = "Service (". Service::SEPARATOR .") or setting ("
-            . Setting::SEPARATOR .") separator missing from path '$path'";
+        $message = "Service (". Service::$separator .") or setting ("
+            . Setting::$separator .") separator missing from path '$path'";
+
+        parent::__construct($message);
     }
 
     public function getPath(): string

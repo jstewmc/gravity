@@ -13,7 +13,7 @@ class Parse
 {
     public function __invoke(string $path): Path
     {
-        if (strlen($path) === 0) {
+        if ($path === '') {
             throw new EmptyPath();
         }
 
@@ -31,7 +31,7 @@ class Parse
 
     /* !Private methods */
 
-    private function downcase(string $path): string
+    private function lowercase(string $path): string
     {
         return strtolower($path);
     }
@@ -44,7 +44,7 @@ class Parse
     private function getSegments(string $path, string $separator): array
     {
         $path = $this->trim($path);
-        $path = $this->downcase($path);
+        $path = $this->lowercase($path);
         $path = $this->popSeparator($path, $separator);
         $path = $this->shiftSeparator($path, $separator);
 
@@ -69,27 +69,27 @@ class Parse
 
     private function isService(string $path): bool
     {
-        return strpos($path, Service::SEPARATOR) !== false;
+        return strpos($path, Service::$separator) !== false;
     }
 
     private function isSetting(string $path): bool
     {
-        return strpos($path, Setting::SEPARATOR) !== false;
+        return strpos($path, Setting::$separator) !== false;
     }
 
     private function parseService(string $path): Service
     {
         $hasLeadingSeparator = $this->hasLeadingSeparator(
             $path,
-            Service::SEPARATOR
+            Service::$separator
         );
 
         $hasTrailingSeparator = $this->hasTrailingSeparator(
             $path,
-            Service::SEPARATOR
+            Service::$separator
         );
 
-        $path = (new Service($this->getSegments($path, Service::SEPARATOR)))
+        $path = (new Service($this->getSegments($path, Service::$separator)))
             ->setHasLeadingSeparator($hasLeadingSeparator)
             ->setHasTrailingSeparator($hasTrailingSeparator);
 
@@ -100,15 +100,15 @@ class Parse
     {
         $hasLeadingSeparator = $this->hasLeadingSeparator(
             $path,
-            Setting::SEPARATOR
+            Setting::$separator
         );
 
         $hasTrailingSeparator = $this->hasTrailingSeparator(
             $path,
-            Setting::SEPARATOR
+            Setting::$separator
         );
 
-        $path = (new Setting($this->getSegments($path, Setting::SEPARATOR)))
+        $path = (new Setting($this->getSegments($path, Setting::$separator)))
             ->setHasLeadingSeparator($hasLeadingSeparator)
             ->setHasTrailingSeparator($hasTrailingSeparator);
 

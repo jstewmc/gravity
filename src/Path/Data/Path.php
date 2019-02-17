@@ -7,6 +7,12 @@
 namespace Jstewmc\Gravity\Path\Data;
 
 use Jstewmc\Gravity\Path\Exception\EmptyPath;
+use function array_pop;
+use function array_shift;
+use function count;
+use function end;
+use function implode;
+use function reset;
 
 /**
  * Partial location of a service or setting in the project using one or more
@@ -21,6 +27,8 @@ abstract class Path
 
     private $segments;
 
+    public static $separator = '.';
+
     public function __construct(array $segments)
     {
         if (count($segments) === 0) {
@@ -32,7 +40,7 @@ abstract class Path
 
     public function __toString(): string
     {
-        return implode(static::SEPARATOR, $this->segments);
+        return implode(self::$separator, $this->segments);
     }
 
     public function getFirstSegment(): string

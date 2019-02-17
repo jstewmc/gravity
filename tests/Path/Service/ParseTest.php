@@ -43,13 +43,13 @@ class ParseTest extends TestCase
     {
         $segments = ['foo', 'bar', 'baz'];
 
-        $path = implode(Path::SEPARATOR, $segments);
+        $path = implode(Path::$separator, $segments);
         $path = "   $path   ";
 
         $expected = new Path($segments);
         $actual   = (new Parse())($path);
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals((string)$expected, (string)$actual);
 
         return;
     }
@@ -58,12 +58,12 @@ class ParseTest extends TestCase
     {
         $segments = ['FOO', 'bar', 'BaZ'];
 
-        $path = implode(Path::SEPARATOR, $segments);
+        $path = implode(Path::$separator, $segments);
 
         $expected = new Path(['foo', 'bar', 'baz']);
         $actual   = (new Parse())($path);
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals((string)$expected, (string)$actual);
 
         return;
     }
@@ -72,12 +72,12 @@ class ParseTest extends TestCase
     {
         $segments = ['foo', null, 'bar', 'baz'];
 
-        $path = implode(Path::SEPARATOR, $segments);
+        $path = implode(Path::$separator, $segments);
 
         $expected = new Path(['foo', 'bar', 'baz']);
         $actual   = (new Parse())($path);
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals((string)$expected, (string)$actual);
 
         return;
     }
@@ -86,29 +86,25 @@ class ParseTest extends TestCase
     {
         $segments = ['foo', 'bar', 'baz'];
 
-        $path = implode(Path::SEPARATOR, $segments);
-        $path = Path::SEPARATOR . $path;
+        $path = implode(Path::$separator, $segments);
+        $path = Path::$separator . $path;
 
         $expected = (new Path($segments))->setHasLeadingSeparator(true);
         $actual   = (new Parse())($path);
 
-        $this->assertEquals($expected, $actual);
-
-        return;
+        $this->assertEquals((string)$expected, (string)$actual);return;
     }
 
     public function testInvokeReturnsIdIfTrailingSeparatorExists(): void
     {
         $segments = ['foo', 'bar', 'baz'];
 
-        $path = implode(Path::SEPARATOR, $segments);
-        $path = $path . Path::SEPARATOR;
+        $path = implode(Path::$separator, $segments);
+        $path .= Path::$separator;
 
         $expected = (new Path($segments))->setHasTrailingSeparator(true);
         $actual   = (new Parse())($path);
 
-        $this->assertEquals($expected, $actual);
-
-        return;
+        $this->assertSame((string)$expected, (string)$actual);
     }
 }
