@@ -14,10 +14,13 @@ use Psr\SimpleCache\CacheInterface as Cache;
 
 class Get
 {
+    /** @var Cache */
     private $cache;
 
+    /** @var Instantiate */
     private $instantiate;
 
+    /** @var Logger */
     private $logger;
 
     public function __construct(

@@ -9,13 +9,14 @@ namespace Jstewmc\Gravity\Setting\Service;
 use Jstewmc\Gravity\Id\Data\Setting as Id;
 use Jstewmc\Gravity\Project\Data\Project;
 use Psr\Log\LoggerInterface as Logger;
-use Psr\SimpleCache\CacheInterface;
+use Psr\SimpleCache\CacheInterface as Cache;
 
 class Get
 {
+    /** @var Cache */
     private $cache;
 
-    public function __construct(CacheInterface $cache, Logger $logger)
+    public function __construct(Cache $cache, Logger $logger)
     {
         $this->cache  = $cache;
         $this->logger = $logger;
