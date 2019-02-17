@@ -16,4 +16,4 @@ $g = (new Gravity())->setCache($cache)->pull();
 
 ## PSR-16 compliance
 
-Currently, our `Cache\Data\Cache` interface isn't [PSR-16](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-16-simple-cache.md) compliant. We don't need the `XMultiple()` methods, and we prefer to use the language's latest features like argument types, which the interface does not support. However, if you think this is a bad idea, [let us know](mailto:clayjs0@gmail.com)!
+This library adheres to [PSR-16](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-16-simple-cache.md).
