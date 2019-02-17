@@ -20,7 +20,7 @@ class Parse
         if ($this->isService($path)) {
             $pathService = $this->parseService($path);
         } elseif ($this->isSetting($path)) {
-			$pathService = $this->parseSetting($path);
+            $pathService = $this->parseSetting($path);
         } else {
             throw new InvalidSeparator($path, '');
         }
@@ -79,7 +79,7 @@ class Parse
 
     private function parseService(string $path): Service
     {
-		$separator 			  = Service::getSeparator();
+        $separator            = Service::getSeparator();
         $hasLeadingSeparator  = $this->hasLeadingSeparator($path, $separator);
         $hasTrailingSeparator = $this->hasTrailingSeparator($path, $separator);
 
@@ -90,9 +90,9 @@ class Parse
 
     private function parseSetting(string $path): Setting
     {
-		$separator 			  = Setting::getSeparator();
-		$hasLeadingSeparator  = $this->hasLeadingSeparator($path, $separator);
-		$hasTrailingSeparator = $this->hasTrailingSeparator($path, $separator);
+        $separator            = Setting::getSeparator();
+        $hasLeadingSeparator  = $this->hasLeadingSeparator($path, $separator);
+        $hasTrailingSeparator = $this->hasTrailingSeparator($path, $separator);
 
         return (new Setting($this->getSegments($path, $separator)))
             ->setHasLeadingSeparator($hasLeadingSeparator)

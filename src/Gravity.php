@@ -13,7 +13,7 @@ use Psr\SimpleCache\CacheInterface;
 
 class Gravity
 {
-	/** @var CacheInterface */
+    /** @var CacheInterface */
     private $cache;
 
     /** @var LoggerInterface  */

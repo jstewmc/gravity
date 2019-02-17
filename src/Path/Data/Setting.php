@@ -8,8 +8,8 @@ namespace Jstewmc\Gravity\Path\Data;
 
 class Setting extends Path
 {
-	public static function getSeparator(): string
-	{
-		return '.';
-	}
+    public static function getSeparator(): string
+    {
+        return '.';
+    }
 }

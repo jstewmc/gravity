@@ -22,7 +22,7 @@ class Warm
         $this->setServiceServices($cache, $logger)
              ->setDeprecationServices($cache, $logger)
              ->setPathServices($cache, $logger)
-		     ->setIdServices($cache, $logger);
+             ->setIdServices($cache, $logger);
 
         return $cache;
     }
