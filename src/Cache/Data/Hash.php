@@ -99,12 +99,14 @@ class Hash implements CacheInterface
     /**
      * This method exists to validate input argument types since the PSR CacheInterface does not support them
      *
+	 * @see CacheInterface @throws tags
+	 *
      * @param mixed  $actual
      * @param string $expectedType
      */
     private function validateInput($actual, string $expectedType): void
     {
-        if (gettype($actual) !== $expectedType) {
+        if ((is_object($actual) && !method_exists($actual, '__toString')) || gettype($actual) !== $expectedType) {
             throw new InvalidArgumentException($expectedType);
         }
     }
