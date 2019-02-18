@@ -15,6 +15,7 @@ class Close
         return (new Closed())
             ->setAliases($script->getAliases())
             ->setDefinitions($script->getDefinitions())
-            ->setDeprecations($script->getDeprecations());
+            ->setDeprecations($script->getDeprecations())
+            ->setRequirements($script->getRequirements());
     }
 }

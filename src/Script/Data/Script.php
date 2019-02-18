@@ -14,6 +14,8 @@ abstract class Script
 
     protected $deprecations = [];
 
+    protected $requirements = [];
+
     public function getAliases(): array
     {
         return $this->aliases;
@@ -27,6 +29,11 @@ abstract class Script
     public function getDeprecations(): array
     {
         return $this->deprecations;
+    }
+
+    public function getRequirements(): array
+    {
+        return $this->requirements;
     }
 
     public function setAliases(array $aliases): self
@@ -47,6 +54,13 @@ abstract class Script
     {
         $this->deprecations = $deprecations;
 
+        return $this;
+    }
+
+    public function setRequirements(array $requirements): self
+    {
+        $this->requirements = $requirements;
+        
         return $this;
     }
 }

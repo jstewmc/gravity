@@ -9,6 +9,7 @@ namespace Jstewmc\Gravity\Script\Service;
 use Jstewmc\Gravity\Alias\Service\Parse as ParseAlias;
 use Jstewmc\Gravity\Definition\Service\Parse as ParseDefinition;
 use Jstewmc\Gravity\Deprecation\Service\Parse as ParseDeprecation;
+use Jstewmc\Gravity\Requirement\Service\Parse as ParseRequirement;
 use Jstewmc\Gravity\Script\Data\{Closed, Parsed};
 
 class Parse
@@ -22,11 +23,13 @@ class Parse
     public function __construct(
         ParseAlias        $parseAlias,
         ParseDefinition   $parseDefinition,
-        ParseDeprecation  $parseDeprecation
+        ParseDeprecation  $parseDeprecation,
+        ParseRequirement  $parseRequirement
     ) {
         $this->parseAlias       = $parseAlias;
         $this->parseDefinition  = $parseDefinition;
         $this->parseDeprecation = $parseDeprecation;
+        $this->parseRequirement = $parseRequirement;
     }
 
     public function __invoke(Closed $script): Parsed
@@ -34,11 +37,13 @@ class Parse
         $aliases      = $this->parseAliases($script->getAliases());
         $definitions  = $this->parseDefinitions($script->getDefinitions());
         $deprecations = $this->parseDeprecations($script->getDeprecations());
+        $requirements = $this->parseRequirements($script->getRequirements());
 
         $script = (new Parsed())
             ->setAliases($aliases)
             ->setDefinitions($definitions)
-            ->setDeprecations($deprecations);
+            ->setDeprecations($deprecations)
+            ->setRequirements($requirements);
 
         return $script;
     }
@@ -68,5 +73,14 @@ class Parse
         }
 
         return $deprecations;
+    }
+
+    private function parseRequirements(array $requirements): array
+    {
+        foreach ($requirements as &$requirement) {
+            $requirement = ($this->parseRequirement)($requirement);
+        }
+
+        return $requirements;
     }
 }

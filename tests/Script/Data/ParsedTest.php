@@ -25,6 +25,11 @@ class ParsedTest extends TestCase
         $this->assertEquals([], (new Parsed())->getDeprecations());
     }
 
+    public function testGetRequirements(): void
+    {
+        $this->assertEquals([], (new Parsed())->getRequirements());
+    }
+
     public function testSetAliases(): void
     {
         $script = new Parsed();
@@ -44,5 +49,12 @@ class ParsedTest extends TestCase
         $script = new Parsed();
 
         $this->assertSame($script, $script->setDeprecations([]));
+    }
+
+    public function testSetRequirements(): void
+    {
+        $script = new Parsed();
+
+        $this->assertSame($script, $script->setRequirements([]));
     }
 }

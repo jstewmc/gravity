@@ -9,6 +9,7 @@ namespace Jstewmc\Gravity\Script\Data;
 use Jstewmc\Gravity\Alias\Data\Read as Alias;
 use Jstewmc\Gravity\Definition\Data\Read as Definition;
 use Jstewmc\Gravity\Deprecation\Data\Read as Deprecation;
+use Jstewmc\Gravity\Requirement\Data\Read as Requirement;
 use PHPUnit\Framework\TestCase;
 
 class OpenedTest extends TestCase
@@ -40,6 +41,15 @@ class OpenedTest extends TestCase
         $this->assertSame($script, $script->addDeprecation($deprecation));
     }
 
+    public function testAddRequirement(): void
+    {
+        $script = new Opened();
+
+        $requirement = $this->createMock(Requirement::class);
+
+        $this->assertSame($script, $script->addRequirement($requirement));
+    }
+
     public function testGetAliases(): void
     {
         $this->assertEquals([], (new Opened())->getAliases());
@@ -53,6 +63,11 @@ class OpenedTest extends TestCase
     public function testGetDeprecations(): void
     {
         $this->assertEquals([], (new Opened())->getDeprecations());
+    }
+
+    public function testGetRequirements(): void
+    {
+        $this->assertEquals([], (new Opened())->getRequirements());
     }
 
     public function testSetAliases(): void
@@ -74,5 +89,12 @@ class OpenedTest extends TestCase
         $script = new Opened();
 
         $this->assertSame($script, $script->setDeprecations([]));
+    }
+
+    public function testSetRequirements(): void
+    {
+        $script = new Opened();
+
+        $this->assertSame($script, $script->setRequirements([]));
     }
 }
