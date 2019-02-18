@@ -42,6 +42,20 @@ class ManagerTest extends TestCase
         $this->assertNull($manager->exit());
     }
 
+    public function testGetProject(): void
+    {
+        $project = $this->createMock(Project\Data\Project::class);
+
+        $manager = new Manager(
+            $project,
+            $this->createMock(Id\Service\Get::class),
+            $this->createMock(Service\Service\Get::class),
+            $this->createMock(Setting\Service\Get::class)
+        );
+
+        $this->assertSame($project, $manager->getProject());
+    }
+
     public function testGetSetting(): void
     {
         $path  = 'foo.bar.baz';

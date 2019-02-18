@@ -3,24 +3,28 @@
  * @copyright  2018 Jack Clayton
  * @license    MIT
  */
- 
+
 namespace Jstewmc\Gravity\Example;
 
 // define a service using null
 $g->set(Service\Baz::class);
 
 // define a service using an instance
-$g->set(Setting\Qux::class, new Service\Qux());
+$g->set(Service\Qux::class, new Service\Qux());
 
-// define a service using an aonoymous function
-$g->set(Setting\Quux::class, function (): Quux {
-    return new Quux();
+// define a service using an anonymous function
+$g->set(Service\Quux::class, function (): Service\Quux {
+    return new Service\Quux();
 });
 
-$g->set(Setting\Corge::class, function (): Service\Corge {
-    $quux = $this->get(Setting\Quux::class);
+// define a service with the same classname (and no arguments)
+$g->set(Service\Quuz::class);
 
-    return new Corge($quux);
+// inject other services
+$g->set(Service\Corge::class, function (): Service\Corge {
+    $quux = $this->get(Service\Quuz::class);
+
+    return new Service\Corge($quux);
 });
 
 // define a service using a factory

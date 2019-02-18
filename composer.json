@@ -25,5 +25,8 @@
 			"Jstewmc\\Gravity\\Example\\": "examples/src/"
 		},
         "files": ["src/uarray_merge_recursive.php"]
-	}
+	},
+    "bin": [
+        "gravity"
+    ]
 }

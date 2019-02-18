@@ -83,6 +83,7 @@ class Bootstrap
         $project->addService($this->getNamespaceParse());
 
         $project->addService($this->getProjectHydrate());
+        $project->addService($this->getProjectValidate());
 
         $project->addService($this->getRequirementParse());
         $project->addService($this->getRequirementResolve());
@@ -392,6 +393,20 @@ class Bootstrap
         $path     = new Path\Data\Service($segments);
         $id       = new Id\Data\Service($path);
         $service  = new Service\Data\Newable($id);
+
+        return $service;
+    }
+
+    private function getProjectValidate(): Service\Data\Service
+    {
+        $segments = ['jstewmc', 'gravity', 'project', 'service', 'validate'];
+        $path     = new Path\Data\Service($segments);
+        $id       = new Id\Data\Service($path);
+        $service  = new Service\Data\Fx($id, function () {
+            return new \Jstewmc\Gravity\Project\Service\Validate(
+                $this->get(Service\Service\Instantiate::class)
+            );
+        }, $this->namespace);
 
         return $service;
     }
