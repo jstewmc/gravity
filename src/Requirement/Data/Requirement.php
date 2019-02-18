@@ -8,11 +8,11 @@ namespace Jstewmc\Gravity\Requirement\Data;
 
 abstract class Requirement
 {
-    private $key;
-
     private $description;
 
     private $validator;
+
+    protected $key;
 
     public function __construct($key, string $description, callable $validator)
     {

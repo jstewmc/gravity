@@ -6,7 +6,7 @@
 
 namespace Jstewmc\Gravity\Requirement\Data;
 
-use Jstewmc\Gravity\Id\Data\Id;
+use Jstewmc\Gravity\Id\Data\{Id, Service, Setting};
 
 class Resolved extends Requirement
 {
@@ -18,5 +18,15 @@ class Resolved extends Requirement
     public function getKey(): Id
     {
         return parent::getKey();
+    }
+
+    public function isService(): bool
+    {
+        return $this->key instanceof Service;
+    }
+
+    public function isSetting(): bool
+    {
+        return $this->key instanceof Setting;
     }
 }

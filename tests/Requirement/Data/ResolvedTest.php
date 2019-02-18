@@ -6,7 +6,11 @@
 
 namespace Jstewmc\Gravity\Requirement\Data;
 
-use Jstewmc\Gravity\Id\Data\Id;
+use Jstewmc\Gravity\Id\Data\{
+    Id,
+    Service as ServiceId,
+    Setting as SettingId
+};
 use PHPUnit\Framework\TestCase;
 
 class ResolvedTest extends TestCase
@@ -47,5 +51,27 @@ class ResolvedTest extends TestCase
         $requirement = new Resolved($this->key, 'bar', $validator);
 
         $this->assertEquals($validator, $requirement->getValidator());
+    }
+
+    public function testIsService(): void
+    {
+        $key = $this->createMock(ServiceId::class);
+
+        $requirement = new Resolved($key, 'bar', function () {
+            return true;
+        });
+
+        $this->assertTrue($requirement->isService());
+    }
+
+    public function testIsSetting(): void
+    {
+        $key = $this->createMock(SettingId::class);
+
+        $requirement = new Resolved($key, 'bar', function () {
+            return true;
+        });
+
+        $this->assertTrue($requirement->isSetting());
     }
 }
