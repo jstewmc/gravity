@@ -4,6 +4,8 @@
  * @license    MIT
  */
 
+namespace Jstewmc\Gravity;
+
 use PHPUnit\Framework\TestCase;
 
 /**
