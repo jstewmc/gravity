@@ -116,6 +116,11 @@ class Project
         return $this->services[(string)$id];
     }
 
+    public function getServices(): array
+    {
+        return $this->services;
+    }
+
     public function getSetting(SettingId $id)
     {
         if (!$this->hasSetting($id)) {

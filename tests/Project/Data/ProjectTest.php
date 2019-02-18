@@ -155,6 +155,11 @@ class ProjectTest extends TestCase
         $this->assertSame($service, $project->getService($id));
     }
 
+    public function testGetServices(): void
+    {
+        $this->assertEquals([], (new Project($this->root))->getServices());
+    }
+
     public function testGetSettingThrowsExceptionIfDoesNotExist(): void
     {
         $this->expectException(SettingNotFound::class);
