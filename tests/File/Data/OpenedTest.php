@@ -67,6 +67,15 @@ class OpenedTest extends TestCase
         $this->assertSame($file, $file->namespace('foo'));
     }
 
+    public function testRequirement(): void
+    {
+        $file = $this->getFile();
+
+        $this->assertSame($file, $file->require('foo', 'bar', function ($value) {
+            return true;
+        }));
+    }
+
     public function testSet(): void
     {
         $file = $this->getFile();

@@ -25,6 +25,11 @@ class ClosedTest extends TestCase
         $this->assertEquals([], (new Closed())->getDeprecations());
     }
 
+    public function testGetRequirements(): void
+    {
+        $this->assertEquals([], (new Closed())->getRequirements());
+    }
+
     public function testSetAliases(): void
     {
         $script = new Closed();
@@ -44,5 +49,12 @@ class ClosedTest extends TestCase
         $script = new Closed();
 
         $this->assertSame($script, $script->setDeprecations([]));
+    }
+
+    public function testSetRequirements(): void
+    {
+        $script = new Closed();
+
+        $this->assertSame($script, $script->setRequirements([]));
     }
 }

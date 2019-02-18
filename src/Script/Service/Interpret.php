@@ -34,6 +34,7 @@ class Interpret
         $script = (new Interpreted())
             ->setAliases($script->getAliases())
             ->setDeprecations($script->getDeprecations())
+            ->setRequirements($script->getRequirements())
             ->setServices($services)
             ->setSettings($settings);
 

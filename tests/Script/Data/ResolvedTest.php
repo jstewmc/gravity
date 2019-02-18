@@ -25,6 +25,11 @@ class ResolvedTest extends TestCase
         $this->assertEquals([], (new Resolved())->getDeprecations());
     }
 
+    public function testGetRequirements(): void
+    {
+        $this->assertEquals([], (new Resolved())->getRequirements());
+    }
+
     public function testSetAliases(): void
     {
         $script = new Resolved();
@@ -44,5 +49,12 @@ class ResolvedTest extends TestCase
         $script = new Resolved();
 
         $this->assertSame($script, $script->setDeprecations([]));
+    }
+
+    public function testSetRequirements(): void
+    {
+        $script = new Resolved();
+
+        $this->assertSame($script, $script->setRequirements([]));
     }
 }

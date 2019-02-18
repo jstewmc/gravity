@@ -16,6 +16,7 @@ use Jstewmc\Gravity\{
     Import,
     Ns,
     Path,
+    Requirement,
     Root,
     Script,
     Service,
@@ -82,6 +83,9 @@ class Bootstrap
         $project->addService($this->getNamespaceParse());
 
         $project->addService($this->getProjectHydrate());
+
+        $project->addService($this->getRequirementParse());
+        $project->addService($this->getRequirementResolve());
 
         $project->addService($this->getScriptClose());
         $project->addService($this->getScriptInterpret());
@@ -392,6 +396,34 @@ class Bootstrap
         return $service;
     }
 
+    private function getRequirementParse(): Service\Data\Service
+    {
+        $segments = ['jstewmc', 'gravity', 'requirement', 'service', 'parse'];
+        $path     = new Path\Data\Service($segments);
+        $id       = new Id\Data\Service($path);
+        $service  = new Service\Data\Fx($id, function () {
+            return new Requirement\Service\Parse(
+                $this->get(Path\Service\Parse::class)
+            );
+        }, $this->namespace);
+
+        return $service;
+    }
+
+    private function getRequirementResolve(): Service\Data\Service
+    {
+        $segments = ['jstewmc', 'gravity', 'requirement', 'service', 'resolve'];
+        $path     = new Path\Data\Service($segments);
+        $id       = new Id\Data\Service($path);
+        $service  = new Service\Data\Fx($id, function () {
+            return new Requirement\Service\Resolve(
+                $this->get(Path\Service\Resolve::class)
+            );
+        }, $this->namespace);
+
+        return $service;
+    }
+
     private function getScriptClose(): Service\Data\Service
     {
         $segments = ['jstewmc', 'gravity', 'script', 'service', 'close'];
@@ -426,7 +458,8 @@ class Bootstrap
             return new Script\Service\Parse(
                 $this->get(Alias\Service\Parse::class),
                 $this->get(Definition\Service\Parse::class),
-                $this->get(Deprecation\Service\Parse::class)
+                $this->get(Deprecation\Service\Parse::class),
+                $this->get(Requirement\Service\Parse::class)
             );
         }, $this->namespace);
 
@@ -442,7 +475,8 @@ class Bootstrap
             return new Script\Service\Resolve(
                 $this->get(Alias\Service\Resolve::class),
                 $this->get(Definition\Service\Resolve::class),
-                $this->get(Deprecation\Service\Resolve::class)
+                $this->get(Deprecation\Service\Resolve::class),
+                $this->get(Requirement\Service\Resolve::class)
             );
         }, $this->namespace);
 

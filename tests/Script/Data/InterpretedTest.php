@@ -25,6 +25,11 @@ class InterpretedTest extends TestCase
         $this->assertEquals([], (new Interpreted())->getDeprecations());
     }
 
+    public function testGetRequirements(): void
+    {
+        $this->assertEquals([], (new Interpreted())->getRequirements());
+    }
+
     public function testGetServices(): void
     {
         $this->assertEquals([], (new Interpreted())->getServices());
@@ -54,6 +59,13 @@ class InterpretedTest extends TestCase
         $script = new Interpreted();
 
         $this->assertSame($script, $script->setDeprecations([]));
+    }
+
+    public function testSetRequirements(): void
+    {
+        $script = new Interpreted();
+
+        $this->assertSame($script, $script->setRequirements([]));
     }
 
     public function testSetServices(): void

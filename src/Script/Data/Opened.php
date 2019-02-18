@@ -9,6 +9,7 @@ namespace Jstewmc\Gravity\Script\Data;
 use Jstewmc\Gravity\Alias\Data\Read as Alias;
 use Jstewmc\Gravity\Definition\Data\Read as Definition;
 use Jstewmc\Gravity\Deprecation\Data\Read as Deprecation;
+use Jstewmc\Gravity\Requirement\Data\Read as Requirement;
 
 class Opened extends Script
 {
@@ -29,6 +30,13 @@ class Opened extends Script
     public function addDeprecation(Deprecation $deprecation): self
     {
         $this->deprecations[] = $deprecation;
+
+        return $this;
+    }
+
+    public function addRequirement(Requirement $requirement): self
+    {
+        $this->requirements[] = $requirement;
 
         return $this;
     }
