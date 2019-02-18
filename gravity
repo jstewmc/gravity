@@ -50,12 +50,12 @@ if ($command === 'validate') {
         $total = count($errors);
 
         fwrite(
-            STDOUT,
+            STDERR,
             "Project is invalid! Found {$total} errors:" . PHP_EOL . PHP_EOL
         );
 
         foreach ($errors as $key => $error) {
-            echo "    * {$key}: {$error}" . PHP_EOL . PHP_EOL;
+            fwrite(STDERR, "    * {$key}: {$error}" . PHP_EOL . PHP_EOL);
         }
 
         exit(1);
