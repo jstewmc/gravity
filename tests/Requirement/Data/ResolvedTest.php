@@ -13,7 +13,7 @@ class ResolvedTest extends TestCase
 {
     private $key;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->key = $this->createMock(Id::class);
     }

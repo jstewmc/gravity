@@ -13,7 +13,7 @@ class ParsedTest extends TestCase
 {
     private $key;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->key = $this->createMock(Path::class);
     }
