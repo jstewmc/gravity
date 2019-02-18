@@ -10,7 +10,6 @@ use Jstewmc\Gravity\Manager\Data\Manager;
 use Jstewmc\Gravity\Project\Data\Project;
 use Jstewmc\Gravity\Service\Data\Service;
 use Jstewmc\Gravity\Service\Service\Instantiate;
-use Jstewmc\Gravity\Exception;
 
 class Validate
 {
@@ -62,7 +61,7 @@ class Validate
         foreach ($project->getServices() as $service) {
             try {
                 $this->instantiate($service, $g);
-            } catch (Exception $e) {
+            } catch (\Throwable $e) {
                 $errors[(string)$service->getId()] = "Instatiating service, "
                     . "'{$service->getId()}', failed with " . get_class($e)
                     . ": " . $e->getMessage();
