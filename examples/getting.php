@@ -15,12 +15,12 @@ $actual   = $g->get('jstewmc.gravity.example.setting.foo');
 assert($expected == $actual);
 
 // using the settings from ../.gravity/examples/setting.php:12
-$instance = $g->get(Setting\Qux::class);
+$instance = $g->get(Service\Qux::class);
 
 assert($instance instanceof Service\Qux);
 
-$a = $g->get(Setting\Qux::class);
-$b = $g->get(Setting\Qux::class);
+$a = $g->get(Service\Qux::class);
+$b = $g->get(Service\Qux::class);
 
 // remember, PHP's === operator compares the object's references in memory
 assert($a === $b);

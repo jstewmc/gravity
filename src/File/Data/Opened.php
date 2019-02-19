@@ -11,6 +11,7 @@ use Jstewmc\Gravity\Definition\Data\Read as Definition;
 use Jstewmc\Gravity\Deprecation\Data\Read as Deprecation;
 use Jstewmc\Gravity\Import\Data\Read as Import;
 use Jstewmc\Gravity\Ns\Data\Opened as Ns;
+use Jstewmc\Gravity\Requirement\Data\Read as Requirement;
 use Jstewmc\Gravity\Script\Data\Opened as Script;
 
 
@@ -41,6 +42,13 @@ class Opened extends File
     public function namespace(string $namespace): self
     {
         $this->namespace->setName($namespace);
+
+        return $this;
+    }
+
+    public function require(string $key, string $description, callable $validator): self
+    {
+        $this->script->addRequirement(new Requirement($key, $description, $validator));
 
         return $this;
     }

@@ -74,6 +74,11 @@ class Manager
         return $value;
     }
 
+    public function getProject(): Project
+    {
+        return $this->project;
+    }
+
     public function has(string $path): bool
     {
         $id = $this->getId($path);

@@ -10,6 +10,7 @@ use Jstewmc\Gravity\Alias\Service\Resolve as ResolveAlias;
 use Jstewmc\Gravity\Definition\Service\Resolve as ResolveDefinition;
 use Jstewmc\Gravity\Deprecation\Service\Resolve as ResolveDeprecation;
 use Jstewmc\Gravity\Ns\Data\Parsed as Ns;
+use Jstewmc\Gravity\Requirement\Service\Resolve as ResolveRequirement;
 use Jstewmc\Gravity\Script\Data\{Parsed, Resolved};
 
 class Resolve
@@ -20,14 +21,18 @@ class Resolve
 
     private $resolveDeprecation;
 
+    private $resolveRequirement;
+
     public function __construct(
         ResolveAlias        $resolveAlias,
         ResolveDefinition   $resolveDefinition,
-        ResolveDeprecation  $resolveDeprecation
+        ResolveDeprecation  $resolveDeprecation,
+        ResolveRequirement  $resolveRequirement
     ) {
         $this->resolveAlias       = $resolveAlias;
         $this->resolveDefinition  = $resolveDefinition;
         $this->resolveDeprecation = $resolveDeprecation;
+        $this->resolveRequirement = $resolveRequirement;
     }
 
     public function __invoke(Parsed $script, Ns $namespace): Resolved
@@ -47,10 +52,16 @@ class Resolve
             $namespace
         );
 
+        $requirements = $this->resolveRequirements(
+            $script->getRequirements(),
+            $namespace
+        );
+
         $script = (new Resolved())
             ->setAliases($aliases)
             ->setDefinitions($definitions)
-            ->setDeprecations($deprecations);
+            ->setDeprecations($deprecations)
+            ->setRequirements($requirements);
 
         return $script;
     }
@@ -80,5 +91,14 @@ class Resolve
         }
 
         return $deprecations;
+    }
+
+    private function resolveRequirements(array $requirements, Ns $namespace): array
+    {
+        foreach ($requirements as $requirement) {
+            $requirement = ($this->resolveRequirement)($requirement, $namespace);
+        }
+
+        return $requirements;
     }
 }
