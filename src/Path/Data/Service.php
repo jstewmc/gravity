@@ -8,5 +8,8 @@ namespace Jstewmc\Gravity\Path\Data;
 
 class Service extends Path
 {
-    public const SEPARATOR = '\\';
+    public static function getSeparator(): string
+    {
+        return '\\';
+    }
 }

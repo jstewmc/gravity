@@ -8,8 +8,7 @@ namespace Jstewmc\Gravity\Manager\Data;
 
 use Jstewmc\Gravity\Id\Data\{
     Id,
-    Service as ServiceId,
-    Setting as SettingId
+    Service as ServiceId
 };
 use Jstewmc\Gravity\Id\Service\Get as GetId;
 use Jstewmc\Gravity\Ns\Data\Parsed as Ns;
@@ -20,14 +19,19 @@ use SplStack;
 
 class Manager
 {
+    /** @var GetId */
     private $getId;
 
+    /** @var GetService */
     private $getService;
 
+    /** @var GetSetting */
     private $getSetting;
 
+    /** @var SplStack */
     private $namespaces;
 
+    /** @var Project */
     private $project;
 
     public function __construct(

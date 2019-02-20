@@ -1,32 +1,39 @@
 {
-	"name": "jstewmc/gravity",
-	"description": "A framework-agnostic service and configuration manager for PHP",
-	"license": "MIT",
-	"keywords": ["php", "jstewmc", "gravity", "service", "configuration", "manager"],
-	"authors": [
-		{
-			"name": "Jack Clayton",
-			"email": "clayjs0@gmail.com"
-		}
-	],
-	"require": {
-		"php": "^7.2",
-        "psr/log": "^1.1"
-	},
-	"require-dev": {
-		"mikey179/vfsstream": "^1.6",
-		"phpunit/phpunit": "^8",
-		"roave/security-advisories": "dev-master",
-		"slevomat/coding-standard": "^4"
-	},
-	"autoload": {
-		"psr-4": {
-			"Jstewmc\\Gravity\\": "src/",
-			"Jstewmc\\Gravity\\Example\\": "examples/src/"
-		},
-        "files": ["src/uarray_merge_recursive.php"]
-	},
-    "bin": [
-        "gravity"
+  "name": "jstewmc/gravity",
+  "description": "A framework-agnostic service and configuration manager for PHP",
+  "license": "MIT",
+  "keywords": [
+    "php",
+    "jstewmc",
+    "gravity",
+    "service",
+    "configuration",
+    "manager"
+  ],
+  "authors": [
+    {
+      "name": "Jack Clayton",
+      "email": "clayjs0@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.2",
+    "psr/log": "^1.1",
+    "psr/simple-cache": "^1.0"
+  },
+  "require-dev": {
+    "mikey179/vfsstream": "^1.6",
+    "phpunit/phpunit": "^8",
+    "roave/security-advisories": "dev-master",
+    "slevomat/coding-standard": "^4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Jstewmc\\Gravity\\": "src/",
+      "Jstewmc\\Gravity\\Example\\": "examples/src/"
+    },
+    "files": [
+      "src/uarray_merge_recursive.php"
     ]
+  }
 }

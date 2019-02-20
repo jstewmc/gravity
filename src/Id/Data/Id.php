@@ -7,7 +7,7 @@
 namespace Jstewmc\Gravity\Id\Data;
 
 use Jstewmc\Gravity\Id\Exception\TooShort;
-use Jstewmc\Gravity\Path\Data\Path as Path;
+use Jstewmc\Gravity\Path\Data\Path;
 
 /**
  * Uniquely identifies a service or setting, using a path with three or more

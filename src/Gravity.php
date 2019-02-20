@@ -6,22 +6,26 @@
 
 namespace Jstewmc\Gravity;
 
-use Jstewmc\Gravity\{Cache, Manager, Project};
-use Psr\Log;
+use Jstewmc\Gravity\{Cache\Data\Hash, Cache\Service\Warm, Manager, Project};
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
+use Psr\SimpleCache\CacheInterface as Cache;
 
 class Gravity
 {
+    /** @var Cache */
     private $cache;
 
+    /** @var LoggerInterface  */
     private $logger;
 
     public function __construct()
     {
-        $this->cache  = new Cache\Data\Hash();
-        $this->logger = new Log\NullLogger();
+        $this->cache  = new Hash();
+        $this->logger = new NullLogger();
     }
 
-    public function pull()
+    public function pull(): Manager\Data\Manager
     {
         $this->warmCache();
 
@@ -33,14 +37,14 @@ class Gravity
         return $manager;
     }
 
-    public function setLogger(Log\LoggerInterface $logger): self
+    public function setLogger(LoggerInterface $logger): self
     {
         $this->logger = $logger;
 
         return $this;
     }
 
-    public function setCache(Cache\Data\Cache $cache): self
+    public function setCache(Cache $cache): self
     {
         $this->cache = $cache;
 
@@ -51,13 +55,11 @@ class Gravity
     {
         $bootstrap = new Manager\Service\Bootstrap();
 
-        $project = $bootstrap($project, $this->cache, $this->logger);
-
-        return $project;
+        return $bootstrap($project, $this->cache, $this->logger);
     }
 
     private function bootstrapProject(
-        Log\LoggerInterface $logger
+        LoggerInterface $logger
     ): Project\Data\Project {
         $root = (new Root\Service\Find('vendor'))();
 
@@ -81,6 +83,6 @@ class Gravity
 
     private function warmCache(): void
     {
-        (new Cache\Service\Warm())($this->cache, $this->logger);
+        (new Warm())($this->cache, $this->logger);
     }
 }
