@@ -8,8 +8,9 @@ namespace Jstewmc\Gravity\Setting\Exception;
 
 use Jstewmc\Gravity\Id\Data\Setting as Id;
 use Jstewmc\Gravity\Exception;
+use Psr\Container\NotFoundExceptionInterface;
 
-class NotFound extends Exception
+class NotFound extends Exception implements NotFoundExceptionInterface
 {
     private $id;
 
