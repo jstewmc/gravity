@@ -8,20 +8,47 @@ Use Gravity to set services and settings for yourself and others.
 
 Like [Composer](https://getcomposer.org), Gravity thinks in terms of packages. In fact, Gravity relies heavily on Composer's default filesystem to find its files.
 
-As a package author, you'll define your services and settings in a `.gravity` directory located in your package's root directory:
+As a _package_ author, you'll define your services and settings in a `.gravity` directory located in your package's root directory:
 
 ```
 /path/to/package
- |-- .gravity
- |-- composer.json
- |-- ...
+|-- .gravity
+|-- composer.json
+|-- ...
 ```
 
-A Gravity directory many contain any number of files and subdirectories. Any file in the directory will be considered a Gravity file.
+As a _project_ author, you'll define your services and settings in a `.gravity` directory as well, and when you includes other packages using Composer, your filesystem will look something like this:
+
+```
+/path/to/project
+|-- .gravity
+|   |-- foo.php              # services and settings for your project
+|-- composer.json
+|-- src
+|   |-- ...
+|-- test
+|   |-- ...
+|-- vendor
+|   |-- vendor1
+|   |   |-- package1
+|   |   |   |-- .gravity
+|   |   |   |   |-- bar.php  # services and settings for package1
+|   |   |   |-- ...
+|   |   |-- package2
+|   |   |   |-- .gravity
+|   |   |   |   |-- baz.php  # services and settings for package2
+|   |   |   |-- ...
+|   |-- vendor2
+|   |   |-- ...
+|   |-- ...
+|-- ...
+```
+
+A Gravity directory many contain any number of files and subdirectories, and any file in the directory will be considered a Gravity file.
 
 ## Gravity files
 
-Within a Gravity file, the magic `$g` variable will always be defined ("g" is the abbreviation for [gravity](https://en.wikipedia.org/wiki/Gravity_of_Earth)). You'll use `$g` and its methods to define services and settings:
+Within a Gravity file, the magic `$g` variable will always be defined ("g" is the common abbreviation for [gravity](https://en.wikipedia.org/wiki/Gravity_of_Earth)). You'll use `$g` and its methods to define services and settings:
 
 ```php
 # /path/to/jstewmc/gravity/.gravity/examples/first.php
@@ -37,11 +64,68 @@ $g->set(Foo::class, function (): Foo {
 
 You can mix settings and services in the same file.
 
-## Organization
+## Environments
 
-Between the support for recursive directories and the mixing of services and configuration in the same file, you're free to organize your package's settings and services however you'd like.
+Oftentimes, you'd like the _same_ setting to have _different_ values in _different_ environments. To that end, Gravity supports four environments:
 
-Also, and this is important, Gravity allows _anyone_ to define settings and services _anywhere_. So, in your own Gravity files, you can define (or override) settings and services defined in another package. This allows you to create services that your users can configure.
+* development
+* test
+* staging
+* production
+
+To detect its environment, Gravity looks for a `GRAVITY_ENV` environment variable. If it can't be found, Gravity will default to the development environment.
+
+To define environment-specific services and settings, add an `environments` directory beneath your `.gravity` directory.
+
+```
+/path/to/package
+|-- .gravity
+|   |-- environments
+|-- composer.json
+|-- ...
+```
+
+Within the `environments` directory, you can use files named after an environment:
+
+```
+/path/to/package
+|-- .gravity
+|   |-- environments
+|   |   |-- development.php
+|   |   |-- test.php
+|   |   |-- staging.php
+|   |   |-- production.php
+|-- composer.json
+|-- ...
+```
+
+Or, you can define multiple files in directories named after an environment:
+
+```
+/path/to/package
+|-- .gravity
+|   |-- environments
+|   |   |-- development
+|   |   |   |-- foo.php
+|   |   |   |-- bar.php
+|   |   |-- test
+|   |   |   |-- foo.php
+|   |   |   |-- bar.php
+|   |   |-- staging
+|   |   |   |-- foo.php
+|   |   |   |-- bar.php
+|   |   |-- production
+|   |   |   |-- foo.php
+|   |   |   |-- bar.php
+|-- composer.json
+|-- ...
+```
+
+Any services and settings defined in these files will take precedence over identically named services and settings defined elsewhere.
+
+Keep in mind, environment files are not required, and they may be sparse. You can define as many (or as few) as you'd like.
+
+Don't mix methods! If both a directory and file exist (e.g., `environments\development` and `environments\development.php`, respectively), the file will win.
 
 ## Services
 
@@ -259,6 +343,16 @@ $g->set('jstewmc.gravity.example.waldo-three', 3);
 // good
 $g->set('jstewmc.gravity.example.waldo', [1, 2, 3]);
 ```
+
+## Organization
+
+Between the support for recursive directories, the mixing of services and configuration in the same file, and the support for environments, you're free to organize your package (or project) settings and services however you'd like.
+
+Gravity allows _anyone_ to define settings and services _anywhere_. So, in your own Gravity files, you can define (or override) settings and services defined in another package. This allows authors to create services that users can configure.
+
+Mixing definitions between packages can get confusing. Gravity logs important events like loading files, resolving paths, and more. By default, Gravity uses a null logger. However, you can inject any PSR-compliant logger. See [logging](logging.md) for details.
+
+Leaving important services and settings to be defined can be risky. Gravity allows authors to define required services and settings using `$g->require()`, and it allows users to validate their project using the command line `gravity validate` tool. See [validating](validating.md) for details.
 
 ## That's it!
 
