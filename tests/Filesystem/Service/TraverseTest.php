@@ -49,7 +49,7 @@ class TraverseTest extends TestCase
         $sut = new Traverse($this->directories, $this->logger);
 
         $expected = new Traversed([]);
-        $actual   = $sut($root);
+        $actual   = $sut($root, 'foo');
 
         $this->assertEquals($expected, $actual);
 
@@ -84,7 +84,7 @@ class TraverseTest extends TestCase
             new SplFileInfo($file2->url()),
             new SplFileInfo($file3->url())
         ]);
-        $actual = $sut($root);
+        $actual = $sut($root, 'foo');
 
         $this->assertEquals($expected, $actual);
 
@@ -127,7 +127,7 @@ class TraverseTest extends TestCase
             new SplFileInfo($file2->url()),
             new SplFileInfo($file3->url())
         ]);
-        $actual = $sut($root);
+        $actual = $sut($root, 'foo');
 
         $this->assertEquals($expected, $actual);
 

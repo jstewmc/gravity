@@ -42,7 +42,7 @@ class Traverse
      * win, and local environment files should take precedence over global
      * environment files so the local enviornment wins.
      */
-    public function __invoke(Root $root, string $environment = null): Traversed
+    public function __invoke(Root $root, string $environment): Traversed
     {
         $this->before($root, $environment);
 
@@ -50,18 +50,14 @@ class Traverse
 
         if ($pathnames) {
             $packageGlobal = $this->getPackageGlobalFiles($pathnames);
-            if ($environment) {
-                $packageLocal  = $this->getPackageLocalFiles($pathnames, $environment);
-            }
+            $packageLocal  = $this->getPackageLocalFiles($pathnames, $environment);
         }
 
         $pathname = $this->getProjectGravityDirectoryPathname($root);
 
         if ($pathname) {
             $projectGlobal = $this->getProjectGlobalFiles($pathname);
-            if ($environment) {
-                $projectLocal  = $this->getProjectLocalFiles($pathname, $environment);
-            }
+            $projectLocal  = $this->getProjectLocalFiles($pathname, $environment);
         }
 
         $files = array_merge(
