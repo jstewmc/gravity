@@ -63,8 +63,8 @@ Here are a few psuedo-examples with the plumbing of a working example omitted to
 By default, a file without a `namespace` or `use` statements will default to the global namespace, and identifiers will resolve as-is:
 
 ```
-'Foo\Bar\Baz'  // resolves to "Foo\Bar\Baz"
-'foo.bar.baz'  // resolves to "foo.bar.baz"
+$g->set('Foo\Bar\Baz');     // resolves to "Foo\Bar\Baz"
+$g->set('foo.bar.baz', 1);  // resolves to "foo.bar.baz"
 ```
 
 ### With namespace
@@ -74,8 +74,8 @@ When a namespace is defined, it is prepended to every identifier in the file.
 ```
 $g->namespace('foo.bar.baz');
 
-'qux.quux.corge'       // resolves to "foo.bar.baz.qux.quux.corge"
-'grault.garply.waldo'  // resolves to "foo.bar.baz.grault.garply.waldo"
+$g->set('qux.quux.corge', 1);       // resolves to "foo.bar.baz.qux.quux.corge"
+$g->set('grault.garply.waldo', 2);  // resolves to "foo.bar.baz.grault.garply.waldo"
 ```
 
 Unless, you use a leading separator to escape the namespace:
@@ -83,8 +83,8 @@ Unless, you use a leading separator to escape the namespace:
 ```
 $g->namespace('foo.bar.baz');
 
-'qux.quux.corge'   // resolves to "foo.bar.baz.qux.quux.corge"
-'.qux.quux.corge'  // resolves to "qux.quux.corge"
+$g->set('qux.quux.corge', 1);   // resolves to "foo.bar.baz.qux.quux.corge"
+$g->set('.qux.quux.corge', 2);  // resolves to "qux.quux.corge"
 ```
 
 Unfortunately, a namespace is not a great option if you're going to mix settings and services in the same file, because it is prepended to _every_ identifier, regardless of type:
@@ -92,23 +92,22 @@ Unfortunately, a namespace is not a great option if you're going to mix settings
 ```
 $g->namespace('foo.bar.baz');
 
-'qux.quux.corge'  // resolves to "foo.bar.baz.qux.quux.corge" (good!)
-'Qux\Quux\Corge'  // throws exception because types don't match
+$g->set('qux.quux.corge', 1);  // resolves to "foo.bar.baz.qux.quux.corge" (good!)
+$g->set('Qux\Quux\Corge');     // throws an exception because the types don't match
 ```
 
 That is, unless you use imported namespaces.
 
 ### With imports
 
-Imported namespaces are added to a file under an alias. If an alias is not explictly defined, the last segment in the namespace will be used:
+Imported namespaces are added to a file under an alias. If an alias is not explicitly defined, the last segment in the namespace will be used as its alias:
 
 ```
 $g->use('Foo\Bar\Baz');         // uses the implicit alias "baz"
-$g->use('Foo\Bar\Baz', 'Baz');  // uses the explicit alias "baz"
-$g->use('Foo\Bar\Baz', 'Qux');  // uses the explicit alias "qux"
+$g->use('Foo\Bar\Baz', 'Bar');  // uses the explicit alias "bar"
 ```
 
-You can use as many imports namespaces as you like in a file.
+You can use as many imported namespaces as you'd like in a file.
 
 Imported namespaces are resolved before the file's namespace. So, if you mix services and settings in the same file, you can use a namespace for one type and imported namespaces for another:
 
@@ -117,8 +116,8 @@ $g->namespace('foo.bar.baz');
 
 $g->use('Foo\Bar\Baz');
 
-'qux.quux.corge'      // resolves to "foo.bar.baz.qux.quux.corge"
-'Baz\Qux\Quux\Corge'  // resolves to "Foo\Bar\Baz\Qux\Quux\Corge"
+$g->set('qux.quux.corge');      // resolves to "foo.bar.baz.qux.quux.corge"
+$g->set('Baz\Qux\Quux\Corge');  // resolves to "Foo\Bar\Baz\Qux\Quux\Corge"
 ```
 
 Just be careful of alias collisions. The last alias will always win:
@@ -127,7 +126,7 @@ Just be careful of alias collisions. The last alias will always win:
 $g->use('foo.bar.baz');
 $g->use('Foo\Bar\Baz');
 
-'baz.qux.quux.corge'  // throws an exception because the last "baz" alis won!
+$g->set('baz.qux.quux.corge', 1)  // throws an exception for type mismatch
 ```
 
 ### Rules
