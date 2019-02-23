@@ -100,8 +100,13 @@ This library strives to adhere to the following standards:
 
 1. [Keep a Changelog 1.0](http://keepachangelog.com/en/1.0.0/)
 2. [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)
+<<<<<<< HEAD
 3. [PSR-11](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-11-container.md)
 4. [PSR-16](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-16-simple-cache.md)
+=======
+4. [PSR-11](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-11-container.md)
+3. [PSR-16](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-16-simple-cache.md)
+>>>>>>> f4e7c1b90420ceb6a9990fa7e825471e524e1305
 5. [Semantic Versioning 2.0](http://semver.org/spec/v2.0.0.html)
 6. [SODO Design Pattern 0.1.0](https://github.com/jstewmc/sodo-design-pattern)
 
