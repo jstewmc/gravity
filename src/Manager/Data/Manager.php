@@ -16,8 +16,9 @@ use Jstewmc\Gravity\Project\Data\Project;
 use Jstewmc\Gravity\Service\Service\Get as GetService;
 use Jstewmc\Gravity\Setting\Service\Get as GetSetting;
 use SplStack;
+use Psr\Container\ContainerInterface as Container;
 
-class Manager
+class Manager implements Container
 {
     /** @var GetId */
     private $getId;
@@ -61,9 +62,9 @@ class Manager
         $this->namespaces->pop();
     }
 
-    public function get(string $path)
+    public function get($path)
     {
-        $id = $this->getId($path);
+        $id = $this->getId((string)$path);
 
         if ($id instanceof ServiceId) {
             $value = $this->getService($id);
@@ -79,9 +80,9 @@ class Manager
         return $this->project;
     }
 
-    public function has(string $path): bool
+    public function has($path)
     {
-        $id = $this->getId($path);
+        $id = $this->getId((string)$path);
 
         if ($id instanceof ServiceId) {
             $has = $this->project->hasService($id);
