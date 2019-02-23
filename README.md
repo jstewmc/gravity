@@ -6,7 +6,7 @@ Gravity is a service and configuration manager for everyone. It makes it easy to
 
 ## Usage
 
-First, let's write a simple service in this repository (services are usually much more complex and stored in a separate repository):
+Create a simple service:
 
 ```php
 # /path/to/jstewmc/gravity/examples/src/Service/Foo.php
@@ -22,29 +22,19 @@ class Foo
 }
 ```
 
-Next, let's define our service and a setting in a Gravity file (since the example service is in this repository so is the `.gravity` directory):
+Define the service in a Gravity file:
 
 ```php
 # /path/to/jstewmc/gravity/.gravity/examples/first.php
 
 namespace Jstewmc\Gravity\Example\Service;
 
-// here, we define a _service_ named "Jstewmc\Gravity\Example\Service\Foo" with
-//   an anonymous function
-// when the service is requested, Gravity will invoke the function and return
-//   its return value, an instance of Jstewmc\Gravity\Example\Service\Foo
-//
 $g->set(Foo::class, function (): Foo {
     return new Foo();
 });
-
-// here, we define a _setting_ named "jstewmc.gravity.example.foo"
-// when the setting is requested, Gravity will return its value, true
-//
-$g->set('jstewmc.gravity.example.foo', true);
 ```
 
-Now, use your service (this example is a little verbose since it's a plain old PHP script):
+Use your service:
 
 ```php
 # /path/to/jstemwc/gravity/examples/first.php
@@ -55,17 +45,9 @@ use Jstewmc\Gravity\Gravity;
 
 require_once realpath(__DIR__ . '/../vendor/autoload.php');
 
-// instantiate Gravity
 $g = (new Gravity())->pull();
 
-// Gravity returns the "Jstewmc\Gravity\Example\Service\Foo" _service_
 assert($g->get(Foo::class) instanceof Foo);
-
-// Gravity returns the "jstewmc.gravity.example.foo" value
-$expected = true;
-$actual   = $g->get('jstewmc.gravity.example.foo');
-
-assert($expected == $actual);
 ```
 
 That's it!
@@ -116,10 +98,12 @@ Gravity must be installed via [Composer](https://getcomposer.org). To do so, add
 
 This library strives to adhere to the following standards:
 
-1. [Semantic Versioning 2.0](http://semver.org/spec/v2.0.0.html);
-2. [Keep a Changelog 1.0](http://keepachangelog.com/en/1.0.0/);
-3. [PSR-2](https://www.php-fig.org/psr/psr-2/); and,
-4. [SODO Design Pattern 0.1.0](https://github.com/jstewmc/sodo-design-pattern).
+1. [Keep a Changelog 1.0](http://keepachangelog.com/en/1.0.0/)
+2. [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)
+3. [PSR-11](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-11-container.md)
+4. [PSR-16](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-16-simple-cache.md)
+5. [Semantic Versioning 2.0](http://semver.org/spec/v2.0.0.html)
+6. [SODO Design Pattern 0.1.0](https://github.com/jstewmc/sodo-design-pattern)
 
 If you spot an error, please let us know!
 
