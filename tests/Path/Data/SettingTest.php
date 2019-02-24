@@ -52,26 +52,6 @@ class SettingTest extends TestCase
         );
     }
 
-    public function testGetLowecaseSegments(): void
-    {
-        $segments = ['FOO', 'BAR', 'BAZ'];
-
-        $this->assertEquals(
-            ['foo', 'bar', 'baz'],
-            (new Setting($segments))->getLowercaseSegments()
-        );
-    }
-
-    public function testGetOriginaCaseSegments(): void
-    {
-        $segments = ['FOO', 'bar', 'BAZ'];
-
-        $this->assertEquals(
-            $segments,
-            (new Setting($segments))->getOriginalCaseSegments()
-        );
-    }
-
     public function testGetSegments(): void
     {
         $segments = ['foo', 'bar', 'baz'];
