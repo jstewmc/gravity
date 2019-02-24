@@ -4,10 +4,9 @@
   "license": "MIT",
   "keywords": [
     "php",
-    "jstewmc",
     "gravity",
-    "service",
-    "configuration",
+    "services",
+    "settings",
     "manager"
   ],
   "authors": [
@@ -37,5 +36,8 @@
     "files": [
       "src/uarray_merge_recursive.php"
     ]
-  }
+  },
+  "bin": [
+    "gravity"
+  ]
 }
