@@ -259,7 +259,7 @@ class Bootstrap
 
     private function getFileOpen(): Service\Data\Service
     {
-        $segments = ['jstewmc', 'gravity', 'file', 'service', 'open'];
+        $segments = ['Jstewmc', 'Gravity', 'File', 'Service', 'Open'];
         $path     = new Path\Data\Service($segments);
         $id       = new Id\Data\Service($path);
         $service  = new Service\Data\Newable($id);
@@ -284,7 +284,7 @@ class Bootstrap
 
     private function getFileRead(): Service\Data\Service
     {
-        $segments = ['jstewmc', 'gravity', 'file', 'service', 'read'];
+        $segments = ['Jstewmc', 'Gravity', 'File', 'Service', 'Read'];
         $path     = new Path\Data\Service($segments);
         $id       = new Id\Data\Service($path);
         $service  = new Service\Data\Newable($id);
@@ -364,7 +364,7 @@ class Bootstrap
 
     private function getNamespaceClose(): Service\Data\Service
     {
-        $segments = ['jstewmc', 'gravity', 'ns', 'service', 'close'];
+        $segments = ['Jstewmc', 'Gravity', 'Ns', 'Service', 'Close'];
         $path     = new Path\Data\Service($segments);
         $id       = new Id\Data\Service($path);
         $service  = new Service\Data\Newable($id);
@@ -389,7 +389,7 @@ class Bootstrap
 
     private function getProjectHydrate(): Service\Data\Service
     {
-        $segments = ['jstewmc', 'gravity', 'project', 'service', 'hydrate'];
+        $segments = ['Jstewmc', 'Gravity', 'Project', 'Service', 'Hydrate'];
         $path     = new Path\Data\Service($segments);
         $id       = new Id\Data\Service($path);
         $service  = new Service\Data\Newable($id);
@@ -441,7 +441,7 @@ class Bootstrap
 
     private function getScriptClose(): Service\Data\Service
     {
-        $segments = ['jstewmc', 'gravity', 'script', 'service', 'close'];
+        $segments = ['Jstewmc', 'Gravity', 'Script', 'Service', 'Close'];
         $path     = new Path\Data\Service($segments);
         $id       = new Id\Data\Service($path);
         $service  = new Service\Data\Newable($id);
@@ -519,7 +519,7 @@ class Bootstrap
 
     private function getServiceInterpret(): Service\Data\Service
     {
-        $segments = ['jstewmc', 'gravity', 'service', 'service', 'interpret'];
+        $segments = ['Jstewmc', 'Gravity', 'Service', 'Service', 'Interpret'];
         $path     = new Path\Data\Service($segments);
         $id       = new Id\Data\Service($path);
         $service  = new Service\Data\Newable($id);
@@ -529,7 +529,7 @@ class Bootstrap
 
     private function getSettingInterpret(): Service\Data\Service
     {
-        $segments = ['jstewmc', 'gravity', 'setting', 'service', 'interpret'];
+        $segments = ['Jstewmc', 'Gravity', 'Setting', 'Service', 'Interpret'];
         $path     = new Path\Data\Service($segments);
         $id       = new Id\Data\Service($path);
         $service  = new Service\Data\Newable($id);
