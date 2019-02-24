@@ -56,12 +56,8 @@ class Instantiate
 
     public function instantiateNewable(Newable $service): object
     {
-        $segments = $service->getId()->getSegments();
-        $segments = array_map('ucfirst', $segments);
-
-        $classname = implode('\\', $segments);
-        $classname = '\\' . $classname;
-
+        $classname = $service->getClassname();
+        
         return new $classname;
     }
 }
