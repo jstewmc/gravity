@@ -17,6 +17,6 @@ class Newable extends Service
 
     public function getClassname(): string
     {
-        return implode('\\', $this->id->getSegments());
+        return '\\' . implode('\\', $this->id->getSegments());
     }
 }
