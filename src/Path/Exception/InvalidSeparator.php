@@ -10,12 +10,11 @@ class InvalidSeparator extends Exception
 {
     private $path;
 
-    public function __construct(string $path, string $separator)
+    public function __construct(string $path)
     {
         $this->path = $path;
 
-        $message = 'Service (' . $separator . ') or setting ('
-            . $separator .") separator missing from path '$path'";
+        $message = "Path '$path' does not include a service or setting separator";
 
         parent::__construct($message);
     }

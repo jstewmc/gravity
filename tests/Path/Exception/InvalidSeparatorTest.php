@@ -12,7 +12,7 @@ class InvalidSeparatorTest extends TestCase
 {
     public function testGetPath(): void
     {
-        $this->assertEquals('foo', (new InvalidSeparator('foo', ''))->getPath());
+        $this->assertEquals('foo', (new InvalidSeparator('foo'))->getPath());
 
         return;
     }

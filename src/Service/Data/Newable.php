@@ -15,8 +15,8 @@ class Newable extends Service
         parent::__construct($id, null);
     }
 
-    public function getDefinition(): void
+    public function getClassname(): string
     {
-        return;
+        return '\\' . implode('\\', $this->id->getSegments());
     }
 }

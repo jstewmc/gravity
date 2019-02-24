@@ -149,6 +149,8 @@ $g->set(Service\Baz::class);
 
 When a newable service is requested, Gravity will instantiate an instance of the class with the same name as the identifier and return it.
 
+Be careful: case matters! Because you can't control the case sensitivity of your user's systems, you should assume they are _case sensitive_ and use the filesystem's case in the service name. Otherwise, Gravity (through Composer) won't be able to autoload the class. Don't worry, though. Getting the service is still _case insensitive_.
+
 ### Instances
 
 An instance-defined service is already instantiated.

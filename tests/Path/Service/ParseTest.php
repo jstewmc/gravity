@@ -39,7 +39,7 @@ class ParseTest extends TestCase
         return;
     }
 
-    public function testInvokeReturnsIdIfWhitespaceExists(): void
+    public function testInvokeIfWhitespaceExists(): void
     {
         $segments = ['foo', 'bar', 'baz'];
 
@@ -54,13 +54,13 @@ class ParseTest extends TestCase
         return;
     }
 
-    public function testInvokeReturnsIdIfMixedCaseExists(): void
+    public function testInvokeIfMixedCaseExists(): void
     {
         $segments = ['FOO', 'bar', 'BaZ'];
 
         $path = implode(Path::getSeparator(), $segments);
 
-        $expected = new Path(['foo', 'bar', 'baz']);
+        $expected = new Path(['FOO', 'bar', 'BaZ']);
         $actual   = (new Parse())($path);
 
         $this->assertEquals($expected, $actual);
@@ -68,7 +68,7 @@ class ParseTest extends TestCase
         return;
     }
 
-    public function testInvokeReturnsIdIfEmptySegmentsExist(): void
+    public function testInvokeIfEmptySegmentsExist(): void
     {
         $segments = ['foo', null, 'bar', 'baz'];
 
@@ -82,7 +82,7 @@ class ParseTest extends TestCase
         return;
     }
 
-    public function testInvokeReturnsIdIfLeadingSeparatorExists(): void
+    public function testInvokeIfLeadingSeparatorExists(): void
     {
         $segments = ['foo', 'bar', 'baz'];
 
@@ -97,7 +97,7 @@ class ParseTest extends TestCase
         return;
     }
 
-    public function testInvokeReturnsIdIfTrailingSeparatorExists(): void
+    public function testInvokeIfTrailingSeparatorExists(): void
     {
         $segments = ['foo', 'bar', 'baz'];
 

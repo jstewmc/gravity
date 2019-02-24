@@ -15,7 +15,7 @@ abstract class Service
 {
     private $definition;
 
-    private $id;
+    protected $id;
 
     public function __construct(Id $id, $definition)
     {
