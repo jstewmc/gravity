@@ -28,7 +28,7 @@ abstract class Id
 
     public function __toString(): string
     {
-        return (string)$this->path;
+        return strtolower((string)$this->path);
     }
 
     public function getPath(): Path
