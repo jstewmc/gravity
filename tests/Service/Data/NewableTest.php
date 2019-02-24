@@ -20,10 +20,19 @@ class NewableTest extends TestCase
         $this->assertSame($id, $service->getId());
     }
 
+    public function testGetClassname(): void
+    {
+        $id = $this->createMock(Id::class);
+        $id->method('getSegments')->willReturn(['StdClass']);
+
+        $service = new Newable($id);
+
+        $this->assertEquals('\StdClass', $service->getClassname());
+    }
+
     public function testGetDefinition(): void
     {
         $id = $this->createMock(Id::class);
-        $definition = 'StdClass';
 
         $service = new Newable($id);
 
