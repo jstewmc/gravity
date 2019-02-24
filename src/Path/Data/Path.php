@@ -18,6 +18,9 @@ use function reset;
  * Partial location of a service or setting in the project using one or more
  * segments, separated by a separator, with or without a leading- and trailing-
  * separator.
+ *
+ * Segments are input in original case but usually output in lowercase. This
+ * helps with classnames and autoloading.
  */
 abstract class Path
 {
@@ -40,17 +43,21 @@ abstract class Path
 
     public function __toString(): string
     {
-        return implode($this::getSeparator(), $this->segments);
+        return implode($this::getSeparator(), $this->getLowercaseSegments());
     }
 
     public function getFirstSegment(): string
     {
-        return reset($this->segments);
+        $segments = $this->getLowercaseSegments();
+
+        return reset($segments);
     }
 
     public function getLastSegment(): string
     {
-        return end($this->segments);
+        $segments = $this->getLowercaseSegments();
+
+        return end($segments);
     }
 
     public function getLength(): int
@@ -58,9 +65,19 @@ abstract class Path
         return count($this->segments);
     }
 
-    public function getSegments(): array
+    public function getLowercaseSegments(): array
+    {
+        return array_map('strtolower', $this->segments);
+    }
+
+    public function getOriginalCaseSegments(): array
     {
         return $this->segments;
+    }
+
+    public function getSegments(): array
+    {
+        return $this->getLowercaseSegments();
     }
 
     public function hasLeadingSeparator(): bool

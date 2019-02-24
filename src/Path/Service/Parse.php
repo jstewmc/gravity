@@ -18,22 +18,14 @@ class Parse
         }
 
         if ($this->isService($path)) {
-            $pathService = $this->parseService($path);
+            $path = $this->parseService($path);
         } elseif ($this->isSetting($path)) {
-            $pathService = $this->parseSetting($path);
+            $path = $this->parseSetting($path);
         } else {
-            throw new InvalidSeparator($path, '');
+            throw new InvalidSeparator($path);
         }
 
-        return $pathService;
-    }
-
-
-    /* !Private methods */
-
-    private function lowercase(string $path): string
-    {
-        return strtolower($path);
+        return $path;
     }
 
     private function explode(string $path, string $separator): array
@@ -44,7 +36,6 @@ class Parse
     private function getSegments(string $path, string $separator): array
     {
         $path = $this->trim($path);
-        $path = $this->lowercase($path);
         $path = $this->popSeparator($path, $separator);
         $path = $this->shiftSeparator($path, $separator);
 

@@ -50,6 +50,26 @@ class ServiceTest extends TestCase
         );
     }
 
+    public function testGetLowecaseSegments(): void
+    {
+        $segments = ['FOO', 'BAR', 'BAZ'];
+
+        $this->assertEquals(
+            ['foo', 'bar', 'baz'],
+            (new Service($segments))->getLowercaseSegments()
+        );
+    }
+
+    public function testGetOriginaCaseSegments(): void
+    {
+        $segments = ['FOO', 'bar', 'BAZ'];
+
+        $this->assertEquals(
+            $segments,
+            (new Service($segments))->getOriginalCaseSegments()
+        );
+    }
+
     public function testGetSegments(): void
     {
         $segments = ['foo', 'bar', 'baz'];
