@@ -121,11 +121,22 @@ Or, you can define multiple files in directories named after an environment:
 |-- ...
 ```
 
-Any services and settings defined in these files will take precedence over identically named services and settings defined elsewhere.
-
 Keep in mind, environment files are not required, and they may be sparse. You can define as many (or as few) as you'd like.
 
 Don't mix methods! If both a directory and file exist (e.g., `environments\development` and `environments\development.php`, respectively), the file will win.
+
+## Precedence
+
+When multiple definitions exist for the same service or setting, the last one wins.
+
+Gravity loads files in the following order:
+
+1. Package global files
+2. Project global files
+3. Package environment files
+4. Project environment files
+
+This way, _project_ definitions take precedence over _package_ definitions, and _local_ definitions take precedence over _global_ definitions. 
 
 ## Services
 
