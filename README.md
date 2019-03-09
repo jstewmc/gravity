@@ -1,6 +1,6 @@
 # Gravity
 
-Gravity is like Composer for settings and services: other developers can define settings and services in your dependency injection container using files in their packages, no framework conventions or glue code required. By seamlessly pulling everything together, Gravity makes it easy for developers to build and share small, configurable services.
+Gravity is like Composer for settings and services: other developers can define settings and services in your dependency injection container from files in their packages, no framework conventions to follow, no glue code required. By pulling everything together, Gravity makes it easy to build and share small, configurable services.
 
 [![Build Status](https://travis-ci.com/jstewmc/gravity.svg?branch=master)](https://travis-ci.com/jstewmc/gravity) [![codecov](https://codecov.io/gh/jstewmc/gravity/branch/master/graph/badge.svg)](https://codecov.io/gh/jstewmc/gravity)
 
@@ -8,26 +8,31 @@ Gravity is like Composer for settings and services: other developers can define 
 
 Gravity serves two audiences: _package authors_, the developers who create packages, and _package consumers_, the developers who use them.
 
-## As an author
+### As an author
 
 As a package author, you'll define services and settings in your repository using a simple file-based DSL:
 
 ```php
-#/path/to/project/.gravity/foo.php
+# /path/to/project/.gravity/foo.php
 
-$g->set('foo.bar.baz', true);            // define a setting
-$g->set('Foo\Bar\Baz', new StdClass());  // define a service
+$g->set('foo.bar.baz', true);            // defines a setting
+$g->set('Foo\Bar\Baz', new StdClass());  // defines a service
 ```
 
 ## As a consumer
 
-As a package consumer, you'll install Gravity-compliant packages via Composer (not shown); call Gravity's `pull()` method; and, request your service or setting using the `get()` method:
+As a package consumer, you'll install packages via Composer; call Gravity's `pull()` method; and, request your service or setting using the `get()` method:
 
 ```php
-$g = (new Gravity())->pull();       // returns the Gravity manager
+# /path/to/project/file.php
 
-$service = $g->get('Foo\Bar\Baz');  // returns the StdClass instance
-$setting = $g->get('foo.bar.baz');  // returns the true
+use Jstewmc\Gravity\Gravity;
+
+// returns Gravity's setting and service manager
+$g = (new Gravity())->pull();
+
+$g->get('foo.bar.baz');  // returns true
+$g->get('Foo\Bar\Baz');  // returns the StdClass instance
 ```
 
 ## Documentation
@@ -54,7 +59,7 @@ Gravity must be installed via [Composer](https://getcomposer.org). To do so, add
 
 ## Examples
 
-You can run most examples in the documentation by cloning the repository to your computer, navigating to it on your filesystem, and using the PHP command line. Most examples use `assert()` statements, and will output nothing when successful, unless stated otherwise.
+You can run most examples in the documentation by cloning the repository to your computer, navigating to it on your filesystem, and using the PHP command line.
 
 ```bash
 # navigate to a directory on your computer
@@ -69,6 +74,8 @@ $ cd ~/projects
 # run the first example
 ~/projects/gravity $ php examples/first.php
 ```
+
+Most examples use `assert()` statements, and will output nothing when successful, unless stated otherwise.
 
 ## Compliance
 
