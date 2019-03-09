@@ -127,16 +127,14 @@ Don't mix methods! If both a directory and file exist (e.g., `environments\devel
 
 ## Precedence
 
-When multiple definitions exist for the same service or setting, the last one wins.
+When multiple definitions exist for the same service or setting identifier, the last one wins.
 
-Gravity loads files in the following order:
+To ensure _project_ definitions take precedence over _package_ definitions and _local_ definitions take precedence over _global_ definitions, Gravity loads files in the following order:
 
 1. Package global files
 2. Project global files
 3. Package environment files
 4. Project environment files
-
-This way, _project_ definitions take precedence over _package_ definitions, and _local_ definitions take precedence over _global_ definitions. 
 
 ## Services
 
