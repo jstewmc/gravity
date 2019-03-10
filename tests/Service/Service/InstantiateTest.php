@@ -6,6 +6,7 @@
 
 namespace Jstewmc\Gravity\Service\Service;
 
+use Error;
 use Jstewmc\Gravity\FactoryTest;
 use Jstewmc\Gravity\Id\Data\Service as Id;
 use Jstewmc\Gravity\Manager\Data\Manager;
@@ -35,8 +36,6 @@ class InstantiateTest extends TestCase
         $sut = new Instantiate();
 
         $this->assertInstanceOf(StdClass::class, $sut($service, $this->g));
-
-        return;
     }
 
     public function testInvokeIfFx(): void
@@ -51,8 +50,26 @@ class InstantiateTest extends TestCase
         $sut = new Instantiate();
 
         $this->assertInstanceOf(StdClass::class, $sut($service, $this->g));
+    }
 
-        return;
+    public function testInvokeIfFxCallsPrivateMethods(): void
+    {
+        $namespace = $this->createMock(Ns::class);
+
+        $function  = function () {
+            $this->getId('foo.bar.baz');
+        };
+
+        $service = new Fx($this->id, $function, $namespace);
+
+        // hmm, I (Jack) couldn't figure out to get PHPUnit to expect an error;
+        //     the expectException(Error::class) didn't work
+        try {
+            (new Instantiate())($service, $this->g);
+            $this->assertTrue(false, "Closure accessed manager's private methods");
+        } catch (Error $e) {
+            $this->assertTrue(true);
+        }
     }
 
     public function testInvokeIfInstance()
@@ -62,8 +79,6 @@ class InstantiateTest extends TestCase
         $sut = new Instantiate();
 
         $this->assertInstanceOf(StdClass::class, $sut($service, $this->g));
-
-        return;
     }
 
     public function testInvokeIfNewable()
@@ -75,7 +90,5 @@ class InstantiateTest extends TestCase
         $sut = new Instantiate();
 
         $this->assertInstanceOf(StdClass::class, $sut($service, $this->g));
-
-        return;
     }
 }
