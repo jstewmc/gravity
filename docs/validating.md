@@ -22,7 +22,7 @@ If a project's requirements are met and all services can be instantiated without
 Project is valid!
 ```
 
-It not, `validate` will print error messages as a bulleted list:
+If not, `validate` will print error messages as a bulleted list:
 
 ```bash
 /path/to/project $ gravity validate
