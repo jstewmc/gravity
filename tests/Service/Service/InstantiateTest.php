@@ -16,70 +16,65 @@ use StdClass;
 
 class InstantiateTest extends TestCase
 {
+    private $g;
+
+    private $id;
+
+    public function setUp(): void
+    {
+        $this->id = $this->createMock(Id::class);
+        $this->g  = $this->createMock(Manager::class);
+    }
+
     public function testInvokeIfFactory()
     {
-        $service = new Factory(
-            $this->createMock(Id::class),
-            FactoryTest::class
-        );
+        $service = new Factory($this->id, FactoryTest::class);
 
-        $manager = $this->createMock(Manager::class);
-        $manager->method('get')->willReturn(new FactoryTest());
+        $this->g->method('get')->willReturn(new FactoryTest());
 
         $sut = new Instantiate();
 
-        $this->assertInstanceOf(StdClass::class, $sut($service, $manager));
+        $this->assertInstanceOf(StdClass::class, $sut($service, $this->g));
 
         return;
     }
 
     public function testInvokeIfFx(): void
     {
-        $service = new Fx(
-            $this->createMock(Id::class),
-            function () {
-                return new StdClass();
-            },
-            $this->createMock(Ns::class)
-        );
+        $namespace = $this->createMock(Ns::class);
+        $function  = function () {
+            return new StdClass();
+        };
 
-        $manager = $this->createMock(Manager::class);
+        $service = new Fx($this->id, $function, $namespace);
 
         $sut = new Instantiate();
 
-        $this->assertInstanceOf(StdClass::class, $sut($service, $manager));
+        $this->assertInstanceOf(StdClass::class, $sut($service, $this->g));
 
         return;
     }
 
     public function testInvokeIfInstance()
     {
-        $service = new Instance(
-            $this->createMock(Id::class),
-            new StdClass()
-        );
-
-        $manager = $this->createMock(Manager::class);
+        $service = new Instance($this->id, new StdClass());
 
         $sut = new Instantiate();
 
-        $this->assertInstanceOf(StdClass::class, $sut($service, $manager));
+        $this->assertInstanceOf(StdClass::class, $sut($service, $this->g));
 
         return;
     }
 
     public function testInvokeIfNewable()
     {
-        $id = $this->createMock(Id::class);
-        $id->method('getSegments')->willReturn(['StdClass']);
+        $this->id->method('getSegments')->willReturn(['StdClass']);
 
-        $service = new Newable($id);
-
-        $manager = $this->createMock(Manager::class);
+        $service = new Newable($this->id);
 
         $sut = new Instantiate();
 
-        $this->assertInstanceOf(StdClass::class, $sut($service, $manager));
+        $this->assertInstanceOf(StdClass::class, $sut($service, $this->g));
 
         return;
     }
