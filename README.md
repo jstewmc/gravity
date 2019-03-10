@@ -1,14 +1,12 @@
 # Gravity
 
-Gravity is like Composer for settings and services: other developers can define settings and services in your dependency injection container from files in their packages, no framework conventions to follow, no glue code required. By pulling everything together, Gravity makes it easy to build and share small, configurable services.
+Gravity is like Composer for settings and services: other developers define settings and services in your dependency injection container using files in their packages. By pulling everything together, Gravity makes it easy to build and share small, configurable services.
 
 [![Build Status](https://travis-ci.com/jstewmc/gravity.svg?branch=master)](https://travis-ci.com/jstewmc/gravity) [![codecov](https://codecov.io/gh/jstewmc/gravity/branch/master/graph/badge.svg)](https://codecov.io/gh/jstewmc/gravity)
 
 ## Usage
 
 Gravity serves two audiences: _package authors_, the developers who create packages, and _package consumers_, the developers who use them.
-
-### As an author
 
 As a package author, you'll define services and settings in your repository using a simple file-based DSL:
 
@@ -19,17 +17,12 @@ $g->set('foo.bar.baz', true);            // defines a setting
 $g->set('Foo\Bar\Baz', new StdClass());  // defines a service
 ```
 
-## As a consumer
-
 As a package consumer, you'll install packages via Composer; call Gravity's `pull()` method; and, request your service or setting using the `get()` method:
 
 ```php
 # /path/to/project/file.php
 
-use Jstewmc\Gravity\Gravity;
-
-// returns Gravity's setting and service manager
-$g = (new Gravity())->pull();
+$g = (new \Jstewmc\Gravity\Gravity())->pull();  // returns Gravity's manager
 
 $g->get('foo.bar.baz');  // returns true
 $g->get('Foo\Bar\Baz');  // returns the StdClass instance
