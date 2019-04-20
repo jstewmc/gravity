@@ -6,16 +6,16 @@ Gravity lets other developers define settings and services in _your_ dependency 
 
 ## Usage
 
-As a _package author_, you'll define services and settings in your repository using a simple file-based DSL:
+As a _package author_, you'll define services and settings in your repository using the `set()` method:
 
 ```php
-# /path/to/project/.gravity/foo.php
+# /path/to/package/.gravity/foo.php
 
 $g->set('foo.bar.baz', true);            // defines a setting
 $g->set('Foo\Bar\Baz', new StdClass());  // defines a service
 ```
 
-As a _package consumer_, you'll install packages via Composer; call Gravity's `pull()` method; and, request services and settings using the `get()` method:
+As a _package consumer_, you'll request services and settings in your project using the `get()` method:
 
 ```php
 # /path/to/project/file.php
@@ -25,6 +25,8 @@ $g = (new \Jstewmc\Gravity\Gravity())->pull();  // returns Gravity's manager
 $g->get('foo.bar.baz');  // returns true
 $g->get('Foo\Bar\Baz');  // returns the StdClass instance
 ```
+
+Gravity works entirely within your local filesystem. When you call the `pull()` method, Gravity will find the current project's root directory; search it, as well as your `vendor` directory, for Gravity files; load each file's service and setting definitions into the manager; and, return the manager to you. That's it!
 
 ## Documentation
 
